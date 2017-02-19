@@ -1,0 +1,10 @@
+img#io-conto-logo, img.responsive-img {
+	position:absolute;
+	top:0;
+	right:0;
+	width: 80px;
+}
+.page-break {
+	display: block;
+	page-break-before: always;
+}
