@@ -17,9 +17,12 @@ Prerequisiti:
 
     apt-get install apache2 mariadb-server php5 php5-mysql libapache2-mod-php5 php-gettext libjs-jquery
 
+Di default Boz-PHP è atteso in `/usr/share`:
+
+    apt-get install bzr
+    bzr branch lp:boz-php-another-php-framework /usr/share/boz-php-another-php-framework
+
 Popolare il file [load-example.php](load-example.php) con le credenziali del database e salvare tale file come `load.php`.
-
-
 
 ## Licenza
 Questo software è fruibile attraverso la licenza di software libero [GNU Affero General Public License](LICENSE.md).
