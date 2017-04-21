@@ -143,7 +143,7 @@ if( ! empty($_POST) ) {
 					_("Conto tesoreria <small>(%d caratteri numerici </small>"),
 					Scuola::TESORERIA_CONTO_MAXLEN
 				),
-				$scuola->scuola_tesoreria_conto,
+				$scuola->getScuolaTesoreriaConto(),
 				'mdi-editor-attach-money',
 				HTML::property('maxlength', Scuola::TESORERIA_CONTO_MAXLEN)
 			)

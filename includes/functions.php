@@ -27,11 +27,11 @@ function luser_float($v) {
 
 function m_icon($icon = null, $position = 'right', $title = null) {
 	if($icon === null) {
-		$icon = 'mdi-content-send';
+		$icon = 'send';
 	}
 	$position = HTML::spaced($position);
-	return HTML::tag('i', null,
-		HTML::property('class', "$icon$position") .
+	return HTML::tag('i', $icon,
+		HTML::property('class', 'material-icons ' . $position) .
 		HTML::property('title', $title)
 	);
 }

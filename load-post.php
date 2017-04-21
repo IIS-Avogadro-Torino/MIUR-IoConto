@@ -78,6 +78,7 @@ register_js('jquery-ui',                JQUERY_UI);
 register_js('jquery-ui-custom',         MEDIA_URL . '/jquery-ui-1.11.4.custom/jquery-ui.min.js');
 register_js('materialize',              MEDIA_URL . '/materialize/js/materialize.min.js', JS::FOOTER);
 register_js('datepicker-settings',      MEDIA_URL . '/datepicker-settings.js');
+register_js('model-view-controller',    ROOT . '/static/model-view-controller.js');
 register_css('jquery-ui-custom',        MEDIA_URL . '/jquery-ui-1.11.4.custom/jquery-ui.min.css');
 register_css('materialize',             MEDIA_URL . '/materialize/css/materialize.min.css');
 register_css('materialize-icons',      'https://fonts.googleapis.com/icon?family=Material+Icons');
@@ -110,7 +111,8 @@ add_menu_entries( [
 	new MenuEntry('modulistica',                              '/modulistica.php',                              _("Modulistica"),                     [ 'single-pole-school', 'all-pole-school' ] ),
 	new MenuEntry('all-pole-school',                          '/all-pole-school.php',                          _("Gestisci scuole polo") ),
 	new MenuEntry('all-pole-school-calendar-list',            '/all-pole-school-calendar-list.php',            _("Tutti i calendari e iscritti"),      'all-pole-school' ),
-	new MenuEntry('all-pole-school-reporting-list',           '/all-pole-school-reporting-list.php',           _("Tutte le rendicontazioni"),          'all-pole-school' )
+	new MenuEntry('all-pole-school-reporting-list',           '/all-pole-school-reporting-list.php',           _("Tutte le rendicontazioni"),          'all-pole-school' ),
+	new MenuEntry('curriculum-2017',                          '/curriculum-2017.php',                          _("Inserimento informazioni"),          '2017')
 ] );
 
 // Global objects dynamically instantiated
