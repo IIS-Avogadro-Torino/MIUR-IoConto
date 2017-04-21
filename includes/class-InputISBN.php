@@ -15,27 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class ModelView {
-	static function enqueue() {
-		enqueue_js('model-view-controller');
-	}
+class InputISBN {
 
-	static function model() {
-		echo '<div class="model-container">';
-	}
-
-	static function endmodel() {
-		echo "</div>";
-	}
-
-	static function remove() { ?>
-		<button class="view-remove btn-floating waves-effect red" type="button" title="<?php _e("Rimuovi") ?>"><?php echo m_icon('remove') ?></button>
-	<?php }
-
-	static function add($title = null, $icon = 'add') {
-		$title = $title ? $title : _("Aggiungi");
+	/**
+	 * @param $title string Placeholder
+	 * @param $name string Input name
+	 * @param $value string Input value
+	 */
+	static function spawn($name, $value) {
 		?>
-		<button class="view-add btn waves-effect" type="button" title="<?php echo $title ?>"><?php echo $title . m_icon($icon) ?></button>
+		<input type="text" name="<?php echo $name ?>" placeholder="<?php _e("ISBN") ?> " pattern=".{10,13}" value="<?php $value and _esc_attr($value) ?>" class="validate" />
 		<?php
 	}
 }

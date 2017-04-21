@@ -30,7 +30,7 @@ $(document).ready( function () {
 	 * Replicate the model
 	 */
 	var $_modelViewAutoincrement = 0;
-	$('.model-view-container .view-add').click( function () {
+	$(document).on('click', '.model-view-container .view-add', function () {
 		var $cont  = $(this).closest('.model-view-container');
 		var $model = $cont.find('.model-container').children().clone();
 
@@ -42,7 +42,7 @@ $(document).ready( function () {
 		$_modelViewAutoincrement++;
 
 		$model.addClass('view').hide();
-		$cont.children('.view-container').append($model);
+		$cont.find('.view-container').append($model);
 		$model.show('fast', $_modelViewControllerAdded );
 	} );
 

@@ -15,27 +15,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class ModelView {
-	static function enqueue() {
-		enqueue_js('model-view-controller');
+class H {
+	static function _1($title) {
+		echo self::generic(1, $title);
 	}
 
-	static function model() {
-		echo '<div class="model-container">';
+	static function _2($title) {
+		echo self::generic(2, $title);
 	}
 
-	static function endmodel() {
-		echo "</div>";
+	static function _3($title) {
+		echo self::generic(3, $title);
 	}
 
-	static function remove() { ?>
-		<button class="view-remove btn-floating waves-effect red" type="button" title="<?php _e("Rimuovi") ?>"><?php echo m_icon('remove') ?></button>
-	<?php }
+	static function _4($title) {
+		echo self::generic(4, $title);
+	}
 
-	static function add($title = null, $icon = 'add') {
-		$title = $title ? $title : _("Aggiungi");
-		?>
-		<button class="view-add btn waves-effect" type="button" title="<?php echo $title ?>"><?php echo $title . m_icon($icon) ?></button>
-		<?php
+	static function generic($level, $title, $anchor = null) {
+		$anchor = $anchor ? $anchor : generate_slug($title);
+		printf('<span id="%s"></span>', $anchor);
+		echo "<h$level>$title</h$level>";
 	}
 }

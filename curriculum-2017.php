@@ -36,7 +36,7 @@ Header::factory('curriculum-2017');
 	<form method="post">
 		<!-- esperienza professionale -->
 		<div class="card-panel">
-			<h3><?php _e("Esperienza professionale") ?></h3>
+			<?php H::_3( _("Esperienza professionale") ) ?>
 			<div class="row">
 				<div class="col s12 l6 input-field">
 					<?php
@@ -53,8 +53,7 @@ Header::factory('curriculum-2017');
 
 		<!-- titolo di studio -->
 		<div class="card-panel model-view-container">
-			<h3><?php _e("Titolo di studio") ?></h3>
-
+			<?php H::_3( _("Titolo di studio") ) ?>
 			<?php ModelView::model() ?>
 				<?php $study = function ($level = null, $school = null) { ?>
 				<div class="col s12 m6">
@@ -83,7 +82,7 @@ Header::factory('curriculum-2017');
 				<?php }; ?>
 
 				<?php $study() ?>
-			<?php ModelView::end() ?>
+			<?php ModelView::endmodel() ?>
 
 			<div class="row view-container"></div>
 			<div class="row">
@@ -96,7 +95,7 @@ Header::factory('curriculum-2017');
 
 		<!-- corsi seguiti -->
 		<div class="card-panel">
-			<h3><?php _e("Corsi di formazione seguiti") ?></h3>
+			<?php H::_3( _("Corsi di formazione seguiti") ) ?>
 			<div class="row">
 				<div class="col s12 l6 input-field">
 					<?php InputSelect::spawn(InputSelect::SINGLE, 'studies', null, [
@@ -114,38 +113,53 @@ Header::factory('curriculum-2017');
 
 		<!-- pubblicazioni -->
 		<div class="card-panel model-view-container">
-			<h3><?php _e("Pubblicazioni") ?></h3>
+			<?php H::_3( _("Pubblicazioni") ) ?>
 
-			<?php ModelView::model() ?>
-				<?php $pubblicazione = function($title = null, $year = null) { ?>
-				<div class="col s12 m6">
-					<div class="card-panel">
-						<div class="row">
-							<div class="col s11">
-								<?php InputText::spawn(_("Titolo della pubblicazione"), 'publication[][title]', $title) ?>
+			<?php Modal::start() ?>
+
+				<?php ModelView::model() ?>
+					<?php $pubblicazione = function($title = null, $year = null, $author = null, $published = null, $isbn = null) { ?>
+					<div class="col s12 m6">
+						<div class="card-panel">
+							<div class="row">
+								<div class="col s11">
+									<?php InputText::spawn(_("Titolo della pubblicazione"), 'publication[][title]', $title) ?>
+								</div>
+								<div class="col s1">
+									<?php ModelView::remove() ?>
+								</div>
 							</div>
-							<div class="col s1">
-								<?php ModelView::remove() ?>
+							<div class="row">
+								<div class="col s12 m6">
+									<?php InputText::spawn( _("Autore"), 'publication[][author]', $author) ?>
+								</div>
+								<div class="col s12 m6">
+									<?php InputYear::spawn( _("Anno di pubblicazione"), 'publication[][year]', $year) ?>
+								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col s11">
-								<?php InputYear::spawn(_("Anno di pubblicazione"), 'publication[][year]', $year) ?>
+							<div class="row">
+								<div class="col s12 m6">
+									<?php InputText::spawn( _("Editore"), 'publication[][published]', $published) ?>
+								</div>
+								<div class="col s12 m6">
+									<?php InputISBN::spawn('publication[][isbn]', $isbn) ?>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<?php }; ?>
+					<?php }; ?>
 
-				<?php $pubblicazione() ?>
-			<?php ModelView::end() ?>
+					<?php $pubblicazione() ?>
+				<?php ModelView::endmodel() ?>
 
-			<div class="row view-container"></div>
-			<div class="row">
-				<div class="col s12">
-					<?php ModelView::add() ?>
-				</div>
-			</div>
+				<div class="row view-container"></div>
+				<p><?php ModelView::add() ?></p>
+				<p><?php Modal::close() ?></p>
+
+			<?php Modal::end() ?>
+
+			<?php Modal::open() ?>
+
 		</div>
 		<!-- / pubblicazioni -->
 
@@ -159,7 +173,11 @@ Header::factory('curriculum-2017');
 		$('select').not('.model-container select').material_select();
 	}
 
-	$(document).ready(updateGUI);
+	$(document).ready( function () {
+		updateGUI();
+		$('.modal').modal();
+
+	} );
 	$_modelViewControllerAdded = updateGUI;
 	</script>
 
