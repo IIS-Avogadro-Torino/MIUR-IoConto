@@ -35,7 +35,7 @@ class ModelView {
 	static function add($title = null, $icon = 'add') {
 		$title = $title ? $title : _("Aggiungi");
 		?>
-		<button class="view-add btn waves-effect" type="button" title="<?php echo $title ?>"><?php echo $title . m_icon($icon) ?></button>
+		<button class="view-add btn waves-effect light-blue darken-1" type="button" title="<?php echo $title ?>"><?php echo $title . m_icon($icon) ?></button>
 		<?php
 	}
 }

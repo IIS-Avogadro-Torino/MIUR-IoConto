@@ -16,7 +16,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Header {
+	static $args = [];
+
 	static function factory($uid, $args = []) {
+
+		self::$args = $args;
+		$args = & self::$args;
 
 		$menuEntry = get_menu_entry($uid);
 		$menuEntry || error_die( sprintf(
@@ -31,7 +36,10 @@ class Header {
 			'meta-title'   => true,
 			'pre-enqueue'  => 'default',
 			'pre-template' => 'default',
-			'complete-site-name' => true
+			'complete-site-name' => true,
+			'user-navbar'  => true,
+			'container'    => true,
+			'header'       => true
 		], $args);
 
 		switch( $args['pre-template'] ) {
@@ -68,9 +76,10 @@ class Header {
 </head>
 <body>
 
-<?php $args['pre-template'] !== 'print'
+<?php $args['pre-template'] !== 'print' and $args['user-navbar']
 	and UserNavbar::spawn() ?>
 
+<?php if( $args['header'] ): ?>
 <div class="container" style="clear: both">
 	<div class="row valign-wrapper">
 		<div class="col s11 m8">
@@ -89,7 +98,11 @@ class Header {
 		</div>
 	</div>
 </div>
+<?php endif ?>
 
+<?php if( $args['container'] ): ?>
 <!-- Start header container -->
 <div class="container">
+<?php endif ?>
+
 <?php } }

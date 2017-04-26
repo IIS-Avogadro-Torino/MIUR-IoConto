@@ -17,8 +17,13 @@
 
 class Footer {
 	static function factory($args = []) { ?>
+
+<?php if( Header::$args['container'] ): ?>
 </div>
 <!-- End header container -->
+<?php endif ?>
+
+<?php if( @ $args['footer'] !== false ): ?>
 
 <footer class="page-footer">
 	<div class="container white-text">
@@ -57,6 +62,8 @@ class Footer {
 
 	</div>
 </footer>
+<?php endif ?>
+
 <?php load_module('footer') ?>
 </body>
 </html><?php } }

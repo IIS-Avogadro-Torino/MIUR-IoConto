@@ -37,7 +37,7 @@ class Modal {
 	static function open($title = null, $icon = 'add', $id = null) {
 		$title = $title ? $title : _("compila");
 
-		printf('<a class="btn waves-effect" href="#%s">%s %s</a>',
+		printf('<a class="btn waves-effect light-blue darken-1" href="#%s">%s %s</a>',
 			$id ? $id : self::id(),
 			$title,
 			m_icon($icon)
@@ -47,7 +47,7 @@ class Modal {
 	static function close($title = null, $icon = 'done') {
 		$title = $title ? $title : _("OK");
 
-		printf('<a class="btn waves-effect modal-close">%s %s</a>',
+		printf('<a class="btn waves-effect modal-close light-blue darken-1">%s %s</a>',
 			$title,
 			m_icon($icon)
 		);
