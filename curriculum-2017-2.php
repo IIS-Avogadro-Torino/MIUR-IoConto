@@ -33,7 +33,7 @@ Header::factory('curriculum-2017', [
 	<aside class="col s3 l2 light-blue darken-1">
 		<div class="section">
 			<div id="logo"><img class="responsive-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto-logo-landscape.png"></div>
-				<div class="">
+				<div class="nothing">
 					<img class="responsive-img ioconto-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto.png" />
 				</div>
 				<p class="flow-text red-text white expand">Curriculum Vitae</p>
@@ -57,16 +57,7 @@ Header::factory('curriculum-2017', [
 		<form method="post">
 			<div class="row">
 				<div class="input-field col s2">
-					<label for="informazioni_personali">Informazioni personali</label>
-				</div>
-				<div class="input-field col s9 push-s1">
-					<input placeholder="Informazioni personali" id="informazioni-personali" type="text" class="validate">
-					<p class="valign-wrapper compila"><?php Modal::open() ?></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s2">
-					<label for="experience_years"><?php _e("Esperienza Professionale") ?></label>
+					<label for="experience_years"><?php _e("Anni di servizio") ?></label>
 				</div>
 				<div class="input-field col s9 push-s1">
 					<?php
@@ -77,26 +68,6 @@ Header::factory('curriculum-2017', [
 					InputSelect::spawn(InputSelect::SINGLE, 'experience_years', null, $options);
 					?>
 				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s2"><label for="first_name">Conoscenze di base</label></div>
-				<div class="input-field col s9 push-s1"><input placeholder="Conoscenze di base" id="first_name" type="text" class="validate">
-				 <p class="valign-wrapper compila"><?php Modal::open() ?></div>
-			</div>
-			<div class="row">
-				<div class="input-field col s2"><label for="first_name">Conoscenze specifiche</label></div>
-				<div class="input-field col s9 push-s1"><input placeholder="Conoscenze specifiche" id="first_name" type="text" class="validate">
-				 <p class="valign-wrapper compila"><?php Modal::open() ?></div>
-			</div>
-			<div class="row">
-				<div class="input-field col s2"><label for="first_name">Esperienza in qualità di docente</label></div>
-				<div class="input-field col s9 push-s1"><input placeholder="Esperienza in qualità di docente" id="first_name" type="text" class="validate">
-				<p class="valign-wrapper compila"><?php Modal::open() ?></p>
-			</div>
-			<div class="row">
-				<div class="input-field col s2"><label for="first_name">Collaborazioni con USR e Istituzioni Scolastiche</label></div>
-				<div class="input-field col s9 push-s1"><input placeholder="Collaborazioni con USR e Istituzioni Scolastiche" id="first_name" type="text" class="validate">
-				<p class="valign-wrapper compila"><?php Modal::open() ?></p>
 			</div>
 
 			<div class="row">
@@ -145,10 +116,10 @@ Header::factory('curriculum-2017', [
 
 			<div class="row">
 				<div class="input-field col s2">
-					<label><?php _e("Corsi seguiti") ?></label>
+					<label><?php _e("Corsi di formazione seguiti") ?></label>
 				</div>
 				<div class="input-field col s9 push-s1">
-					<?php InputSelect::spawn(InputSelect::SINGLE, 'studies', null, [
+					<?php InputSelect::spawn(InputSelect::SINGLE, 'course_followed', null, [
 						'0'   => _("Nessun corso"),
 						'1-2' => _("meno di tre corsi"),
 						'3-4' => _("meno di cinque corsi"),
@@ -179,9 +150,7 @@ Header::factory('curriculum-2017', [
 										<div class="col s11">
 											<?php InputText::spawn(_("Titolo della pubblicazione"), 'publication[][title]', $title) ?>
 										</div>
-										<div class="col s1">
-											<?php ModelView::remove() ?>
-										</div>
+										<div class="col s1"><?php ModelView::remove() ?></div>
 									</div>
 									<div class="row">
 										<div class="col s12 m6">
@@ -208,6 +177,22 @@ Header::factory('curriculum-2017', [
 				</div>
 			</div>
 			<!-- / row pubblicazioni -->
+
+			<div class="row">
+				<div class="input-field col s2">
+					<label><?php _e("Corsi di formazione organizzati/erogati") ?></label>
+				</div>
+				<div class="input-field col s9 push-s1">
+					<?php InputSelect::spawn(InputSelect::SINGLE, 'course_erogated', null, [
+						'0'   => _("Nessun corso"),
+						'1-2' => _("meno di tre corsi"),
+						'3-4' => _("meno di cinque corsi"),
+						'5-6' => _("meno di sei corsi"),
+						'6+'  => _("sei corsi, o più")
+					] ) ?>
+				</div>
+			</div>
+			<!-- / row corsi seguiti -->
 
 			<p>
 				<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Salva tutto") ?><?php echo m_icon() ?></button>
