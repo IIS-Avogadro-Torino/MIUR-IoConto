@@ -51,6 +51,7 @@ class Header {
 			case 'default':
 				enqueue_css('materialize');
 				enqueue_css('materialize-icons');
+				enqueue_css('materialize-patch');
 				enqueue_js('jquery');
 				enqueue_js('materialize');
 				break;

@@ -24,7 +24,7 @@ class Modal {
 	static $i = 0;
 
 	static function start() {
-		printf('<div id="modal%d" class="modal">', ++self::$i);
+		printf('<div id="modal%d" class="modal modal-large">', ++self::$i);
 		echo '<div class="modal-content">';
 
 		return self::$i;

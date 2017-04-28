@@ -83,6 +83,7 @@ register_css('jquery-ui-custom',        MEDIA_URL . '/jquery-ui-1.11.4.custom/jq
 register_css('materialize',             MEDIA_URL . '/materialize/css/materialize.min.css');
 register_css('materialize-icons',      'https://fonts.googleapis.com/icon?family=Material+Icons');
 register_css('materialize-post-style',  THEME_URL . '/post-style.css');
+register_css('materialize-patch',       ROOT . '/static/materialize.patch.css');
 register_css('print-mode',              THEME_URL . '/print-mode.css');
 
 // Menu entries

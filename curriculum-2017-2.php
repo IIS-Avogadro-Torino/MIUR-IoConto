@@ -26,203 +26,230 @@ Header::factory('curriculum-2017', [
 	'container'   => false,
 	'header'      => false
 ] );
+
+$heading = function ($s) {
+	printf("<p class='flow-text'>%s</p>\n", $s);
+};
+$label = function ($s) {
+	printf("<div class='input-field col s12 m2'><p>%s</p></div>\n", $s);
+};
+$container_start = function () {
+	echo "<div class='input-field col s12 m9 push-m1 model-view-container'>\n";
+};
+$container_end = function () {
+	echo "</div><!-- / input-field col s12 m9 push-m1 -->\n";
+};
+$modal_open = function () {
+	echo '<p>';
+	Modal::open();
+	echo '</p>';
+};
+
 ?>
 
 <div class="row">
 	<!-- left -->
-	<aside class="col s3 l2 light-blue darken-1">
-		<div class="section">
-			<div id="logo"><img class="responsive-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto-logo-landscape.png"></div>
-				<div class="nothing">
-					<img class="responsive-img ioconto-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto.png" />
-				</div>
-				<p class="flow-text red-text white expand">Curriculum Vitae</p>
-				<footer class="menu-laterale">
-				<ul class="menu">
-					<li><a class="white-text" href="index.html">Home</a></li>
-					<li><a class="white-text" href="#">Il progetto</a></li>
-					<li><a class="white-text" href="#">Istruzioni</a></li>
-					<li><a class="white-text" href="#">Vai a Io Conto</a></li>
-					<li><a class="white-text" href="#">Esempi</a></li>
-					<li><a class="white-text" href="#">Area riservata</a></li>
-					<li><a class="white-text" href="#">News</a></li>
-				</ul>
-			</footer>
+	<aside class="col s12 m3 l2 light-blue darken-1">
+		<div>
+			<img class="responsive-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto-logo-landscape.png" alt="logo Formazione MIUR" />
 		</div>
+		<div class="hide-on-small-only">
+			<img class="responsive-img ioconto-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto.png" alt="logo Io Conto" />
+		</div>
+		<p class="flow-text red-text white expand">Curriculum Vitae</p>
+		<footer class="hide-on-small-only">
+			<ul>
+				<li><a class="white-text" href="index.html">Home</a></li>
+				<li><a class="white-text" href="#">Il progetto</a></li>
+				<li><a class="white-text" href="#">Istruzioni</a></li>
+				<li><a class="white-text" href="#">Vai a Io Conto</a></li>
+				<li><a class="white-text" href="#">Esempi</a></li>
+				<li><a class="white-text" href="#">Area riservata</a></li>
+				<li><a class="white-text" href="#">News</a></li>
+			</ul>
+		</footer>
 	</aside>
 	<!-- /left -->
 
 	<!-- main -->
-	<section class="col s6 l8">
+	<div class="section col s12 m6 l8">
 		<form method="post">
-			<div class="row">
-				<div class="input-field col s2">
-					<label for="experience_years"><?php _e("Anni di servizio") ?></label>
-				</div>
-				<div class="input-field col s9 push-s1">
-					<?php
-					$options = [];
-					for($i = 5; $i<16; $i += 5) {
-						$options[$i] = sprintf( _("Ho %d (o meno) anni di esperienza"), $i);
-					}
-					InputSelect::spawn(InputSelect::SINGLE, 'experience_years', null, $options);
-					?>
+
+			<!-- Informazioni personali -->
+			<div class="card-panel">
+				<?php $heading( _("Informazioni personali") ) ?>
+				<p><?php _e("Informazioni basilari da compilare prima di procedere con il questionario vero e proprio.") ?></p>
+
+				<?php Modal::start() ?>
+						<p><?php InputText::spawn( _("Nome"),            'name',    null ) ?></p>
+						<p><?php InputText::spawn( _("Cognome"),         'surname', null ) ?></p>
+						<p><?php InputText::spawn( _("Via e n° civico"), 'surname', null ) ?></p>
+						<p><?php Modal::close() ?>
+				<?php Modal::end() ?>
+
+				<div class="row">
+					<?php $label( _("Informazioni personali") ) ?>
+					<?php $container_start() ?>
+						<?php $modal_open() ?>
+					<?php $container_end() ?>
 				</div>
 			</div>
+			<!-- /Informazioni personali -->
 
-			<div class="row">
-				<div class="input-field col s2"><label><?php _e("Titoli di studio") ?></label></div>
-				<div class="input-field col s9 push-s1 model-view-container">
-					<?php Modal::start() ?>
-						<div class="row view-container"></div>
-						<p><?php ModelView::add() ?></p>
-						<p><?php Modal::close() ?></p>
-					<?php Modal::end() ?>
+			<!-- Conoscenze di base e specifiche -->
+			<div class="card-panel">
+				<?php $heading( _("Compilazione curriculum") ) ?>
 
-					<?php ModelView::model() ?>
-						<?php $study = function ($level = null, $school = null) { ?>
-						<div class="col s12 m6">
-							<div class="card-panel">
-								<div class="row">
-									<div class="col s11 input-field">
-										<?php InputSelect::spawn(InputSelect::SINGLE, 'studies[][level]', $level, [
-											'degree-1' => _("Laurea triennale"),
-											'degree-2' => _("Laurea magistrale / V.O / specialistica"),
-											'master-1' => _("Master di I livello"),
-											'master-2' => _("Master di II livello (o biennale)"),
-											'degree-3' => _("Dottorato / seconda laurea")
-										] ) ?>
-									</div>
-									<div class="col s1">
-										<?php ModelView::remove() ?>
+				<?php ModalInstructions::start( _("Valutare l'esperienza professionale dell'esperto considerando il ruolo e l'anzianità di servizio") ) ?>
+					<p><?php _e("Anni di anzianità o di servizio continuativi nel ruolo di DS o DSGA") ?></p>
+					<div class="input-field">
+						<?php
+						$options = [];
+						for($i = 5; $i<16; $i += 5) {
+							$options[$i] = sprintf( _("Ho %d (o meno) anni di esperienza"), $i);
+						}
+						InputSelect::spawn(InputSelect::SINGLE, 'experience_years', null, $options);
+						?>
+					</div>
+				<?php ModalInstructions::end() ?>
+
+				<div class="row">
+					<?php $label( _("Esperienza professionale") ) ?>
+					<?php $container_start() ?>
+						<p><?php ModalInstructions::open() ?></p>
+					<?php $container_end() ?>
+				</div>
+
+				<?php ModalInstructions::start( _("Valutare il livello di preparazione dell'esperto considerando il suo percorso accademico formativo") ) ?>
+
+						<!-- Titoli di studio -->
+						<div class="card-panel model-view-container">
+							<p>Titoli di studio</p>
+							<div class="row view-container"></div>
+							<p><?php ModelView::add() ?></p>
+
+							<?php ModelView::model() ?>
+								<?php $study = function ($level = null, $school = null) { ?>
+								<div class="col s12">
+									<div class="card-panel">
+										<div class="row">
+											<div class="col s10 input-field">
+												<?php InputSelect::spawn(InputSelect::SINGLE, 'studies[][level]', $level, [
+													'degree-1' => _("Laurea triennale"),
+													'degree-2' => _("Laurea magistrale / V.O / specialistica"),
+													'master-1' => _("Master di I livello"),
+													'master-2' => _("Master di II livello (o biennale)"),
+													'degree-3' => _("Dottorato / seconda laurea")
+												] ) ?>
+											</div>
+											<div class="col s2">
+												<?php ModelView::remove() ?>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12">
+												<?php InputText::spawn( _("Nome istituto, Luogo"), 'studies[][school]', $school) ?>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col s12">
-										<?php InputText::spawn( _("Nome istituto, Luogo"), 'studies[][school]', $school) ?>
-									</div>
+								<?php }; ?>
+
+								<?php $study() ?>
+							<?php ModelView::endmodel() ?>
+						</div>
+						<!-- /Titoli di studio section -->
+
+						<div class="divider"></div>
+
+						<!-- Corsi di formazione seguiti -->
+						<div class="card-panel">
+							<p><?php _e("Corsi di formazione seguiti") ?></p>
+							<p>
+								<?php InputSelect::spawn(InputSelect::SINGLE, 'course_followed', null, [
+									'0'   => _("Nessun corso"),
+									'1-2' => _("meno di tre corsi"),
+									'3-4' => _("meno di cinque corsi"),
+									'5-6' => _("meno di sei corsi"),
+									'6+'  => _("sei corsi, o più"),
+									'10+' => _("dieci corsi, o più")
+								] ) ?>
+							</p>
+						</div>
+						<!-- /Corsi di formazione seguiti -->
+
+						<!-- Pubblicazioni -->
+						<div class="card-panel model-view-container">
+							<p><?php _e("N. pubblicazioni su tematiche attinenti alle materie del percorso di aggiornamento professionale Io Conto") ?></p>
+							<div class="row">
+								<div class="col s12 m6 input-field">
+									<?php InputSelect::spawn(InputSelect::SINGLE, 'publications[n]', null, [
+										'0'   => _("Nessuna pubblicazione su articoli o riviste specializzate"),
+										'1-3' => _("da uno a tre pubblicazioni"),
+										'4-5' => _("meno di sei pubblicazioni"),
+										'6+'  => _("sei pubblicazioni o più"),
+									] ) ?>
+								</div>
+								<div class="col s12 m6 input-field">
+									<?php Textarea::spawn( _("Per ogni pubblicazione scrivi autore, anno di pubblicazione, editore, ISBN..."), 'publications[][desc]', null) ?>
 								</div>
 							</div>
 						</div>
-						<?php }; ?>
+						<!-- /Pubblicazioni -->
 
-						<?php $study() ?>
-					<?php ModelView::endmodel() ?>
+				<?php ModalInstructions::end() ?>
 
-					<p><?php Modal::open() ?></p>
+				<div class="row">
+					<?php $label( _("Conoscenze di base e specifiche") ) ?>
+					<?php $container_start() ?>
+						<p><?php ModalInstructions::open() ?></p>
+					<?php $container_end() ?>
+				</div>
+
+				<?php ModalInstructions::start( _("Valutare eventuali esperienze di docenza dell'esperto") ) ?>
+					<div class="card-panel">
+						<p><?php _e("Corsi di formazione organizzati/erogati") ?></p>
+						<div class="input-field">
+							<?php InputSelect::spawn(InputSelect::SINGLE, 'course_erogated', null, [
+								'0'   => _("Nessun corso"),
+								'1-2' => _("meno di tre corsi"),
+								'3-4' => _("meno di cinque corsi"),
+								'5-6' => _("meno di sei corsi"),
+								'6+'  => _("sei corsi, o più")
+							] ) ?>
+						</div>
+					</div>
+				<?php ModalInstructions::end() ?>
+
+				<div class="row">
+					<?php $label( _("Esperienza in qualità di docente") ) ?>
+					<?php $container_start() ?>
+						<p><?php ModalInstructions::open() ?></p>
+					<?php $container_end() ?>
 				</div>
 			</div>
-			<!-- / row titolo di studio -->
 
 			<div class="row">
-				<div class="input-field col s2">
-					<label><?php _e("Corsi di formazione seguiti") ?></label>
+				<div class="col s12 m6">
+					<p><?php _e(
+						"Compilando e salvando il questionario accetti il trattamento dei tuoi dati personali ai sensi della legge 196/03."
+					) ?></p>
 				</div>
-				<div class="input-field col s9 push-s1">
-					<?php InputSelect::spawn(InputSelect::SINGLE, 'course_followed', null, [
-						'0'   => _("Nessun corso"),
-						'1-2' => _("meno di tre corsi"),
-						'3-4' => _("meno di cinque corsi"),
-						'5-6' => _("meno di sei corsi"),
-						'6+'  => _("sei corsi, o più"),
-						'10+' => _("dieci corsi, o più")
-					] ) ?>
+				<div class="col s12 m6 input-field">
+					<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Salva tutto") ?><?php echo m_icon() ?></button>
 				</div>
 			</div>
-			<!-- / row corsi seguiti -->
-
-			<div class="row">
-				<div class="input-field col s2">
-					<label><?php _e("Pubblicazioni") ?></label>
-				</div>
-				<div class="input-field col s9 push-s1">
-					<p><?php Modal::open() ?></p>
-					<?php Modal::start() ?>
-						<div class="row view-container"></div>
-						<p><?php ModelView::add() ?></p>
-						<p><?php Modal::close() ?></p>
-
-						<?php ModelView::model() ?>
-							<?php $pubblicazione = function($title = null, $year = null, $author = null, $published = null, $isbn = null) { ?>
-							<div class="col s12 m6">
-								<div class="card-panel">
-									<div class="row">
-										<div class="col s11">
-											<?php InputText::spawn(_("Titolo della pubblicazione"), 'publication[][title]', $title) ?>
-										</div>
-										<div class="col s1"><?php ModelView::remove() ?></div>
-									</div>
-									<div class="row">
-										<div class="col s12 m6">
-											<?php InputText::spawn( _("Autore"), 'publication[][author]', $author) ?>
-										</div>
-										<div class="col s12 m6">
-											<?php InputYear::spawn( _("Anno di pubblicazione"), 'publication[][year]', $year) ?>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col s12 m6">
-											<?php InputText::spawn( _("Editore"), 'publication[][published]', $published) ?>
-										</div>
-										<div class="col s12 m6">
-											<?php InputISBN::spawn('publication[][isbn]', $isbn) ?>
-										</div>
-									</div>
-								</div>
-							</div>
-							<?php }; ?>
-							<?php $pubblicazione() ?>
-						<?php ModelView::endmodel() ?>
-					<?php Modal::end() ?>
-				</div>
-			</div>
-			<!-- / row pubblicazioni -->
-
-			<div class="row">
-				<div class="input-field col s2">
-					<label><?php _e("Corsi di formazione organizzati/erogati") ?></label>
-				</div>
-				<div class="input-field col s9 push-s1">
-					<?php InputSelect::spawn(InputSelect::SINGLE, 'course_erogated', null, [
-						'0'   => _("Nessun corso"),
-						'1-2' => _("meno di tre corsi"),
-						'3-4' => _("meno di cinque corsi"),
-						'5-6' => _("meno di sei corsi"),
-						'6+'  => _("sei corsi, o più")
-					] ) ?>
-				</div>
-			</div>
-			<!-- / row corsi seguiti -->
-
-			<p>
-				<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Salva tutto") ?><?php echo m_icon() ?></button>
-			</p>
-
-			<script>
-			function updateGUI () {
-				$('select').not('.model-container select').material_select();
-			}
-
-			$(document).ready( function () {
-				updateGUI();
-				$('.modal').modal();
-
-			} );
-			$_modelViewControllerAdded = updateGUI;
-			</script>
 		</form>
-	</section>
+	</div>
 	<!-- main -->
 
 	<!-- right -->
-	<aside class="col s3 l2">
-		<section>
-			<p><a href="#" class="btn waves-effect light-blue darken-1">Importare <?php echo m_icon('cloud_upload') ?></a></p>
-			<p class="flow-text">Campi Complementari</p>
-			<p><a class="btn-floating btn waves-effect waves-light red"><?php echo m_icon('photo_camera') ?></a> Foto</p>
-			<p><a href="#" class="btn waves-effect yellow black-text">Anteprima <?php echo m_icon('spellcheck') ?></a></p>
-			<p><a href="#" class="btn waves-effect red">Scarica <?php echo m_icon('file_download') ?></a></p>
-		</section>
+	<aside class="col hide-on-small-only m3 l2">
+		<p><a href="#" class="btn waves-effect light-blue darken-1">Importare <?php echo m_icon('cloud_upload') ?></a></p>
+		<p class="flow-text">Campi Complementari</p>
+		<p><a class="btn-floating btn waves-effect waves-light red"><?php echo m_icon('photo_camera') ?></a> Foto</p>
+		<p><a href="#" class="btn waves-effect yellow black-text">Anteprima <?php echo m_icon('spellcheck') ?></a></p>
+		<p><a href="#" class="btn waves-effect red">Scarica <?php echo m_icon('file_download') ?></a></p>
 	</aside>
 	<!-- right -->
 
@@ -230,23 +257,41 @@ Header::factory('curriculum-2017', [
 <!-- /row -->
 
 <script>
+/**
+ * Modal fix
+ */
+var updateGUI = function () {
+	$('select').not('.model-container select').material_select();
+};
+$_modelViewControllerAdded = updateGUI;
+
+$(document).ready( function () {
 	/**
 	 * Sidebar animation
 	 */
-	$(document).ready( function () {
-		var $aside = $('aside');
-		$aside.css('transition', 'padding-top 1s ease')
-		      .css('min-height', $(document).height() + 'px');
-		$aside.parent()
-			  .css('margin-bottom', 0);
-		var timeout;
-		$(window).scroll( function () {
+	var $aside = $('aside');
+	$aside.css('transition', 'padding-top 1s ease');
+	if( $(document).width() > 600 ) {
+			$aside.css('min-height', $(document).height() + 'px');
+			$aside.parent().css('margin-bottom', 0);
+	}
+
+	var timeout;
+	$(window).scroll( function () {
+		if( $(document).width() > 600 ) {
 			timeout && window.clearTimeout(timeout);
 			timeout = setTimeout( function () {
 				$aside.css('padding-top', window.pageYOffset + 'px')
 			}, 200 );
-		} );
+		} else {
+			$aside.css('padding-top', 'inherit')
+				.css('min-height', 0)
+		}
 	} );
+
+	updateGUI();
+	$('.modal').modal();
+} );
 </script>
 
 
