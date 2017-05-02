@@ -30,17 +30,19 @@ class ModalInstructions extends Modal {
 		self::$instructions = $instructions;
 		$i = parent::start(); ?>
 			<div class="row">
-				<div class="col s12 m9">
+				<div class="col s12">
+					<blockquote>
+						<?php _e("Scopo:") ?><br />
+						<?php echo self::$instructions ?>
+					</blockquote>
+				</div>
+				<div class="col s12">
 		<?php
 		return $i;
 	}
 
 	static function end() { ?>
 					<p><?php parent::close() ?></p>
-				</div>
-				<div class="col s12 m3">
-					<p><?php _e("Scopo:") ?></p>
-					<p><?php echo self::$instructions ?></p>
 				</div>
 			</div>
 		<?php parent::end();

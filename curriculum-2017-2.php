@@ -59,7 +59,7 @@ $modal_open = function () {
 		<p class="flow-text red-text white expand">Curriculum Vitae</p>
 		<footer class="hide-on-small-only">
 			<ul>
-				<li><a class="white-text" href="index.html">Home</a></li>
+				<li><a class="white-text" href="#">Home</a></li>
 				<li><a class="white-text" href="#">Il progetto</a></li>
 				<li><a class="white-text" href="#">Istruzioni</a></li>
 				<li><a class="white-text" href="#">Vai a Io Conto</a></li>
@@ -182,7 +182,7 @@ $modal_open = function () {
 						<div class="card-panel model-view-container">
 							<p><?php _e("N. pubblicazioni su tematiche attinenti alle materie del percorso di aggiornamento professionale Io Conto") ?></p>
 							<div class="row">
-								<div class="col s12 m6 input-field">
+								<div class="col s12 input-field">
 									<?php InputSelect::spawn(InputSelect::SINGLE, 'publications[n]', null, [
 										'0'   => _("Nessuna pubblicazione su articoli o riviste specializzate"),
 										'1-3' => _("da uno a tre pubblicazioni"),
@@ -190,7 +190,7 @@ $modal_open = function () {
 										'6+'  => _("sei pubblicazioni o più"),
 									] ) ?>
 								</div>
-								<div class="col s12 m6 input-field">
+								<div class="col s12 input-field">
 									<?php Textarea::spawn( _("Per ogni pubblicazione scrivi autore, anno di pubblicazione, editore, ISBN..."), 'publications[][desc]', null) ?>
 								</div>
 							</div>
