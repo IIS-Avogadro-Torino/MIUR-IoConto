@@ -2,3 +2,6 @@
 	/* width: 75% !important; */
 	max-height: 80% !important
 }
+.margin-right-negative {
+	margin-right:-20px;
+}

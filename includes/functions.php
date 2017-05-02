@@ -83,7 +83,7 @@ function print_menu_link($uid, $text = null, $classes = null, $other = null) {
 		return null;
 	}
 	echo HTML::a(
-		$menu->url,
+		append_dir(ROOT, $menu->url),
 		($text) ? $text : $menu->name,
 		( @$menu->extra['title'] ) ? $menu->extra['title'] : $menu->name,
 		$classes,
