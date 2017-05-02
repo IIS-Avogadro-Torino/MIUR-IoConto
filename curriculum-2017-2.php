@@ -81,10 +81,16 @@ $modal_open = function () {
 				<p><?php _e("Informazioni basilari da compilare prima di procedere con il questionario vero e proprio.") ?></p>
 
 				<?php Modal::start() ?>
-						<p><?php InputText::spawn( _("Nome"),            'name',    null ) ?></p>
-						<p><?php InputText::spawn( _("Cognome"),         'surname', null ) ?></p>
-						<p><?php InputText::spawn( _("Via e n° civico"), 'surname', null ) ?></p>
-						<p><?php Modal::close() ?>
+					<p><?php InputText::spawn( _("Nome"),            'name',    null ) ?></p>
+					<p><?php InputText::spawn( _("Cognome"),         'surname', null ) ?></p>
+					<p><?php InputText::spawn( _("Via e n° civico"), 'address', null ) ?></p>
+					<p><?php InputText::spawn( _("CAP"), 'cap', null ) ?></p>
+					<p><?php InputText::spawn( _("Città"), 'city', null ) ?></p>
+					<p><?php InputText::spawn( _("Cellulare"), 'phone', null ) ?></p>
+					<p><?php InputText::spawn( _("E-mail personale"), 'e-mail', null ) ?></p>
+					<p><?php InputText::spawn( _("Sito web / blog"), 'blog', null ) ?></p>
+					<p><?php InputText::spawn( _("Altri contatti"), 'others', null ) ?></p>
+					<p><?php Modal::close() ?>
 				<?php Modal::end() ?>
 
 				<div class="row">
@@ -104,10 +110,12 @@ $modal_open = function () {
 					<p><?php _e("Anni di anzianità o di servizio continuativi nel ruolo di DS o DSGA") ?></p>
 					<div class="input-field">
 						<?php
-						$options = [];
-						for($i = 5; $i<16; $i += 5) {
-							$options[$i] = sprintf( _("Ho %d (o meno) anni di esperienza"), $i);
-						}
+						$options = [
+							'0-5'   => _("Anzianità > 15 anni"),
+							'5-10'  => _("5 anni < anzianità <= 10 anni"),
+							'10-15' => _("10 anni < anzianità <= 15 anni"),
+							'15+'   => _("anzianità > 15")
+						];
 						InputSelect::spawn(InputSelect::SINGLE, 'experience_years', null, $options);
 						?>
 					</div>
@@ -126,6 +134,11 @@ $modal_open = function () {
 						<div class="card-panel model-view-container">
 							<p>Titoli di studio</p>
 							<div class="row view-container"></div>
+							<div class="row">
+								<div class="col s12 input-field">
+									<?php Textarea::spawn( _("Dettaglia il tuo percorso accademico"), 'studies_desc', null) ?>
+								</div>
+							</div>
 							<p><?php ModelView::add() ?></p>
 
 							<?php ModelView::model() ?>
@@ -164,17 +177,24 @@ $modal_open = function () {
 
 						<!-- Corsi di formazione seguiti -->
 						<div class="card-panel">
-							<p><?php _e("Corsi di formazione seguiti") ?></p>
-							<p>
+							<p><?php _e("N. corsi di formazione seguiti in qualità di discente su tematiche attinenti alle materie del percorso di aggiornamento professionale del progetto Io Conto") ?></p>
+							<div class="input-field">
 								<?php InputSelect::spawn(InputSelect::SINGLE, 'course_followed', null, [
 									'0'   => _("Nessun corso"),
-									'1-2' => _("meno di tre corsi"),
-									'3-4' => _("meno di cinque corsi"),
-									'5-6' => _("meno di sei corsi"),
-									'6+'  => _("sei corsi, o più"),
-									'10+' => _("dieci corsi, o più")
+									'1-2' => _("0 < corsi <= 2"),
+									'3-4' => _("2 < corsi <= 4"),
+									'5-6' => _("4 < corsi <= 6"),
+									'6+'  => _("corsi > 6"),
+									'11+' => _("corsi > 10")
 								] ) ?>
-							</p>
+							</div>
+							<div class="row">
+								<div class="col s12">
+									<div class="input-field">
+									<?php Textarea::spawn( _("Inserisci più informazioni possibili a proposito di ognuno dei corsi seguiti"), 'course_followed_desc', null) ?>
+									</div>
+								</div>
+							</div>
 						</div>
 						<!-- /Corsi di formazione seguiti -->
 
@@ -208,15 +228,38 @@ $modal_open = function () {
 
 				<?php ModalInstructions::start( _("Valutare eventuali esperienze di docenza dell'esperto") ) ?>
 					<div class="card-panel">
-						<p><?php _e("Corsi di formazione organizzati/erogati") ?></p>
+						<p><?php _e("N. corsi di formazione organizzati e/o erogati in qualità di docente su tematiche attinenti alle materie del percorso di aggiornamento professionale del progetto Io Conto") ?></p>
 						<div class="input-field">
 							<?php InputSelect::spawn(InputSelect::SINGLE, 'course_erogated', null, [
 								'0'   => _("Nessun corso"),
-								'1-2' => _("meno di tre corsi"),
-								'3-4' => _("meno di cinque corsi"),
-								'5-6' => _("meno di sei corsi"),
-								'6+'  => _("sei corsi, o più")
+								'1-2' => _("0 < corsi <= 2"),
+								'3-4' => _("2 < corsi <= 4"),
+								'5-6' => _("4 < corsi <= 6"),
+								'7+'  => _("corsi > 6")
 							] ) ?>
+						</div>
+						<div class="row">
+							<div class="col s12 input-field">
+								<?php Textarea::spawn( _("Inserisci più informazioni possibili a proposito di ognuno dei corsi erogati"), 'course_erogated_desc', null) ?>
+							</div>
+						</div>
+					</div>
+
+					<div class="card-panel">
+						<p><?php _e("N. corsi di formazione organizzati e/o erogati in qualità di docente su tematiche NON attinenti alle materie del percorso di aggiornamento professionale del progetto Io Conto") ?></p>
+						<div class="input-field">
+							<?php InputSelect::spawn(InputSelect::SINGLE, 'course_erogated', null, [
+								'0'   => _("Nessun corso"),
+								'1-2' => _("0 < corsi <= 2"),
+								'3-4' => _("2 < corsi <= 4"),
+								'5-6' => _("4 < corsi <= 6"),
+								'7+'  => _("corsi > 6")
+							] ) ?>
+						</div>
+						<div class="row">
+							<div class="col s12 input-field">
+								<?php Textarea::spawn( _("Dettaglia i corsi"), 'course_erogated_desc', null) ?>
+							</div>
 						</div>
 					</div>
 				<?php ModalInstructions::end() ?>
@@ -227,13 +270,108 @@ $modal_open = function () {
 						<p><?php ModalInstructions::open() ?></p>
 					<?php $container_end() ?>
 				</div>
+
+
+				<!-- Campi blu -->
+				<?php ModalInstructions::start( _("Valutare la collaborazione con le diverse direzioni regionali e con altre scuole del contesto regionale e nazionale") ) ?>
+					<div class="card-panel">
+						<p><?php _e("Incarichi ispettivi per conto USR / MIUR") ?></p>
+						<div class="input-field">
+							<?php InputSelect::spawn(InputSelect::SINGLE, 'urs_miur_tasks', null, [
+								'3' => _("Incarichi (più di 5)"),
+								'5' => _("Incarichi (fino a 3)")
+							] ) ?>
+						</div>
+						<div class="input-field">
+							<?php Textarea::spawn( _("Dettaglia gli incarichi"), 'urs_miur_tasks_desc', null) ?>
+						</div>
+					</div>
+
+					<div class="card-panel">
+						<p><?php _e("Appartenenza a gruppi di lavoro istituzionali regionali e/o centrali gruppo di lavoro, cabine di regia, comitati paritetici (indicare nome ed estremi)") ?></p>
+						<div class="input-field">
+							<?php InputSelect::spawn(InputSelect::SINGLE, 'general_tasks', null, [
+								'3' => _("Gruppi di lavoro, tavoli tecnici ecc. Amministrazione centrale e/o periferica (più di 3)"),
+								'5' => _("Incarichi reggenza (più di 5)"),
+							] ) ?>
+						</div>
+						<div class="input-field">
+							<?php Textarea::spawn( _("Dettaglia"), 'general_tasks_desc', null) ?>
+						</div>
+					</div>
+
+					<div class="card-panel">
+						<p><?php _e("Incarichi di reggenza presso Istituzioni scolastiche statali") ?></p>
+						<div class="input-field">
+							<?php InputSelect::spawn(InputSelect::SINGLE, 'government_tasks', null, [
+								'3' => _("Gruppi di lavoro, tavoli tecnici ecc. Amministrazione centrale e/o periferica (più di 3)"),
+								'5' => _("Incarichi reggenza (più di 3)"),
+							] ) ?>
+						</div>
+						<div class="input-field">
+							<?php Textarea::spawn( _("Dettaglia"), 'government_tasks_desc', null) ?>
+						</div>
+					</div>
+				<?php ModalInstructions::end() ?>
+
+				<div class="row">
+					<?php $label( _("Collaborazioni con UUSSRR e istituzioni scolastiche") ) ?>
+					<?php $container_start() ?>
+						<p><?php ModalInstructions::open() ?></p>
+					<?php $container_end() ?>
+				</div>
+				<!-- /Campi blu -->
+
+				<!-- Campi rosa -->
+				<?php ModalInstructions::start( _("Valutare la presenza di eventuali esperienze professionali aggiuntive che attestino una conoscenza dell'esperto nelle materie del percorso di aggiornamento professionale del progetto Io Conto") ) ?>
+					<div class="card-panel">
+						<p><?php _e("Ulteriori qualifiche professionali (ad esempio patente europea del computer)") ?></p>
+						<p>
+							<input name="computer" type="checkbox" id="computer" />
+							<label for="computer"><?php _e("Patente europea del computer") ?></label>
+						</p>
+						<p>
+							<input name="languages" type="checkbox" id="languages" />
+							<label for="languages"><?php _e("Corsi di lingua") ?></label>
+						</p>
+					</div>
+				<?php ModalInstructions::end() ?>
+
+				<div class="row">
+					<?php $label( _("Ulteriori esperienza") ) ?>
+					<?php $container_start() ?>
+						<p><?php ModalInstructions::open() ?></p>
+					<?php $container_end() ?>
+				</div>
+				<!-- /Campi rosa -->
+
+				<!-- Campi rosa 2 -->
+				<?php ModalInstructions::start( _("Aver partecipato a comitati e/o gruppi di lavoro o aver realizzato progetti o iniziative incentrati sulle materie del progetto garantisce una maggiore conoscenza delle stesse") ) ?>
+					<div class="card-panel">
+						<p><?php _e("Realizzazione di progetti o iniziative di innovazione organizzativa.") ?></p>
+						<p>
+							<input name="collaborated" type="radio" id="collaborated_yes" />
+							<label for="collaborated_yes"><?php _e("Sì") ?></label>
+						</p>
+						<p>
+							<input name="collaborated" type="radio" id="collaborated_no" />
+							<label for="collaborated_no"><?php _e("No") ?></label>
+						</p>
+					</div>
+				<?php ModalInstructions::end() ?>
+
+				<div class="row">
+					<?php $label( _("Ulteriori esperienza") ) ?>
+					<?php $container_start() ?>
+						<p><?php ModalInstructions::open() ?></p>
+					<?php $container_end() ?>
+				</div>
+				<!-- /Campi rosa 2 -->
 			</div>
 
 			<div class="row">
 				<div class="col s12 m6">
-					<p><?php _e(
-						"Compilando e salvando il questionario accetti il trattamento dei tuoi dati personali ai sensi della legge 196/03."
-					) ?></p>
+					<p><?php _e("Compilando e salvando il questionario accetti il trattamento dei tuoi dati personali ai sensi della legge 196/03.") ?></p>
 				</div>
 				<div class="col s12 m6 input-field">
 					<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Salva tutto") ?><?php echo m_icon() ?></button>
