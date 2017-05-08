@@ -16,54 +16,54 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Footer {
-	static function factory($args = []) { ?>
+	static function spawn() { ?>
 
-<?php if( Header::$args['container'] ): ?>
+	</div>
+	<!-- /main -->
+
+	<?php load_module('footer') ?>
+
+	<?php Header::$args['toolbar-upload']
+		and UploadToolbar::spawn() ?>
+
+	<?php Header::$args['toolbar-login']
+		and LoginToolbar::spawn() ?>
+
 </div>
-<!-- End header container -->
-<?php endif ?>
+<!-- /row -->
 
-<?php if( @ $args['footer'] !== false ): ?>
+<script>
+$(document).ready( function () {
+	/**
+	 * Sidebar animation
+	 */
+	var $aside = $('aside');
+	$aside.css('transition', 'padding-top 1s ease');
+	if( $(document).width() > 600 ) {
+			$aside.css('min-height', $(document).height() + 'px');
+			$aside.parent().css('margin-bottom', 0);
+	}
 
-<footer class="page-footer">
-	<div class="container white-text">
-		<?php if( ! @$args['print-mode'] ): ?>
+	var timeout;
+	$(window).scroll( function () {
+		if( $(document).width() > 600 ) {
+			timeout && window.clearTimeout(timeout);
+			timeout = setTimeout( function () {
+				$aside.css('padding-top', window.pageYOffset + 'px')
+			}, 200 );
+		} else {
+			$aside.css('padding-top', 'inherit')
+				.css('min-height', 0)
+		}
+	} );
+} );
+</script>
 
-		<p><?php _esc_html(SITE_DESCRIPTION) ?></p>
-		<p><?php printf(
-			_("A cura di %s."),
-			HTML::a(URL . '/about.php',
-				'ITIS Avogadro di Torino',
-				_('Ulteriori informazioni sul team e sulle tecnologie'),
-				'orange-text text-lighten-4'
-			)
-		) ?></p>
-		<p>
-			<small><?php printf(
-				_("Pagina generata in %s secondi, con %s query al database."),
-				get_page_load(),
-				get_num_queries()
-			) ?><br /> <?php _e("Questo sito non utilizza cookie di terze parti perchè non tracciamo gli utenti. I cookie tecnici vengono richiesti solo dopo l'accesso, per mantenere la sessione.") ?></small>
-		</p>
-		<?php endif ?>
-	</div>
-	<div class="footer-copyright">
-		<?php if( @$args['print-mode'] ): ?>
+<!-- <?php printf(
+	_("Pagina generata in %s secondi, con %s query al database."),
+	get_page_load(),
+	get_num_queries()
+     ) ?> -->
 
-		<p>
-			&copy; <?php echo date('Y') ?> <?php _esc_html(SITE_NAME) ?> - Area riservata <em><?php echo URL ?></em>
-		</p>
-		<?php else: ?>
-
-		<div class="container">
-			<p>&copy; <?php echo date('Y') ?> <?php _esc_html(SITE_NAME) ?> - <a class="white-text" href="<?php _e('http://creativecommons.org/licenses/by-sa/4.0/deed.it') ?>" title="<?php _e('Creative Commons 4.0 Internazionale') ?>" target="_blank"><?php _e('Alcuni diritti riservati') ?></a></p>
-		</div>
-		<?php endif ?>
-
-	</div>
-</footer>
-<?php endif ?>
-
-<?php load_module('footer') ?>
 </body>
 </html><?php } }

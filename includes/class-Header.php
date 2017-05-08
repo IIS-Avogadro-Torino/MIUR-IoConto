@@ -18,7 +18,14 @@
 class Header {
 	static $args = [];
 
-	static function factory($uid, $args = []) {
+	static function spawn($title, $args = []) {
+
+		$args = merge_args_defaults($args, [
+			'user-navbar'    => false,
+			'container'      => false,
+			'header'         => false,
+			'toolbar-upload' => false
+		] );
 
 		self::$args = $args;
 		$args = & self::$args;

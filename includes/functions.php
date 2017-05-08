@@ -45,14 +45,6 @@ function collection_icon($s, $icon = 'attach_file') {
 	) );
 }
 
-function get_codice_corso($uid, $progressivo) {
-	return sprintf(
-		_("%s%02d"),
-		$uid,
-		$progressivo
-	);
-}
-
 function print_menu($uid = null, $level = 0, $args = array() ) {
 	$args = merge_args_defaults($args, [
 		'max-level' => 99
@@ -91,15 +83,6 @@ function print_menu_link($uid, $text = null, $classes = null, $other = null) {
 	);
 }
 
-if( ! function_exists('_isSelected') ) {
-	function _isSelected($value1, $value2, $force = false) {
-       		if($force === true || $value1 == $value2) {
-       	        	return HTML::property('selected', 'selected');
-		}
-		return '';
-	}
-}
-
 function _print_link($url) {
 	echo HTML::a(
 		$url,
@@ -128,12 +111,4 @@ function get_scuola($scuola_ID = null) {
 function die_asking_permissions() {
 	require_permission('indefined-permission');
 	exit; //
-}
-
-function euro($v) {
-	return money_format('%.2n', $v);
-}
-
-function _euro($v) {
-	echo euro($v);
 }
