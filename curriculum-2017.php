@@ -21,252 +21,313 @@ ModelView::enqueue();
 
 // $scuola = get_scuola();
 
-Header::factory('curriculum-2017', [
-	'user-navbar' => false,
-	'container'   => false,
-	'header'      => false
+Header::spawn('curriculum-2017', [
+	'toolbar-upload' => true
 ] );
+
+$heading = function ($s) {
+	printf("<p class='flow-text'>%s</p>\n", $s);
+};
+$label = function ($s) {
+	printf("<div class='input-field col s12 m2'><p>%s</p></div>\n", $s);
+};
+$container_start = function () {
+	echo "<div class='input-field col s12 m9 push-m1 model-view-container'>\n";
+};
+$container_end = function () {
+	echo "</div><!-- / input-field col s12 m9 push-m1 -->\n";
+};
+$modal_open = function () {
+	echo '<p>';
+	Modal::open();
+	echo '</p>';
+};
+
 ?>
+	<form method="post">
 
-<div class="row">
-	<!-- left -->
-	<aside class="col s3 l2 light-blue darken-1">
-		<div class="section">
-			<div id="logo"><img class="responsive-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto-logo-landscape.png"></div>
-				<div class="">
-					<img class="responsive-img ioconto-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto.png" />
-				</div>
-				<p class="flow-text red-text white expand">Curriculum Vitae</p>
-				<footer class="menu-laterale">
-				<ul class="menu">
-					<li><a class="white-text" href="index.html">Home</a></li>
-					<li><a class="white-text" href="#">Il progetto</a></li>
-					<li><a class="white-text" href="#">Istruzioni</a></li>
-					<li><a class="white-text" href="#">Vai a Io Conto</a></li>
-					<li><a class="white-text" href="#">Esempi</a></li>
-					<li><a class="white-text" href="#">Area riservata</a></li>
-					<li><a class="white-text" href="#">News</a></li>
-				</ul>
-			</footer>
-		</div>
-	</aside>
-	<!-- /left -->
+		<!-- Informazioni personali -->
+		<div class="card-panel">
+			<?php $heading( _("Informazioni personali") ) ?>
+			<p><?php _e("Informazioni basilari da compilare prima di procedere con il questionario vero e proprio.") ?></p>
 
-	<!-- main -->
-	<section class="col s6 l8">
-		<form method="post">
+			<?php Modal::start() ?>
+				<p><?php InputText::spawn( _("Nome"),            'name',    null ) ?></p>
+				<p><?php InputText::spawn( _("Cognome"),         'surname', null ) ?></p>
+				<p><?php InputText::spawn( _("Via e n° civico"), 'address', null ) ?></p>
+				<p><?php InputText::spawn( _("CAP"), 'cap', null ) ?></p>
+				<p><?php InputText::spawn( _("Città"), 'city', null ) ?></p>
+				<p><?php InputText::spawn( _("Cellulare"), 'phone', null ) ?></p>
+				<p><?php InputText::spawn( _("E-mail personale"), 'e-mail', null ) ?></p>
+				<p><?php InputText::spawn( _("Sito web / blog"), 'blog', null ) ?></p>
+				<p><?php InputText::spawn( _("Altri contatti"), 'others', null ) ?></p>
+				<p><?php Modal::close() ?>
+			<?php Modal::end() ?>
+
 			<div class="row">
-				<div class="input-field col s2">
-					<label for="informazioni_personali">Informazioni personali</label>
-				</div>
-				<div class="input-field col s9 push-s1">
-					<input placeholder="Informazioni personali" id="informazioni-personali" type="text" class="validate">
-					<p class="valign-wrapper compila"><?php Modal::open() ?></p>
-				</div>
+				<?php $label( _("Informazioni personali") ) ?>
+				<?php $container_start() ?>
+					<?php $modal_open() ?>
+				<?php $container_end() ?>
 			</div>
-			<div class="row">
-				<div class="input-field col s2">
-					<label for="experience_years"><?php _e("Esperienza Professionale") ?></label>
-				</div>
-				<div class="input-field col s9 push-s1">
+		</div>
+		<!-- /Informazioni personali -->
+
+		<!-- Conoscenze di base e specifiche -->
+		<div class="card-panel">
+			<?php $heading( _("Compilazione curriculum") ) ?>
+
+			<?php ModalInstructions::start( _("Valutare l'esperienza professionale dell'esperto considerando il ruolo e l'anzianità di servizio") ) ?>
+				<p><?php _e("Anni di anzianità o di servizio continuativi nel ruolo di DS o DSGA") ?></p>
+				<div class="input-field">
 					<?php
-					$options = [];
-					for($i = 5; $i<16; $i += 5) {
-						$options[$i] = sprintf( _("Ho %d (o meno) anni di esperienza"), $i);
-					}
+					$options = [
+						'0-5'   => _("Anzianità > 15 anni"),
+						'5-10'  => _("5 anni < anzianità <= 10 anni"),
+						'10-15' => _("10 anni < anzianità <= 15 anni"),
+						'15+'   => _("anzianità > 15")
+					];
 					InputSelect::spawn(InputSelect::SINGLE, 'experience_years', null, $options);
 					?>
 				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s2"><label for="first_name">Conoscenze di base</label></div>
-				<div class="input-field col s9 push-s1"><input placeholder="Conoscenze di base" id="first_name" type="text" class="validate">
-				 <p class="valign-wrapper compila"><?php Modal::open() ?></div>
-			</div>
-			<div class="row">
-				<div class="input-field col s2"><label for="first_name">Conoscenze specifiche</label></div>
-				<div class="input-field col s9 push-s1"><input placeholder="Conoscenze specifiche" id="first_name" type="text" class="validate">
-				 <p class="valign-wrapper compila"><?php Modal::open() ?></div>
-			</div>
-			<div class="row">
-				<div class="input-field col s2"><label for="first_name">Esperienza in qualità di docente</label></div>
-				<div class="input-field col s9 push-s1"><input placeholder="Esperienza in qualità di docente" id="first_name" type="text" class="validate">
-				<p class="valign-wrapper compila"><?php Modal::open() ?></p>
-			</div>
-			<div class="row">
-				<div class="input-field col s2"><label for="first_name">Collaborazioni con USR e Istituzioni Scolastiche</label></div>
-				<div class="input-field col s9 push-s1"><input placeholder="Collaborazioni con USR e Istituzioni Scolastiche" id="first_name" type="text" class="validate">
-				<p class="valign-wrapper compila"><?php Modal::open() ?></p>
-			</div>
+			<?php ModalInstructions::end() ?>
 
 			<div class="row">
-				<div class="input-field col s2"><label><?php _e("Titoli di studio") ?></label></div>
-				<div class="input-field col s9 push-s1 model-view-container">
-					<?php Modal::start() ?>
-						<div class="row view-container"></div>
-						<p><?php ModelView::add() ?></p>
-						<p><?php Modal::close() ?></p>
-					<?php Modal::end() ?>
+				<?php $label( _("Esperienza professionale") ) ?>
+				<?php $container_start() ?>
+					<p><?php ModalInstructions::open() ?></p>
+				<?php $container_end() ?>
+			</div>
 
-					<?php ModelView::model() ?>
-						<?php $study = function ($level = null, $school = null) { ?>
-						<div class="col s12 m6">
-							<div class="card-panel">
-								<div class="row">
-									<div class="col s11 input-field">
-										<?php InputSelect::spawn(InputSelect::SINGLE, 'studies[][level]', $level, [
-											'degree-1' => _("Laurea triennale"),
-											'degree-2' => _("Laurea magistrale / V.O / specialistica"),
-											'master-1' => _("Master di I livello"),
-											'master-2' => _("Master di II livello (o biennale)"),
-											'degree-3' => _("Dottorato / seconda laurea")
-										] ) ?>
-									</div>
-									<div class="col s1">
-										<?php ModelView::remove() ?>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col s12">
-										<?php InputText::spawn( _("Nome istituto, Luogo"), 'studies[][school]', $school) ?>
-									</div>
+			<?php ModalInstructions::start( _("Valutare il livello di preparazione dell'esperto considerando il suo percorso accademico formativo") ) ?>
+
+					<!-- Titoli di studio -->
+					<div class="card-panel">
+						<p><?php _e("Titoli di studio") ?></p>
+						<div class="row">
+							<div class="col s12 input-field">
+								<?php InputSelect::spawn(InputSelect::SINGLE, 'study', null, [
+									'degree-1' => _("Laurea triennale"),
+									'degree-2' => _("Laurea magistrale / V.O / specialistica"),
+									'master-1' => _("Master di I livello"),
+									'master-2' => _("Master di II livello (o biennale)"),
+									'degree-3' => _("Dottorato / seconda laurea")
+								] ) ?>
+							</div>
+							<div class="col s12 input-field">
+								<?php Textarea::spawn( _("Dettaglia il tuo percorso accademico"), 'studies_desc', null) ?>
+							</div>
+						</div>
+					</div>
+					<!-- /Titoli di studio section -->
+
+					<!-- Corsi di formazione seguiti -->
+					<div class="card-panel">
+						<p><?php _e("N. corsi di formazione seguiti in qualità di discente su tematiche attinenti alle materie amministrativo contabili (Bilancio, obblighi normativi, acquisizione di beni e servizi)") ?></p>
+						<div class="input-field">
+							<?php InputSelect::spawn(InputSelect::SINGLE, 'course_followed', null, [
+								'0'   => _("Nessun corso"),
+								'1-2' => _("0 < corsi <= 2"),
+								'3-4' => _("2 < corsi <= 4"),
+								'5-6' => _("4 < corsi <= 6"),
+								'6+'  => _("corsi > 6"),
+								'11+' => _("corsi > 10")
+							] ) ?>
+						</div>
+						<div class="row">
+							<div class="col s12">
+								<div class="input-field">
+								<?php Textarea::spawn( _("Inserisci più informazioni possibili a proposito di ognuno dei corsi seguiti"), 'course_followed_desc', null) ?>
 								</div>
 							</div>
 						</div>
-						<?php }; ?>
+					</div>
+					<!-- /Corsi di formazione seguiti -->
 
-						<?php $study() ?>
-					<?php ModelView::endmodel() ?>
-
-					<p><?php Modal::open() ?></p>
-				</div>
-			</div>
-			<!-- / row titolo di studio -->
-
-			<div class="row">
-				<div class="input-field col s2">
-					<label><?php _e("Corsi seguiti") ?></label>
-				</div>
-				<div class="input-field col s9 push-s1">
-					<?php InputSelect::spawn(InputSelect::SINGLE, 'studies', null, [
-						'0'   => _("Nessun corso"),
-						'1-2' => _("meno di tre corsi"),
-						'3-4' => _("meno di cinque corsi"),
-						'5-6' => _("meno di sei corsi"),
-						'6+'  => _("sei corsi, o più"),
-						'10+' => _("dieci corsi, o più")
-					] ) ?>
-				</div>
-			</div>
-			<!-- / row corsi seguiti -->
-
-			<div class="row">
-				<div class="input-field col s2">
-					<label><?php _e("Pubblicazioni") ?></label>
-				</div>
-				<div class="input-field col s9 push-s1">
-					<p><?php Modal::open() ?></p>
-					<?php Modal::start() ?>
-						<div class="row view-container"></div>
-						<p><?php ModelView::add() ?></p>
-						<p><?php Modal::close() ?></p>
-
-						<?php ModelView::model() ?>
-							<?php $pubblicazione = function($title = null, $year = null, $author = null, $published = null, $isbn = null) { ?>
-							<div class="col s12 m6">
-								<div class="card-panel">
-									<div class="row">
-										<div class="col s11">
-											<?php InputText::spawn(_("Titolo della pubblicazione"), 'publication[][title]', $title) ?>
-										</div>
-										<div class="col s1">
-											<?php ModelView::remove() ?>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col s12 m6">
-											<?php InputText::spawn( _("Autore"), 'publication[][author]', $author) ?>
-										</div>
-										<div class="col s12 m6">
-											<?php InputYear::spawn( _("Anno di pubblicazione"), 'publication[][year]', $year) ?>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col s12 m6">
-											<?php InputText::spawn( _("Editore"), 'publication[][published]', $published) ?>
-										</div>
-										<div class="col s12 m6">
-											<?php InputISBN::spawn('publication[][isbn]', $isbn) ?>
-										</div>
-									</div>
-								</div>
+					<!-- Pubblicazioni -->
+					<div class="card-panel model-view-container">
+						<p><?php _e("N. pubblicazioni su tematiche attinenti alle materie del percorso di aggiornamento professionale Io Conto") ?></p>
+						<div class="row">
+							<div class="col s12 input-field">
+								<?php InputSelect::spawn(InputSelect::SINGLE, 'publications[n]', null, [
+									'0'   => _("Nessuna pubblicazione su articoli o riviste specializzate"),
+									'1-3' => _("da uno a tre pubblicazioni"),
+									'4-5' => _("meno di sei pubblicazioni"),
+									'6+'  => _("sei pubblicazioni o più"),
+								] ) ?>
 							</div>
-							<?php }; ?>
-							<?php $pubblicazione() ?>
-						<?php ModelView::endmodel() ?>
-					<?php Modal::end() ?>
-				</div>
+							<div class="col s12 input-field">
+								<?php Textarea::spawn( _("Per ogni pubblicazione scrivi autore, anno di pubblicazione, editore, ISBN..."), 'publications[][desc]', null) ?>
+							</div>
+						</div>
+					</div>
+					<!-- /Pubblicazioni -->
+
+			<?php ModalInstructions::end() ?>
+
+			<div class="row">
+				<?php $label( _("Conoscenze di base e specifiche") ) ?>
+				<?php $container_start() ?>
+					<p><?php ModalInstructions::open() ?></p>
+				<?php $container_end() ?>
 			</div>
-			<!-- / row pubblicazioni -->
 
-			<p>
+			<?php ModalInstructions::start( _("Valutare eventuali esperienze di docenza dell'esperto") ) ?>
+				<div class="card-panel">
+					<p><?php _e("N. corsi di formazione organizzati e/o erogati in qualità di docente su tematiche attinenti alle materie amministrativo contabili (Bilancio, obblighi normativi, acquisizione di beni e servizi)") ?></p>
+					<div class="input-field">
+						<?php InputSelect::spawn(InputSelect::SINGLE, 'course_erogated', null, [
+							'0'   => _("Nessun corso"),
+							'1-2' => _("0 < corsi <= 2"),
+							'3-4' => _("2 < corsi <= 4"),
+							'5-6' => _("4 < corsi <= 6"),
+							'7+'  => _("corsi > 6")
+						] ) ?>
+					</div>
+					<div class="row">
+						<div class="col s12 input-field">
+							<?php Textarea::spawn( _("Inserisci più informazioni possibili a proposito di ognuno dei corsi erogati"), 'course_erogated_desc', null) ?>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-panel">
+					<p><?php _e("N. corsi di formazione organizzati e/o erogati in qualità di docente su tematiche NON attinenti alle materie attinenti alle materie amministrativo contabili (Bilancio, obblighi normativi, acquisizione di beni e servizi)") ?></p>
+					<div class="input-field">
+						<?php InputSelect::spawn(InputSelect::SINGLE, 'course_erogated', null, [
+							'0'   => _("Nessun corso"),
+							'1-2' => _("0 < corsi <= 2"),
+							'3-4' => _("2 < corsi <= 4"),
+							'5-6' => _("4 < corsi <= 6"),
+							'7+'  => _("corsi > 6")
+						] ) ?>
+					</div>
+					<div class="row">
+						<div class="col s12 input-field">
+							<?php Textarea::spawn( _("Dettaglia i corsi"), 'course_erogated_desc', null) ?>
+						</div>
+					</div>
+				</div>
+			<?php ModalInstructions::end() ?>
+
+			<div class="row">
+				<?php $label( _("Esperienza in qualità di docente") ) ?>
+				<?php $container_start() ?>
+					<p><?php ModalInstructions::open() ?></p>
+				<?php $container_end() ?>
+			</div>
+
+
+			<!-- Campi blu -->
+			<?php ModalInstructions::start( _("Valutare la collaborazione con le diverse direzioni regionali e con altre scuole del contesto regionale e nazionale") ) ?>
+				<div class="card-panel">
+					<p><?php _e("Incarichi ispettivi per conto USR / MIUR") ?></p>
+					<div class="input-field">
+						<?php InputSelect::spawn(InputSelect::SINGLE, 'urs_miur_tasks', null, [
+							'3' => _("Incarichi (più di 5)"),
+							'5' => _("Incarichi (fino a 3)")
+						] ) ?>
+					</div>
+					<div class="input-field">
+						<?php Textarea::spawn( _("Dettaglia gli incarichi"), 'urs_miur_tasks_desc', null) ?>
+					</div>
+				</div>
+
+				<div class="card-panel">
+					<p><?php _e("Appartenenza a gruppi di lavoro istituzionali regionali e/o centrali gruppo di lavoro, cabine di regia, comitati paritetici (indicare nome ed estremi)") ?></p>
+					<div class="input-field">
+						<?php InputSelect::spawn(InputSelect::SINGLE, 'general_tasks', null, [
+							'3' => _("Gruppi di lavoro, tavoli tecnici ecc. Amministrazione centrale e/o periferica (più di 3)"),
+							'5' => _("Incarichi reggenza (più di 5)"),
+						] ) ?>
+					</div>
+					<div class="input-field">
+						<?php Textarea::spawn( _("Dettaglia"), 'general_tasks_desc', null) ?>
+					</div>
+				</div>
+
+				<div class="card-panel">
+					<p><?php _e("Incarichi di reggenza presso Istituzioni scolastiche statali") ?></p>
+					<div class="input-field">
+						<?php InputSelect::spawn(InputSelect::SINGLE, 'government_tasks', null, [
+							'3' => _("Gruppi di lavoro, tavoli tecnici ecc. Amministrazione centrale e/o periferica (più di 3)"),
+							'5' => _("Incarichi reggenza (più di 3)"),
+						] ) ?>
+					</div>
+					<div class="input-field">
+						<?php Textarea::spawn( _("Dettaglia"), 'government_tasks_desc', null) ?>
+					</div>
+				</div>
+			<?php ModalInstructions::end() ?>
+
+			<div class="row">
+				<?php $label( _("Collaborazioni con UUSSRR e istituzioni scolastiche") ) ?>
+				<?php $container_start() ?>
+					<p><?php ModalInstructions::open() ?></p>
+				<?php $container_end() ?>
+			</div>
+			<!-- /Campi blu -->
+
+			<!-- Campi rosa -->
+			<?php ModalInstructions::start( _("Valutare la presenza di eventuali esperienze professionali aggiuntive che attestino una conoscenza dell'esperto nelle materie del percorso di aggiornamento professionale del progetto Io Conto") ) ?>
+				<div class="card-panel">
+					<p><?php _e("Ulteriori qualifiche professionali (ad esempio patente europea del computer)") ?></p>
+					<p>
+						<input name="computer" type="checkbox" id="computer" />
+						<label for="computer"><?php _e("Hai la patente europea del computer?") ?></label>
+					</p>
+					<p>
+						<input name="languages" type="checkbox" id="languages" />
+						<label for="languages"><?php _e("Hai la conoscenza di una lingua straniera?") ?></label>
+					</p>
+				</div>
+				<div class="card-panel">
+					<p><?php _e("hai partecipato alla prima edizione del progetto Io conto in qualità di esperto?") ?></p>
+					<p>
+						<input name="collaborated" type="radio" id="collaborated_yes" />
+						<label for="collaborated_yes"><?php _e("Sì") ?></label>
+					</p>
+					<p>
+						<input name="collaborated" type="radio" id="collaborated_no" />
+						<label for="collaborated_no"><?php _e("No") ?></label>
+					</p>
+				</div>
+			<?php ModalInstructions::end() ?>
+
+			<div class="row">
+				<?php $label( _("Ulteriori esperienze") ) ?>
+				<?php $container_start() ?>
+					<p><?php ModalInstructions::open() ?></p>
+				<?php $container_end() ?>
+			</div>
+			<!-- /Campi rosa 2 -->
+		</div>
+
+		<div class="row">
+			<div class="col s12 m6">
+				<p><?php _e("Compilando e salvando il questionario accetti il trattamento dei tuoi dati personali ai sensi della legge 196/03.") ?></p>
+			</div>
+			<div class="col s12 m6 input-field">
 				<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Salva tutto") ?><?php echo m_icon() ?></button>
-			</p>
-
-			<script>
-			function updateGUI () {
-				$('select').not('.model-container select').material_select();
-			}
-
-			$(document).ready( function () {
-				updateGUI();
-				$('.modal').modal();
-
-			} );
-			$_modelViewControllerAdded = updateGUI;
-			</script>
-		</form>
-	</section>
-	<!-- main -->
-
-	<!-- right -->
-	<aside class="col s3 l2">
-		<section>
-			<p><a href="#" class="btn waves-effect light-blue darken-1">Importare <?php echo m_icon('cloud_upload') ?></a></p>
-			<p class="flow-text">Campi Complementari</p>
-			<p><a class="btn-floating btn waves-effect waves-light red"><?php echo m_icon('photo_camera') ?></a> Foto</p>
-			<p><a href="#" class="btn waves-effect yellow black-text">Anteprima <?php echo m_icon('spellcheck') ?></a></p>
-			<p><a href="#" class="btn waves-effect red">Scarica <?php echo m_icon('file_download') ?></a></p>
-		</section>
-	</aside>
-	<!-- right -->
-
-</div>
-<!-- /row -->
+			</div>
+		</div>
+	</form>
 
 <script>
-	/**
-	 * Sidebar animation
-	 */
-	$(document).ready( function () {
-		var $aside = $('aside');
-		$aside.css('transition', 'padding-top 1s ease')
-		      .css('min-height', $(document).height() + 'px');
-		$aside.parent()
-			  .css('margin-bottom', 0);
-		var timeout;
-		$(window).scroll( function () {
-			timeout && window.clearTimeout(timeout);
-			timeout = setTimeout( function () {
-				$aside.css('padding-top', window.pageYOffset + 'px')
-			}, 200 );
-		} );
-	} );
+/**
+ * Modal fix
+ */
+var updateGUI = function () {
+	$('select').not('.model-container select').material_select();
+};
+$_modelViewControllerAdded = updateGUI;
+
+$(document).ready( function () {
+	updateGUI();
+	$('.modal').modal();
+} );
 </script>
 
 
 <?php
-
-Footer::factory([
-	'footer' => false
-]);
+Footer::spawn();
