@@ -35,6 +35,9 @@ defined('JQUERY')
 defined('JQUERY_UID')
 	or define('JQUERY_UI', '/javascript/jquery-ui/jquery-ui.min.js');
 
+defined('SENDGRID_PATH')
+	or define('SENDGRID_PATH', ABSPATH . __ . 'sendgrid-php' . __ . 'sendgrid-php.php');
+
 define('UPLOADS',   CONTENT . '/uploads');
 
 define('SITE_NAME',        _("Io Conto") );
@@ -64,13 +67,8 @@ spl_autoload_register( function($c) {
 define('SESSIONUSER_CLASS', 'User');
 
 // Permissions
-register_permissions('VISITOR', 'VIEW_SITE');
-inherit_permissions( 'MANAGE_SINGLE_POLE_SCHOOL', 'VISITOR');
-register_permissions('MANAGE_SINGLE_POLE_SCHOOL', 'VIEW_SCHOOL_RELATED_RESOURCES');
-register_permissions('MANAGE_SINGLE_POLE_SCHOOL', 'EDIT_HIS_POLE_SCHOOL');
-inherit_permissions( 'MANAGE_POLE_SCHOOLS',       'VISITOR');
-register_permissions('MANAGE_POLE_SCHOOLS',       'VIEW_SCHOOL_RELATED_RESOURCES');
-register_permissions('MANAGE_POLE_SCHOOLS',       'EDIT_ALL_POLE_SCHOOLS');
+register_permissions('user', 'do-my-curriculum');
+inherit_permissions('supervisor', 'user');
 
 // Javascript and CSS resources
 register_js('jquery',                   JQUERY);
@@ -96,7 +94,8 @@ add_menu_entries( [
 	new MenuEntry('curriculum-2017',                          'curriculum-2017.php',                           _("Il tuo Curriculum")                  ),
 	new MenuEntry('curriculum-home',                          'curriculum-home.php',                           _("Home")                               ),
 	new MenuEntry('news',                                     'http://www.ioconto.itisavogadro.org/index.php/news', _("News")                          ),
-	new MenuEntry('password-recovery',                        'password-recovery.php',                         _("Recupero password"),                 'hidden')
+	new MenuEntry('password-recovery',                        'password-recovery.php',                         _("Recupero password"),                 'hidden'),
+	new MenuEntry('password-change',                          'password-change.php',                           _("Cambio password"),                   'hidden')
 ] );
 
 // Global objects dynamically instantiated

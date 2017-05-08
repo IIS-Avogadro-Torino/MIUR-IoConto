@@ -44,38 +44,47 @@ Header::spawn('login');
 		ADMIN_EMAIL
 	) ) ?>
 
-	<p><?php _e("Area riservata scuole polo, esegui l'accesso:") ?></p>
-	<div class="row">
-		<form class="col s12" method="post" action="<?php echo URL  . '/login.php' ?>">
+	<div class="card-panel">
+		<p><?php _e("Esegui l'accesso:") ?></p>
+		<div class="row">
+			<form class="col s12" method="post" action="<?php echo URL  . '/login.php' ?>">
+				<?php
+				// Start hidden redirect link
+				$redirect = null;
+				if( !empty($_POST['redirect']) ) {
+					$redirect = $_POST['redirect'];
+				} elseif( !empty($_GET['redirect']) ) {
+					$redirect = $_GET['redirect'];
+				}
+				?>
 
-			<?php
-			// Start hidden redirect link
-			$redirect = null;
-			if( !empty($_POST['redirect']) ) {
-				$redirect = $_POST['redirect'];
-			} elseif( !empty($_GET['redirect']) ) {
-				$redirect = $_GET['redirect'];
-			}
-			?>
+				<?php if( ! filter_var($redirect, FILTER_VALIDATE_URL) === false ): ?>
+					<input type="hidden" name="redirect" value="<?php echo $redirect ?>" />
+				<?php endif ?>
 
-			<?php if( ! filter_var($redirect, FILTER_VALIDATE_URL) === false ): ?>
-				<input type="hidden" name="redirect" value="<?php echo $redirect ?>" />
-			<?php endif ?>
-
-			<div class="row">
-				<div class="input-field col s12 m6">
-					<i class="mdi-action-account-circle prefix"></i>
-					<input name="user_uid" id="user_uid" type="text" class="validate"<?php echo HTML::property('value', @$_POST['user_uid']) ?>>
-					<label for="user_uid"><?php _esc_attr( _("Nome utente") ) ?></label>
-				</div>
-				<div class="input-field col s12 m6">
-					<i class="mdi-action-lock prefix"></i>
-					<input name="user_password" id="user_password" type="password" class="validate">
+				<div class="row">
+					<div class="input-field col s12 m6">
+						<i class="mdi-action-account-circle prefix"></i>
+						<input name="user_uid" id="user_uid" type="text" class="validate"<?php echo HTML::property('value', @$_POST['user_uid']) ?>>
+						<label for="user_uid"><?php _esc_attr( _("Nome utente") ) ?></label>
+					</div>
+					<div class="input-field col s12 m6">
+						<i class="mdi-action-lock prefix"></i>
+							<input name="user_password" id="user_password" type="password" class="validate">
 					<label for="user_password"><?php _esc_attr( _("Password") ) ?></label>
+					</div>
 				</div>
+				<button class="btn waves-effect waves-light light-blue darken-1" type="submit" name="action"><?php _e("Accedi") ?><?php echo m_icon() ?></button>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s12 m6">
+			<div class="card-panel">
+				<p><?php _e("Password dimenticata?") ?></p>
+				<p><?php print_menu_link('password-recovery', null, 'btn waves-effect light-blue darken-1') ?></p>
 			</div>
-			<button class="btn waves-effect waves-light light-blue darken-1" type="submit" name="action"><?php _e("Accedi") ?><?php echo m_icon() ?></button>
-		</form>
+		</div>
 	</div>
 <?php
 

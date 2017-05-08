@@ -39,6 +39,13 @@ trait UserTrait {
 	function userHasOrganico() {
 		return $this->getUserOrganicoID();
 	}
+
+	function updateUser($fields) {
+		query_update(User::T, $fields, sprintf(
+			'%s = %d',
+			User::ID, $this->getUserID()
+		) );
+	}
 }
 
 class User extends Sessionuser {
@@ -49,11 +56,21 @@ class User extends Sessionuser {
 	const UID = 'user_uid';
 	const ORGANICO = 'organico_ID';
 	const ACTIVE = 'user_active';
+	const TOKEN = 'user_token';
+	const PASSWORD = 'user_password';
 
 	const ID_       = self::T . DOT . self::ID;
 	const ORGANICO_ = self::T . DOT . self::ORGANICO;
 
 	function __construct() {
 		$this->integers(self::ID, self::ORGANICO);
+	}
+
+	static function factory() {
+		return Query::factory(__CLASS__)->from(self::T);
+	}
+
+	static function factoryByUID($uid) {
+		return self::factory()->whereStr(self::UID, $uid);
 	}
 }

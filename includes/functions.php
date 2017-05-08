@@ -126,7 +126,6 @@ function organico_ID() {
 function required_permission($permission) {
 	if( ! is_logged() ) {
 		$url = site_page( get_menu_entry('login')->url );
-		var_dump($url);exit;
 		http_redirect( $url );
 	} elseif( ! has_permission($permission) ) {
 		PermissionErrorr::spawn();

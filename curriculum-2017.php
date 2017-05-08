@@ -17,6 +17,8 @@
 
 require 'load.php';
 
+required_permission('do-my-curriculum');
+
 $curriculum = Curriculum::factoryByOrganico()
 	->queryRow();
 
@@ -49,6 +51,23 @@ if( ! empty( $_POST )  ) {
 		$v = luser_input($v, 5000);
 		$dbfields[] = new DBCol($field, $v, $type);
 	}
+
+	Email::send( get_user()->getUserEmail() , _("Curriculum salvato"), sprintf(
+		_("Con la presente per informarla che ha salvato con successo il suo curriculum.")
+	) );
+
+	require_once(SENDGRID_PATH);
+	$from = new SendGrid\Email( _("Gentile utente") , ADMIN_EMAIL);
+	$subject = _("Curriculum aggiornato");
+	$to = new SendGrid\Email( _("Io Conto"), get_user()->getUserEmail() );
+	$content = new SendGrid\Content("text/plain", sprintf(
+		_("Hai appena salvato il tuo curriculum. Grazie!\nPuoi aggiornarlo tornando qui:\n%s"),
+		menu_url('curriculum-2017')
+	) );
+	$mail = new SendGrid\Mail($from, $subject, $to, $content);
+	$apiKey = getenv(SENDGRID_API_KEY);
+	$sg = new \SendGrid($apiKey=SENDGRID_API_KEY);
+	$response = $sg->client->mail()->send()->post($mail);
 
 	if( $curriculum ) {
 		$curriculum->update($dbfields);
@@ -98,13 +117,13 @@ $modal_open = function () {
 			<p><?php _e("Informazioni basilari da compilare prima di procedere con il questionario vero e proprio.") ?></p>
 
 			<?php Modal::start() ?>
-				<p><?php InputText::spawn( _("Nome"),            'name',    null ) ?></p>
-				<p><?php InputText::spawn( _("Cognome"),         'surname', null ) ?></p>
-				<p><?php InputText::spawn( _("Via e n° civico"), 'address', null ) ?></p>
-				<p><?php InputText::spawn( _("CAP"), 'cap', null ) ?></p>
-				<p><?php InputText::spawn( _("Città"), 'city', null ) ?></p>
+				<p><?php InputText::spawn( _("Nome"),               'name',    null ) ?></p>
+				<p><?php InputText::spawn( _("Cognome"),            'surname', null ) ?></p>
+				<p><?php InputText::spawn( _("Via e n° civico"),    'address', null ) ?></p>
+				<p><?php InputText::spawn( _("CAP"),                'cap', null ) ?></p>
+				<p><?php InputText::spawn( _("Città"),              'city', null ) ?></p>
 				<p><?php InputText::spawn( _("Cellulare"), 'phone', null ) ?></p>
-				<p><?php InputText::spawn( _("E-mail personale"), 'e-mail', null ) ?></p>
+				<p><?php InputText::spawn( _("E-mail personale"),   'e-mail', null ) ?></p>
 				<p><?php InputText::spawn( _("Sito web / blog"), 'blog', null ) ?></p>
 				<p><?php InputText::spawn( _("Altri contatti"), 'others', null ) ?></p>
 				<p><?php Modal::close() ?>
