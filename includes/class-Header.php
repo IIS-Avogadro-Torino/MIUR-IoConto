@@ -18,14 +18,7 @@
 class Header {
 	static $args = [];
 
-	static function spawn($title, $args = []) {
-
-		$args = merge_args_defaults($args, [
-			'user-navbar'    => false,
-			'container'      => false,
-			'header'         => false,
-			'toolbar-upload' => false
-		] );
+	static function spawn($uid, $args = []) {
 
 		self::$args = $args;
 		$args = & self::$args;
@@ -44,9 +37,10 @@ class Header {
 			'pre-enqueue'  => 'default',
 			'pre-template' => 'default',
 			'complete-site-name' => true,
-			'user-navbar'  => true,
-			'container'    => true,
-			'header'       => true
+			'user-navbar'  => false,
+			'container'    => false,
+			'header'       => true,
+			'toolbar-upload' => false
 		], $args);
 
 		switch( $args['pre-template'] ) {
@@ -87,30 +81,32 @@ class Header {
 <?php $args['pre-template'] !== 'print' and $args['user-navbar']
 	and UserNavbar::spawn() ?>
 
-<?php if( $args['header'] ): ?>
-<div class="container" style="clear: both">
-	<div class="row valign-wrapper">
-		<div class="col s11 m8">
-			<?php if($args['permalink']) : ?>
-				<h2><?php echo HTML::a(
-					site_page( $menuEntry->url, ROOT ),
-					$title,
-					$complete_title
-				) ?></h2>
-			<?php else :?>
-				<h2><?php _esc_html($title) ?></h2>
-			<?php endif ?>
-		</div>
-		<div class="col s1 m4">
-			<img alt="<?php _esc_attr(SITE_NAME) ?>" src="<?php echo IMAGE_URL . '/formazione-MIUR-Io-Conto.png' ?>" id="io-conto-logo" />
-		</div>
-	</div>
-</div>
-<?php endif ?>
 
-<?php if( $args['container'] ): ?>
-<!-- Start header container -->
-<div class="container">
-<?php endif ?>
+<div class="row">
+	<!-- left -->
+	<aside class="col s12 m3 l2 light-blue darken-1">
+		<div>
+			<img class="responsive-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto-logo-landscape.png" alt="logo Formazione MIUR" />
+		</div>
+		<div class="hide-on-small-only">
+			<img class="responsive-img ioconto-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto.png" alt="logo Io Conto" />
+		</div>
+		<p class="flow-text red-text white margin-right-negative"><?php echo Header::$args['title'] ?></p>
+		<footer class="hide-on-small-only">
+			<ul>
+				<li><?php print_menu_link('curriculum-home', _("Home"), 'white-text') ?></li>
+				<li><a class="white-text" href="#">Il progetto</a></li>
+				<li><a class="white-text" href="#">Istruzioni</a></li>
+				<li><a class="white-text" href="#">Vai a Io Conto</a></li>
+				<li><a class="white-text" href="#">Esempi</a></li>
+				<li><a class="white-text" href="#">Area riservata</a></li>
+				<li><a class="white-text" href="#">News</a></li>
+			</ul>
+		</footer>
+	</aside>
+	<!-- /left -->
+
+	<!-- main -->
+	<div class="section col s12 m6 l8">
 
 <?php } }

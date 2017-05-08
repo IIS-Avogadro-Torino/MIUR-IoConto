@@ -16,11 +16,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class LoginToolbar {
-	static function spawn() { ?>
+	static function spawn() {
+		if( is_logged() ) return;
+	?>
 
 	<!-- right -->
 	<aside class="col hide-on-small-only m3 l2">
-		<form method="post" class="card-panel">
+		<form method="post" class="card-panel" action="<?php echo menu_url('login') ?>">
 			<div class="row">
 				<div class="col s12 input-field">
 					<input type="text" name="user_uid" id="user_uid" />

@@ -1,6 +1,6 @@
 <?php
 # Formazione MIUR content management system
-# Copyright (C) 2017 ITIS Avogadro, Ivan Bertotto, Valerio Bozzolan
+# Copyright (C) 2017 Valerio Bozzolan, Ivan Bertotto, ITIS Avogadro
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -15,27 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require 'load.php';
-
-Header::spawn('curriculum-home', [
-	'toolbar-login' => true
-] );
-
-?>
-	<center>
-		<img src="http://www.ioconto.itisavogadro.org/media/k2/items/cache/ada9a09acea936d776a6f55c82778c43_XL.jpg" width="150" />
-	</center>
-	<ul class="collection">
-		<li class="collection-item">
-			<?php print_menu_link('curriculum-2017', _("Crea il tuo Curriculum online") . m_icon('edit'), 'btn light-blue darken-1 waves-effect') ?>
-		</li>
-		<li class="collection-item">
-			<?php _e("Modello e istruzioni") ?>
-		</li>
-		<li class="collection-item">
-			<?php _e("Esempi") ?>
-		</li>
-	</ul>
-<?php
-
-Footer::spawn();
+class PermissionError {
+	static function spawn() {
+		printf("<p>%s</p>" , _("Non hai permessi a sufficienza") );
+	}
+}

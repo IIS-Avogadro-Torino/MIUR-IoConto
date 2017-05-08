@@ -1,6 +1,6 @@
 <?php
 # Formazione MIUR content management system
-# Copyright (C) 2015 Valerio Bozzolan
+# Copyright (C) 2015, 2016, 2017 Valerio Bozzolan, Ivan Bertotto, ITIS Avogadro
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -31,9 +31,7 @@ if( is_logged() ) {
 	http_redirect(URL);
 }
 
-Header::factory('login', [
-	'title' => _("Area riservata alle scuole polo")
-] );
+Header::spawn('login');
 
 ?>
 
@@ -42,7 +40,7 @@ Header::factory('login', [
 	<?php endif ?>
 
 	<?php MessageBox::spawn( sprintf(
-		_("Le credenziali per l'area riservata sono state trasmesse via email alle scuole polo. Chi non le avesse ricevute segnali a <b>%s</b>"),
+		_("Le istruzioni per l'accesso all'area riservata sono state trasmesse via email alle scuole. Chi non le avesse ricevute segnali a <b>%s</b>"),
 		ADMIN_EMAIL
 	) ) ?>
 
@@ -68,20 +66,17 @@ Header::factory('login', [
 				<div class="input-field col s12 m6">
 					<i class="mdi-action-account-circle prefix"></i>
 					<input name="user_uid" id="user_uid" type="text" class="validate"<?php echo HTML::property('value', @$_POST['user_uid']) ?>>
-					<label for="user_uid"><?php echo esc_attr( _("Nome utente") ) ?></label>
+					<label for="user_uid"><?php _esc_attr( _("Nome utente") ) ?></label>
 				</div>
 				<div class="input-field col s12 m6">
 					<i class="mdi-action-lock prefix"></i>
 					<input name="user_password" id="user_password" type="password" class="validate">
-					<label for="user_password"><?php echo esc_attr( _("Password") ) ?></label>
+					<label for="user_password"><?php _esc_attr( _("Password") ) ?></label>
 				</div>
 			</div>
-			<button class="btn waves-effect waves-light" type="submit" name="action"><?php _e("Accedi") ?>
-
-				<i class="mdi-content-send right"></i>
-			</button>
+			<button class="btn waves-effect waves-light light-blue darken-1" type="submit" name="action"><?php _e("Accedi") ?><?php echo m_icon() ?></button>
 		</form>
 	</div>
 <?php
 
-Footer::factory();
+Footer::spawn();

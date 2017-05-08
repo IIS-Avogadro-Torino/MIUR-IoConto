@@ -17,17 +17,4 @@
 
 require 'load.php';
 
-require_permission('VIEW_SCHOOL_RELATED_RESOURCES');
-
-Header::factory('home');
-?>
-
-	<p><?php printf(
-	_("Benvenuto <b>%s</b>."),
-		esc_html( get_user('user_name') )
-	) ?></p>
-
-	<?php BackendNav::spawn() ?>
-
-<?php
-Footer::factory();
+http_redirect( site_page( get_menu_entry('curriculum-home')->url ) );

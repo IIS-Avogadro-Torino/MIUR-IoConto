@@ -33,8 +33,8 @@ class InputSelect {
 				<option disabled selected><?php _e("Seleziona tutte le opzioni corrispondenti") ?></option>
 			<?php endif ?>
 
-			<?php foreach($options as $option_name => $title): ?>
-				<?php self::option($title, $option_name, $value) ?>
+			<?php foreach($options as $option_value => $option_title): ?>
+				<?php self::option($option_title, $option_value, $value) ?>
 			<?php endforeach ?>
 		</select>
 		<?php
@@ -47,7 +47,7 @@ class InputSelect {
 	 */
 	private static function option($option_title, $option_value, $value = null) {
 		?>
-		<option value="<?php echo $option_value ?>"<?php _checked($option_value, $value) ?>><?php echo $option_title ?></option>
+		<option value="<?php echo $option_value ?>"<?php _selected($option_value, $value) ?>><?php _esc_html($option_title) ?></option>
 		<?php
 	}
 }

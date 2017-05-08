@@ -89,13 +89,14 @@ register_css('print-mode',              THEME_URL . '/print-mode.css');
 // Menu entries
 add_menu_entries( [
 	new MenuEntry('home',                                     '',                                              _("Home") ),
-	new MenuEntry('login',                                    '/login.php',                                    _("Autenticati") ),
-	new MenuEntry('logout',                                   '/login.php?logout',                             _("Esci") ),
-	new MenuEntry('about',                                    '/about.php',                                    _("Crediti") ),
-	new MenuEntry('404',                                      '/404.php',                                      _("Pagina non trovata!"),               'hidden' ),
-	new MenuEntry('curriculum-2017',                          'curriculum-2017-2.php',                         _("Il tuo Curriculum"),                 '2017'),
-	new MenuEntry('curriculum-home',                          'curriculum-home.php',                           _("Home"),                              '2017'),
-	new MenuEntry('news',                                     'http://www.ioconto.itisavogadro.org/index.php/news', _("News"),                         '2017')
+	new MenuEntry('login',                                    'login.php',                                    _("Autenticati") ),
+	new MenuEntry('logout',                                   'login.php?logout',                             _("Esci") ),
+	new MenuEntry('about',                                    'about.php',                                    _("Crediti") ),
+	new MenuEntry('404',                                      '404.php',                                      _("Pagina non trovata!"),               'hidden'),
+	new MenuEntry('curriculum-2017',                          'curriculum-2017.php',                           _("Il tuo Curriculum")                  ),
+	new MenuEntry('curriculum-home',                          'curriculum-home.php',                           _("Home")                               ),
+	new MenuEntry('news',                                     'http://www.ioconto.itisavogadro.org/index.php/news', _("News")                          ),
+	new MenuEntry('password-recovery',                        'password-recovery.php',                         _("Recupero password"),                 'hidden')
 ] );
 
 // Global objects dynamically instantiated

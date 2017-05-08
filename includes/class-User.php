@@ -1,6 +1,6 @@
 <?php
 # Formazione MIUR content management system
-# Copyright (C) 2015 Valerio Bozzolan
+# Copyright (C) 2015, 2016, 2017 Valerio Bozzolan, Ivan Bertotto, ITIS Avogadro
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -17,48 +17,43 @@
 
 trait UserTrait {
 	function getUserID() {
-		return $this->nonnull('user_ID');
+		return $this->nonnull(User::ID);
+	}
+
+	function getUserUID() {
+		return $this->nonnull(User::UID);
 	}
 
 	function getUserEmail() {
 		return $this->getUserUID();
 	}
 
-	function getUserUID() {
-		return $this->nonnull('user_uid');
-	}
-
 	function isUserActive() {
-		return $this->get('user_active');
+		return $this->get(User::ACTIVE);
 	}
 
-	function getUserScuolaID() {
-		return $this->get('scuola_ID');
+	function getUserOrganicoID() {
+		return $this->get(User::ORGANICO);
 	}
 
-	function userHasScuola() {
-		return $this->getUserScuolaID();
-	}
-
-	private function queryUserScuola() {
-		return ScuolaFull::queryByID( $this->getUserScuolaID() );
+	function userHasOrganico() {
+		return $this->getUserOrganicoID();
 	}
 }
 
-class_exists('Queried');
-
 class User extends Sessionuser {
-	use QueriedTrait;
 	use userTrait;
 
 	const T   = 'user';
-	const ID  = 'user.user_ID';
+	const ID  = 'user_ID';
 	const UID = 'user_uid';
+	const ORGANICO = 'organico_ID';
+	const ACTIVE = 'user_active';
 
-	static function forceHavingSchool() {
-		if( is_logged() && get_user()->userHasScuola() ) {
-			return get_user()->queryUserScuola();
-		}
-		die_asking_permissions();
+	const ID_       = self::T . DOT . self::ID;
+	const ORGANICO_ = self::T . DOT . self::ORGANICO;
+
+	function __construct() {
+		$this->integers(self::ID, self::ORGANICO);
 	}
 }

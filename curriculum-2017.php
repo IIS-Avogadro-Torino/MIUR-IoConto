@@ -17,9 +17,49 @@
 
 require 'load.php';
 
-ModelView::enqueue();
+$curriculum = Curriculum::factoryByOrganico()
+	->queryRow();
 
-// $scuola = get_scuola();
+if( ! empty( $_POST )  ) {
+
+	$fields = [
+		Curriculum::YEARS => 's',
+		Curriculum::YEARS_DESC => 's',
+		Curriculum::STUDY => 's',
+		Curriculum::STUDY_DESC => 's',
+		Curriculum::COURSES_FOLLOWED => 's',
+		Curriculum::COURSES_FOLLOWED_DESC => 's',
+		Curriculum::PUBLICATIONS => 's',
+		Curriculum::PUBLICATIONS_DESC => 's',
+		Curriculum::COURSES_ORGANIZED_SPECIALIZED => 's',
+		Curriculum::COURSES_ORGANIZED_SPECIALIZED_DESC => 's',
+		Curriculum::COURSES_ORGANIZED_GENERIC => 's',
+		Curriculum::COURSES_ORGANIZED_GENERIC_DESC => 's',
+		Curriculum::USRMIUR_TASKS => 's',
+		Curriculum::USRMIUR_TASKS_DESC => 's',
+		Curriculum::REGIONAL_TASK => 's',
+		Curriculum::REGIONAL_TASK_DESC => 's',
+		Curriculum::ECDL => 'd',
+		Curriculum::EXTRALANGUAGE => 'd',
+		Curriculum::EXPERT => 'd'
+	];
+	$dbfields = [];
+	foreach($fields as $field => $type) {
+		$v = @ $_POST[$field];
+		$v = luser_input($v, 5000);
+		$dbfields[] = new DBCol($field, $v, $type);
+	}
+
+	if( $curriculum ) {
+		$curriculum->update($dbfields);
+	} else {
+		$dbfields[] = new DBCol(Curriculum::ORGANICO, organico_ID(), 'd');
+		insert_row(Curriculum::T, $dbfields);
+	}
+
+	$curriculum = Curriculum::factoryByOrganico()
+		->queryRow();
+}
 
 Header::spawn('curriculum-2017', [
 	'toolbar-upload' => true
@@ -44,6 +84,12 @@ $modal_open = function () {
 };
 
 ?>
+	<?php if( $curriculum && ! empty( $_POST ) ): ?>
+	<div class="card-panel yellow">
+		<p class="flow-text"><?php _e("Curriculum salvato con successo!") ?></p>
+		<p><?php _e("Ricontrolla di aver compilato tutti i campi.") ?></p>
+	</div>
+	<?php endif ?>
 	<form method="post">
 
 		<!-- Informazioni personali -->
@@ -81,13 +127,7 @@ $modal_open = function () {
 				<p><?php _e("Anni di anzianità o di servizio continuativi nel ruolo di DS o DSGA") ?></p>
 				<div class="input-field">
 					<?php
-					$options = [
-						'0-5'   => _("Anzianità > 15 anni"),
-						'5-10'  => _("5 anni < anzianità <= 10 anni"),
-						'10-15' => _("10 anni < anzianità <= 15 anni"),
-						'15+'   => _("anzianità > 15")
-					];
-					InputSelect::spawn(InputSelect::SINGLE, 'experience_years', null, $options);
+					InputSelect::spawn(InputSelect::SINGLE, Curriculum::YEARS, $curriculum ? $curriculum->get(Curriculum::YEARS) : null, Curriculum::YEARS() );
 					?>
 				</div>
 			<?php ModalInstructions::end() ?>
@@ -106,16 +146,10 @@ $modal_open = function () {
 						<p><?php _e("Titoli di studio") ?></p>
 						<div class="row">
 							<div class="col s12 input-field">
-								<?php InputSelect::spawn(InputSelect::SINGLE, 'study', null, [
-									'degree-1' => _("Laurea triennale"),
-									'degree-2' => _("Laurea magistrale / V.O / specialistica"),
-									'master-1' => _("Master di I livello"),
-									'master-2' => _("Master di II livello (o biennale)"),
-									'degree-3' => _("Dottorato / seconda laurea")
-								] ) ?>
+								<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::STUDY, $curriculum ? $curriculum->get(Curriculum::STUDY) : null, Curriculum::STUDY() ) ?>
 							</div>
 							<div class="col s12 input-field">
-								<?php Textarea::spawn( _("Dettaglia il tuo percorso accademico"), 'studies_desc', null) ?>
+								<?php Textarea::spawn( _("Dettaglia il tuo percorso accademico"), Curriculum::STUDY_DESC, $curriculum ? $curriculum->get(Curriculum::STUDY_DESC) : null ) ?>
 							</div>
 						</div>
 					</div>
@@ -125,19 +159,12 @@ $modal_open = function () {
 					<div class="card-panel">
 						<p><?php _e("N. corsi di formazione seguiti in qualità di discente su tematiche attinenti alle materie amministrativo contabili (Bilancio, obblighi normativi, acquisizione di beni e servizi)") ?></p>
 						<div class="input-field">
-							<?php InputSelect::spawn(InputSelect::SINGLE, 'course_followed', null, [
-								'0'   => _("Nessun corso"),
-								'1-2' => _("0 < corsi <= 2"),
-								'3-4' => _("2 < corsi <= 4"),
-								'5-6' => _("4 < corsi <= 6"),
-								'6+'  => _("corsi > 6"),
-								'11+' => _("corsi > 10")
-							] ) ?>
+							<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::COURSES_FOLLOWED, $curriculum ? $curriculum->get(Curriculum::COURSES_FOLLOWED) : null, Curriculum::COURSES_FOLLOWED() ) ?>
 						</div>
 						<div class="row">
 							<div class="col s12">
 								<div class="input-field">
-								<?php Textarea::spawn( _("Inserisci più informazioni possibili a proposito di ognuno dei corsi seguiti"), 'course_followed_desc', null) ?>
+								<?php Textarea::spawn( _("Inserisci più informazioni possibili a proposito di ognuno dei corsi seguiti"), Curriculum::COURSES_FOLLOWED_DESC, $curriculum ? $curriculum->get(Curriculum::COURSES_FOLLOWED_DESC) : null) ?>
 								</div>
 							</div>
 						</div>
@@ -145,19 +172,14 @@ $modal_open = function () {
 					<!-- /Corsi di formazione seguiti -->
 
 					<!-- Pubblicazioni -->
-					<div class="card-panel model-view-container">
+					<div class="card-panel">
 						<p><?php _e("N. pubblicazioni su tematiche attinenti alle materie del percorso di aggiornamento professionale Io Conto") ?></p>
 						<div class="row">
 							<div class="col s12 input-field">
-								<?php InputSelect::spawn(InputSelect::SINGLE, 'publications[n]', null, [
-									'0'   => _("Nessuna pubblicazione su articoli o riviste specializzate"),
-									'1-3' => _("da uno a tre pubblicazioni"),
-									'4-5' => _("meno di sei pubblicazioni"),
-									'6+'  => _("sei pubblicazioni o più"),
-								] ) ?>
+								<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::PUBLICATIONS, $curriculum ? $curriculum->get(Curriculum::PUBLICATIONS) : null, Curriculum::PUBLICATIONS() ) ?>
 							</div>
 							<div class="col s12 input-field">
-								<?php Textarea::spawn( _("Per ogni pubblicazione scrivi autore, anno di pubblicazione, editore, ISBN..."), 'publications[][desc]', null) ?>
+								<?php Textarea::spawn( _("Per ogni pubblicazione scrivi autore, anno di pubblicazione, editore, ISBN..."), Curriculum::PUBLICATIONS_DESC, $curriculum ? $curriculum->get(Curriculum::PUBLICATIONS_DESC) : null ) ?>
 							</div>
 						</div>
 					</div>
@@ -176,17 +198,11 @@ $modal_open = function () {
 				<div class="card-panel">
 					<p><?php _e("N. corsi di formazione organizzati e/o erogati in qualità di docente su tematiche attinenti alle materie amministrativo contabili (Bilancio, obblighi normativi, acquisizione di beni e servizi)") ?></p>
 					<div class="input-field">
-						<?php InputSelect::spawn(InputSelect::SINGLE, 'course_erogated', null, [
-							'0'   => _("Nessun corso"),
-							'1-2' => _("0 < corsi <= 2"),
-							'3-4' => _("2 < corsi <= 4"),
-							'5-6' => _("4 < corsi <= 6"),
-							'7+'  => _("corsi > 6")
-						] ) ?>
+						<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::COURSES_ORGANIZED_SPECIALIZED, $curriculum ? $curriculum->get(Curriculum::COURSES_ORGANIZED_SPECIALIZED) : null, Curriculum::COURSES_ORGANIZED_SPECIALIZED() ) ?>
 					</div>
 					<div class="row">
 						<div class="col s12 input-field">
-							<?php Textarea::spawn( _("Inserisci più informazioni possibili a proposito di ognuno dei corsi erogati"), 'course_erogated_desc', null) ?>
+							<?php Textarea::spawn( _("Inserisci più informazioni possibili a proposito di ognuno dei corsi erogati"), Curriculum::COURSES_ORGANIZED_SPECIALIZED_DESC, $curriculum ? $curriculum->get(Curriculum::COURSES_ORGANIZED_SPECIALIZED_DESC) : null ) ?>
 						</div>
 					</div>
 				</div>
@@ -194,17 +210,11 @@ $modal_open = function () {
 				<div class="card-panel">
 					<p><?php _e("N. corsi di formazione organizzati e/o erogati in qualità di docente su tematiche NON attinenti alle materie attinenti alle materie amministrativo contabili (Bilancio, obblighi normativi, acquisizione di beni e servizi)") ?></p>
 					<div class="input-field">
-						<?php InputSelect::spawn(InputSelect::SINGLE, 'course_erogated', null, [
-							'0'   => _("Nessun corso"),
-							'1-2' => _("0 < corsi <= 2"),
-							'3-4' => _("2 < corsi <= 4"),
-							'5-6' => _("4 < corsi <= 6"),
-							'7+'  => _("corsi > 6")
-						] ) ?>
+						<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::COURSES_ORGANIZED_GENERIC, $curriculum ? $curriculum->get(Curriculum::COURSES_ORGANIZED_GENERIC) : null, Curriculum::COURSES_ORGANIZED_GENERIC() ) ?>
 					</div>
 					<div class="row">
 						<div class="col s12 input-field">
-							<?php Textarea::spawn( _("Dettaglia i corsi"), 'course_erogated_desc', null) ?>
+							<?php Textarea::spawn( _("Dettaglia i corsi"), Curriculum::COURSES_ORGANIZED_GENERIC_DESC,  $curriculum ? $curriculum->get(Curriculum::COURSES_ORGANIZED_GENERIC_DESC) : null ) ?>
 						</div>
 					</div>
 				</div>
@@ -223,26 +233,20 @@ $modal_open = function () {
 				<div class="card-panel">
 					<p><?php _e("Incarichi ispettivi per conto USR / MIUR") ?></p>
 					<div class="input-field">
-						<?php InputSelect::spawn(InputSelect::SINGLE, 'urs_miur_tasks', null, [
-							'3' => _("Incarichi (più di 5)"),
-							'5' => _("Incarichi (fino a 3)")
-						] ) ?>
+						<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::USRMIUR_TASKS, $curriculum ? $curriculum->get(Curriculum::USRMIUR_TASKS) : null, Curriculum::USRMIUR_TASKS() ) ?>
 					</div>
 					<div class="input-field">
-						<?php Textarea::spawn( _("Dettaglia gli incarichi"), 'urs_miur_tasks_desc', null) ?>
+						<?php Textarea::spawn( _("Dettaglia gli incarichi"), Curriculum::USRMIUR_TASKS_DESC, $curriculum ? $curriculum->get(Curriculum::USRMIUR_TASKS_DESC) : null ) ?>
 					</div>
 				</div>
 
 				<div class="card-panel">
 					<p><?php _e("Appartenenza a gruppi di lavoro istituzionali regionali e/o centrali gruppo di lavoro, cabine di regia, comitati paritetici (indicare nome ed estremi)") ?></p>
 					<div class="input-field">
-						<?php InputSelect::spawn(InputSelect::SINGLE, 'general_tasks', null, [
-							'3' => _("Gruppi di lavoro, tavoli tecnici ecc. Amministrazione centrale e/o periferica (più di 3)"),
-							'5' => _("Incarichi reggenza (più di 5)"),
-						] ) ?>
+						<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::REGIONAL_TASK, null, Curriculum::REGIONAL_TASK() ) ?>
 					</div>
 					<div class="input-field">
-						<?php Textarea::spawn( _("Dettaglia"), 'general_tasks_desc', null) ?>
+						<?php Textarea::spawn( _("Dettaglia"), Curriculum::REGIONAL_TASK_DESC, null) ?>
 					</div>
 				</div>
 
@@ -273,22 +277,22 @@ $modal_open = function () {
 				<div class="card-panel">
 					<p><?php _e("Ulteriori qualifiche professionali (ad esempio patente europea del computer)") ?></p>
 					<p>
-						<input name="computer" type="checkbox" id="computer" />
+						<input name="<?php echo Curriculum::ECDL ?>" type="checkbox" id="computer" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::ECDL), true ) ?> />
 						<label for="computer"><?php _e("Hai la patente europea del computer?") ?></label>
 					</p>
 					<p>
-						<input name="languages" type="checkbox" id="languages" />
+						<input name="<?php echo Curriculum::EXTRALANGUAGE ?>" type="checkbox" id="languages" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::EXTRALANGUAGE), true ) ?> />
 						<label for="languages"><?php _e("Hai la conoscenza di una lingua straniera?") ?></label>
 					</p>
 				</div>
 				<div class="card-panel">
 					<p><?php _e("hai partecipato alla prima edizione del progetto Io conto in qualità di esperto?") ?></p>
 					<p>
-						<input name="collaborated" type="radio" id="collaborated_yes" />
+						<input name="<?php echo Curriculum::EXPERT ?>" type="radio" id="collaborated_yes" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::EXPERT), true ) ?> />
 						<label for="collaborated_yes"><?php _e("Sì") ?></label>
 					</p>
 					<p>
-						<input name="collaborated" type="radio" id="collaborated_no" />
+						<input name="<?php echo Curriculum::EXPERT ?>" type="radio" id="collaborated_no" value="0"<?php $curriculum and _checked( $curriculum->get(Curriculum::EXPERT), false ) ?> />
 						<label for="collaborated_no"><?php _e("No") ?></label>
 					</p>
 				</div>

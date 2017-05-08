@@ -93,22 +93,50 @@ function _print_link($url) {
 	);
 }
 
-/**
- * Shortcut
- *
- * @param int $scuola_ID
- * @return ScuolaFull
- */
-function get_scuola($scuola_ID = null) {
-	if( $scuola_ID === null ) {
-		return User::forceHavingSchool();
+function menu_url($uid) {
+	return site_page( get_menu_entry($uid)->url );
+}
+
+function get_organic_ID() {
+	$die = false;
+
+	is_logged()
+		or die_asking_permissions();
+
+	$organico_ID = get_user()->get(User::ORGANICO);
+
+	isset($organico_ID)
+		or die_asking_permissions();
+
+	return $organico_ID;
+}
+
+function organico_ID() {
+	is_logged()
+		or die_asking_permissions();
+
+	$organico_ID = get_user()->get(User::ORGANICO);
+
+	isset($organico_ID)
+		or die_asking_permissions();
+
+	return $organico_ID;
+}
+
+function required_permission($permission) {
+	if( ! is_logged() ) {
+		$url = site_page( get_menu_entry('login')->url );
+		var_dump($url);exit;
+		http_redirect( $url );
+	} elseif( ! has_permission($permission) ) {
+		PermissionErrorr::spawn();
+		Footer::spawn();
+		exit; // Yes!
 	}
-	$scuola = ScuolaFull::queryByID($scuola_ID);
-	$scuola or die_asking_permissions();
-	return $scuola;
 }
 
 function die_asking_permissions() {
-	require_permission('indefined-permission');
-	exit; //
+	required_permission('indefined-permission');
+	Footer::spawn();
+	exit;
 }
