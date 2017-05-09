@@ -15,24 +15,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class InputText {
+require 'load.php';
 
-	static $id = 0;
+Header::spawn('curriculum-home', [
+	'toolbar-login' => true
+] );
+?>
 
-	static function id() {
-		printf("input-text-%d", self::$id);
-	}
+<div class="card-panel">
+	<div class="video-container">
+		<iframe width="853" height="480" src="https://www.youtube.com/embed/FuwiWEiv8_Y" frameborder="0" allowfullscreen></iframe>
+	</div>
+</div>
 
-	/**
-	 * @param $title string Placeholder
-	 * @param $name string Input name
-	 * @param $value string Input value
-	 */
-	static function spawn($title, $name, $value = '') {
-		self::$id++;
-		?>
-		<input type="text" name="<?php echo $name ?>" value="<?php _esc_attr($value) ?>" class="validate" id="<?php self::id() ?>" />
-		<label for="<?php self::id() ?>"><?php _esc_attr($title) ?></label>
-		<?php
-	}
-}
+<?php
+Footer::spawn();

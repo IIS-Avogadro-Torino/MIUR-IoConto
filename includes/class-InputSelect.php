@@ -27,10 +27,12 @@ class InputSelect {
 	static function spawn($type, $name, $value, $options = [] ) {
 		?>
 		<select name="<?php echo $name ?>" class="validate"<?php $type === self::MULTIPLE and printf(' multiple') ?>>
-			<?php if($type === self::SINGLE): ?>
-				<option disabled selected><?php _e("Scegli l'opzione più specifica") ?></option>
-			<?php else: ?>
-				<option disabled selected><?php _e("Seleziona tutte le opzioni corrispondenti") ?></option>
+			<?php if( count($options) > 1 ): ?>
+				<?php if($type === self::SINGLE): ?>
+					<option disabled selected><?php _e("Scegli l'opzione più specifica") ?></option>
+				<?php else: ?>
+					<option disabled selected><?php _e("Seleziona tutte le opzioni corrispondenti") ?></option>
+				<?php endif ?>
 			<?php endif ?>
 
 			<?php foreach($options as $option_value => $option_title): ?>
