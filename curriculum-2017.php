@@ -155,6 +155,9 @@ $modal_open = function () {
 					InputSelect::spawn(InputSelect::SINGLE, Curriculum::YEARS, $curriculum ? $curriculum->get(Curriculum::YEARS) : null, Curriculum::YEARS() );
 					?>
 				</div>
+				<div class="input-field">
+					<?php Textarea::spawn( _("Inserire le scuole presso cui si è prestato servizio e gli anni"), Curriculum::YEARS_DESC, $curriculum ? $curriculum->get(Curriculum::YEARS_DESC) : null) ?>
+				</div>
 			<?php ModalInstructions::end() ?>
 
 			<div class="row">

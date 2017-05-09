@@ -38,6 +38,9 @@ defined('JQUERY_UID')
 defined('SENDGRID_PATH')
 	or define('SENDGRID_PATH', ABSPATH . __ . 'sendgrid-php' . __ . 'sendgrid-php.php');
 
+defined('CSV_GLUE')
+	or define('CSV_GLUE', '|');
+
 define('UPLOADS',   CONTENT . '/uploads');
 
 define('SITE_NAME',        _("Io Conto") );
@@ -69,6 +72,7 @@ define('SESSIONUSER_CLASS', 'User');
 // Permissions
 register_permissions('user', 'do-my-curriculum');
 inherit_permissions('supervisor', 'user');
+register_permissions('supervisor', 'see-all-curriculums');
 
 // Javascript and CSS resources
 register_js('jquery',                   JQUERY);
@@ -98,7 +102,8 @@ add_menu_entries( [
 	new MenuEntry('password-change',                          'password-change.php',                           _("Cambio password"),                   'hidden'),
 	new MenuEntry('torna-a-io-conto',                         'https://www.ioconto.itisavogadro.org',          _("Torna a Io Conto") ),
 	new MenuEntry('istruzioni-compilazione',                  'istruzioni-compilazione.php',                   _("Istruzioni per la compilazione") ),
-	new MenuEntry('assistenza',                               'assistenza.php',                                _("Assistenza") )
+	new MenuEntry('assistenza',                               'assistenza.php',                                _("Assistenza") ),
+	new MenuEntry('curriculum-export-csv',                    'curriculum-export-csv.php',                     _("Esportazione curriculum") , 'admin-menu' )
 ] );
 
 // Global objects dynamically instantiated
