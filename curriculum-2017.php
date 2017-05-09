@@ -25,6 +25,12 @@ $curriculum = Curriculum::factoryByOrganico()
 if( ! empty( $_POST )  ) {
 
 	$fields = [
+		Curriculum::SURNAME => 's',
+		Curriculum::NAME => 's',
+		Curriculum::CITY => 's',
+		Curriculum::CAP => 's',
+		Curriculum::PHONE => 's',
+		Curriculum::EMAIL => 's',
 		Curriculum::YEARS => 's',
 		Curriculum::YEARS_DESC => 's',
 		Curriculum::STUDY => 's',
@@ -117,15 +123,15 @@ $modal_open = function () {
 			<p><?php _e("Informazioni basilari da compilare prima di procedere con il questionario vero e proprio.") ?></p>
 
 			<?php Modal::start() ?>
-				<p class="input-field"><?php InputText::spawn( _("Nome"),               'name',    null ) ?></p>
-				<p class="input-field"><?php InputText::spawn( _("Cognome"),            'surname', null ) ?></p>
-				<p class="input-field"><?php InputText::spawn( _("Via e n° civico"),    'address', null ) ?></p>
-				<p class="input-field"><?php InputText::spawn( _("CAP"),                'cap', null ) ?></p>
-				<p class="input-field"><?php InputText::spawn( _("Città"),              'city', null ) ?></p>
-				<p class="input-field"><?php InputText::spawn( _("Cellulare"), 'phone', null ) ?></p>
-				<p class="input-field"><?php InputText::spawn( _("E-mail personale"),   'e-mail', null ) ?></p>
-				<p class="input-field"><?php InputText::spawn( _("Sito web / blog"), 'blog', null ) ?></p>
-				<p class="input-field"><?php InputText::spawn( _("Altri contatti"), 'others', null ) ?></p>
+				<?php $fields = ['SURNAME', 'NAME', 'CAP', 'CITY', 'PHONE', 'EMAIL'] ?>
+				<?php foreach($fields as $field): ?>
+					<?php $const_value = constant("Curriculum::$field"); ?>
+					<p class="input-field"><?php InputText::spawn(
+						Curriculum::{$field}(),
+						$const_value,
+						$curriculum ? $curriculum->get($const_value) : null
+					) ?></p>
+				<?php endforeach ?>
 				<p class="input-field"><?php Modal::close() ?>
 			<?php Modal::end() ?>
 
@@ -348,6 +354,9 @@ $_modelViewControllerAdded = updateGUI;
 $(document).ready( function () {
 	updateGUI();
 	$('.modal').modal();
+	$('.modal').append(
+		'<button class="modal-close btn-flat" style="position:absolute;top:0;right:0;">X</button>'
+	);
 } );
 </script>
 

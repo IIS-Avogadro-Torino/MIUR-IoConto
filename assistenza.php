@@ -17,28 +17,70 @@
 
 require 'load.php';
 
+required_permission('do-my-curriculum');
+
+if( isset( $_POST['name'], $_POST['surname'], $_POST['email'], $_POST['subject'], $_POST['message'] ) ) {
+
+	$small_fields = ['name', 'surname', 'email', 'subject'];
+	foreach($small_fields as $field) {
+		$_POST[$small_field] = luser_input( $_POST[$field], 100 );
+		$_POST[$small_field] = strip_tags(  $_POST[$field] );
+	}
+	$_POST['message'] = luser_input( $_POST['message'], 10000 );
+
+	if( ! filter_var( $_POST['email'] , FILTER_VALIDATE_EMAIL) ) {
+		error_die("Email non valida");
+	}
+
+	$msg = sprintf(
+		"Nome: %s\n " .
+		"Cognome: %s\n " .
+		"Email: %s\n " .
+		"Oggetto: %s\n " .
+		"Messagggio:\n\n%s",
+
+		$_POST['name'   ],
+		$_POST['surname'],
+		$_POST['email'  ],
+		$_POST['subject'],
+		$_POST['message']
+	);
+
+	Email::send(ADMIN_EMAIL, _("Richiesta di assistenza"), $msg);
+	Email::send($_POST['email'], _("Copia del messaggio di assistenza"), sprintf(
+		_("Di seguito una copia del messaggio che hai trasmesso:\n %s.\n\n".
+		  "Riceverai al più presto una risposta."),
+		$msg
+	) );
+}
+
 Header::spawn('assistenza');
 
 ?>
+<p class="flow-text"><?php _e("Hai bisogno di assistenza? Utilizza questo modulo, risponderemo il prima possibile.") ?></p>
+
 <form method="post" class="card-panel">
 	<div class="row">
 		<div class="col s12 m6 input-field">
-			<?php InputText::spawn( _("Nome"), 'name') ?>
+			<?php InputText::spawn( _("Nome"), 'name', null, null, 'required="required"') ?>
 		</div>
 		<div class="col s12 m6 input-field">
-			<?php InputText::spawn( _("Cognome"), 'name') ?>
+			<?php InputText::spawn( _("Cognome"), 'name', null, null, 'required="required"') ?>
 		</div>
 		<div class="col s12 m6 input-field">
-			<?php InputText::spawn( _("E-mail"), 'email' ) ?>
+			<?php InputText::spawn( _("E-mail"), 'email', null, InputText::EMAIL, 'required="required"' ) ?>
 		</div>
 		<div class="col s12 m6 input-field">
 			<?php $s = _("Assistenza per selezione esperti formatori") ?>
-			<?php InputSelect::spawn(InputSelect::SINGLE, _("Oggetto"), 'subject', [
+			<?php InputSelect::spawn(InputSelect::SINGLE, 'subject', null, [
 				$s => sprintf("Oggetto: %s", $s)
 			] ) ?>
 		</div>
 		<div class="col s12 input-text">
-			<?php TextArea::spawn( _("Corpo del messaggio") , 'message' ) ?>
+			<?php Textarea::spawn( _("Inserisci il messaggio") , 'message', null, 'required="required"' ) ?>
+		</div>
+		<div class="col s12">
+			<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Invia richiesta"); echo m_icon() ?></button>
 		</div>
 	</div>
 </form>

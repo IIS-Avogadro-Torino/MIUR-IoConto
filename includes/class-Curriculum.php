@@ -37,6 +37,13 @@ class Curriculum extends Queried {
 	// External keys
 	const ORGANICO                      = 'organico_ID';
 
+	const SURNAME = 'curriculum_surname';
+	const NAME    = 'curriculum_name';
+	const CITY    = 'curriculum_city';
+	const CAP     = 'curriculum_cap';
+	const PHONE   = 'curriculum_phone';
+	const EMAIL   = 'curriculum_email';
+
 	// Fields
 	const YEARS                         = 'curriculum_years';
 	const YEARS_DESC                    = 'curriculum_years_desc';
@@ -76,6 +83,30 @@ class Curriculum extends Queried {
 			$organico_ID = organico_ID();
 		}
 		return self::factory()->whereInt( self::ORGANICO_, $organico_ID );
+	}
+
+	static function SURNAME() {
+		return _("cognome");
+	}
+
+	static function NAME() {
+		return _("nome");
+	}
+
+	static function CITY() {
+		return _("città");
+	}
+
+	static function CAP() {
+		return _("CAP");
+	}
+
+	static function PHONE() {
+		return _("telefono cellulare");
+	}
+
+	static function EMAIL() {
+		return _("e-mail personale");
 	}
 
 	static function YEARS() {

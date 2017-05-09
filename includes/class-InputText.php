@@ -17,6 +17,9 @@
 
 class InputText {
 
+	const TEXT = 'text';
+	const EMAIL = 'email';
+
 	static $id = 0;
 
 	static function id() {
@@ -28,10 +31,16 @@ class InputText {
 	 * @param $name string Input name
 	 * @param $value string Input value
 	 */
-	static function spawn($title, $name, $value = '') {
+	static function spawn($title, $name, $value = '', $type = null, $other='') {
 		self::$id++;
+		if(! $type ) {
+			$type = self::TEXT;
+		}
+		if($other) {
+			$other = " $other";
+		}
 		?>
-		<input type="text" name="<?php echo $name ?>" value="<?php _esc_attr($value) ?>" class="validate" id="<?php self::id() ?>" />
+		<input type="<?php echo $type ?>" name="<?php echo $name ?>" value="<?php _esc_attr($value) ?>" class="validate" id="<?php self::id() ?>"<?php echo $other ?> />
 		<label for="<?php self::id() ?>"><?php _esc_attr($title) ?></label>
 		<?php
 	}

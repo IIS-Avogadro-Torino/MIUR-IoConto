@@ -22,9 +22,12 @@ class Textarea {
 	 * @param $name string Input name
 	 * @param $value string Input value
 	 */
-	static function spawn($title, $name, $value = '') {
+	static function spawn($title, $name, $value = '', $other = null) {
+		if($other) {
+			$other = " $other";
+		}
 		?>
-		<textarea name="<?php echo $name ?>" placeholder="<?php _esc_attr($title) ?>" class="validate materialize-textarea"><?php _esc_html($value) ?></textarea>
+		<textarea name="<?php echo $name ?>" placeholder="<?php _esc_attr($title) ?>" class="validate materialize-textarea"<?php echo $other ?>><?php _esc_html($value) ?></textarea>
 		<?php
 	}
 }
