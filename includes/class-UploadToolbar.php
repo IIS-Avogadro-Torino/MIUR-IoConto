@@ -18,13 +18,10 @@
 class UploadToolbar {
 	static function spawn() { ?>
 
-<!-- right -->
+	<!-- right -->
 	<aside class="col hide-on-small-only m3 l2">
-		<p><a href="#" class="btn waves-effect light-blue darken-1">Importare <?php echo m_icon('cloud_upload') ?></a></p>
 		<p class="flow-text">Campi Complementari</p>
 		<p><a class="btn-floating btn waves-effect waves-light red"><?php echo m_icon('photo_camera') ?></a> Foto</p>
-		<p><a href="#" class="btn waves-effect yellow black-text">Anteprima <?php echo m_icon('spellcheck') ?></a></p>
-		<p><a href="#" class="btn waves-effect red">Scarica <?php echo m_icon('file_download') ?></a></p>
 	</aside>
 	<!-- right -->
 

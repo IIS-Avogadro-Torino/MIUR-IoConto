@@ -94,13 +94,14 @@ class Header {
 		<p class="flow-text red-text white margin-right-negative"><?php echo Header::$args['title'] ?></p>
 		<footer class="hide-on-small-only">
 			<ul>
-				<li><?php print_menu_link('curriculum-home', _("Home"), 'white-text') ?></li>
-				<li><a class="white-text" href="#">Il progetto</a></li>
-				<li><a class="white-text" href="#">Istruzioni</a></li>
-				<li><a class="white-text" href="#">Vai a Io Conto</a></li>
-				<li><a class="white-text" href="#">Esempi</a></li>
-				<li><a class="white-text" href="#">Area riservata</a></li>
-				<li><a class="white-text" href="#">News</a></li>
+				<li><?php print_menu_link('torna-a-io-conto', null, 'white-text') ?></li>
+				<li><?php print_menu_link('istruzioni-compilazione', null, 'white-text') ?></li>
+				<li><?php print_menu_link('assistenza', null, 'white-text') ?></li>
+				<?php if( is_logged() ): ?>
+				<li><?php print_menu_link('logout', null, 'white-text') ?></li>
+				<?php else: ?>
+				<li><?php print_menu_link('login', null, 'white-text') ?></li>
+				<?php endif ?>
 			</ul>
 		</footer>
 	</aside>

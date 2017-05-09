@@ -22,9 +22,19 @@ Header::spawn('curriculum-home', [
 ] );
 
 ?>
-	<center>
-		<img src="http://www.ioconto.itisavogadro.org/media/k2/items/cache/ada9a09acea936d776a6f55c82778c43_XL.jpg" width="150" />
-	</center>
+	<div class="card-panel">
+	Gentile DS, <br />
+	Gentile DSGA, <br />
+	Cliccando sul pulsante <em>Crea il tuo curriculum</em> accederai ad una pagina nella quale inserire le informazioni necessarie a valutare la tua candidatura per il ruolo di "formatore esperto" nel progetto Io conto seconda edizione.
+	Come avrai modo di vedere si tratta di una procedura rapida che serve solo ad avere un quadro delle competenze che hai.<br />
+
+	Si tratta di selezionare da un menù a tendina le proprie qualifiche e poi di dettagliarle (se lo si ritiene necessario) in un campo di testo (ad esempio è possibile mettere per esteso il titolo delle proprie pubblicazioni).<br />
+
+	Alla fine è possibile stampare il proprio cv e inserire una fotografia.<br />
+
+	Dopo avere cliccato il pulsante <em>Salva</em>, una serie di popup avvertono che si sta per inviare e concludere la procedura e che dopo l'invio NON sarà più possibile modificare quanto inviato.
+	</div>
+
 	<ul class="collection">
 		<li class="collection-item">
 			<?php print_menu_link('curriculum-2017', _("Crea il tuo Curriculum online") . m_icon('edit'), 'btn light-blue darken-1 waves-effect') ?>

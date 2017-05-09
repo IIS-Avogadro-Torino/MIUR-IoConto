@@ -87,15 +87,18 @@ register_css('print-mode',              THEME_URL . '/print-mode.css');
 // Menu entries
 add_menu_entries( [
 	new MenuEntry('home',                                     '',                                              _("Home") ),
-	new MenuEntry('login',                                    'login.php',                                    _("Autenticati") ),
-	new MenuEntry('logout',                                   'login.php?logout',                             _("Esci") ),
+	new MenuEntry('login',                                    'login.php',                                    _("Login") ),
+	new MenuEntry('logout',                                   'login.php?logout',                             _("Logout") ),
 	new MenuEntry('about',                                    'about.php',                                    _("Crediti") ),
 	new MenuEntry('404',                                      '404.php',                                      _("Pagina non trovata!"),               'hidden'),
 	new MenuEntry('curriculum-2017',                          'curriculum-2017.php',                           _("Il tuo Curriculum")                  ),
 	new MenuEntry('curriculum-home',                          'curriculum-home.php',                           _("Home")                               ),
 	new MenuEntry('news',                                     'http://www.ioconto.itisavogadro.org/index.php/news', _("News")                          ),
 	new MenuEntry('password-recovery',                        'password-recovery.php',                         _("Recupero password"),                 'hidden'),
-	new MenuEntry('password-change',                          'password-change.php',                           _("Cambio password"),                   'hidden')
+	new MenuEntry('password-change',                          'password-change.php',                           _("Cambio password"),                   'hidden'),
+	new MenuEntry('torna-a-io-conto',                         'https://www.ioconto.itisavogadro.org',          _("Torna a Io Conto") ),
+	new MenuEntry('istruzioni-compilazione',                  'istruzioni-compilazione.php',                   _("Istruzioni per la compilazione") ),
+	new MenuEntry('assistenza',                               'assistenza.php',                                _("Assistenza") )
 ] );
 
 // Global objects dynamically instantiated
