@@ -328,7 +328,7 @@ $modal_open = function () {
 
 		<div class="row">
 			<div class="col s12 m6">
-				<p><?php _e("Compilando e salvando il questionario accetti il trattamento dei tuoi dati personali ai sensi della legge 196/03.") ?></p>
+				<p><?php _e("Compilando e salvando il questionario Autorizzo espressamente il trattamento dei miei dati personali ai sensi del Decreto Legislativo 30 giugno 2003, n. 196 \"Codice in materia di protezione dei dati personali\" per la selezione per Esperto Formatore del progetto Io conto seconda edizione.") ?></p>
 			</div>
 			<div class="col s12 m6 input-field">
 				<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Salva tutto") ?><?php echo m_icon() ?></button>
