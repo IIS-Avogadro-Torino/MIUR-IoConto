@@ -19,18 +19,18 @@ require 'load.php';
 
 required_permission('do-my-curriculum');
 
-if( isset( $_POST['name'], $_POST['surname'], $_POST['email'], $_POST['subject'], $_POST['message'] ) ) {
+$sent = false;
 
-	$small_fields = ['name', 'surname', 'email', 'subject'];
+if( isset( $_POST['name'], $_POST['surname'], $_POST['subject'], $_POST['message'] ) ) {
+
+	$small_fields = ['name', 'surname', 'subject'];
 	foreach($small_fields as $field) {
 		$_POST[$small_field] = luser_input( $_POST[$field], 100 );
 		$_POST[$small_field] = strip_tags(  $_POST[$field] );
 	}
 	$_POST['message'] = luser_input( $_POST['message'], 10000 );
 
-	if( ! filter_var( $_POST['email'] , FILTER_VALIDATE_EMAIL) ) {
-		error_die("Email non valida");
-	}
+	$email = get_user()->getUserEmail();
 
 	$msg = sprintf(
 		"Nome: %s\n " .
@@ -41,7 +41,7 @@ if( isset( $_POST['name'], $_POST['surname'], $_POST['email'], $_POST['subject']
 
 		$_POST['name'   ],
 		$_POST['surname'],
-		$_POST['email'  ],
+		$email,
 		$_POST['subject'],
 		$_POST['message']
 	);
@@ -52,45 +52,56 @@ if( isset( $_POST['name'], $_POST['surname'], $_POST['email'], $_POST['subject']
 		  "Riceverai al più presto una risposta."),
 		$msg
 	) );
+
+	$sent = true;
 }
 
 Header::spawn('assistenza');
 
 ?>
-<p class="flow-text"><?php _e("Hai bisogno di assistenza? Utilizza questo modulo, risponderemo il prima possibile.") ?></p>
 
-<form method="post" class="card-panel">
-	<div class="row">
-		<div class="col s12 m6 input-field">
-			<?php InputText::spawn( _("Nome"), 'name', null, null, 'required="required"') ?>
-		</div>
-		<div class="col s12 m6 input-field">
-			<?php InputText::spawn( _("Cognome"), 'name', null, null, 'required="required"') ?>
-		</div>
-		<div class="col s12 m6 input-field">
-			<?php InputText::spawn( _("E-mail"), 'email', null, InputText::EMAIL, 'required="required"' ) ?>
-		</div>
-		<div class="col s12 m6 input-field">
-			<?php $s = _("Assistenza per selezione esperti formatori") ?>
-			<?php InputSelect::spawn(InputSelect::SINGLE, 'subject', null, [
-				$s => sprintf("Oggetto: %s", $s)
-			] ) ?>
-		</div>
-		<div class="col s12 input-text">
-			<?php Textarea::spawn( _("Inserisci il messaggio") , 'message', null, 'required="required"' ) ?>
-		</div>
-		<div class="col s12">
-			<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Invia richiesta"); echo m_icon() ?></button>
-		</div>
+<?php if($sent): ?>
+	<div class="card-panel">
+		<p><?php _e("Messaggio inviato!") ?></p>
 	</div>
-</form>
+<?php else: ?>
+	<p class="flow-text"><?php _e("Hai bisogno di assistenza? Utilizza questo modulo, risponderemo il prima possibile.") ?></p>
 
-<script>
-$(document).ready( function () {
-	$('select').material_select();
-} );
-</script>
+	<form method="post" class="card-panel">
+		<div class="row">
+			<div class="col s12 m6 input-field">
+				<?php InputText::spawn( _("Nome"), 'name', null, null, 'required="required"') ?>
+			</div>
+			<div class="col s12 m6 input-field">
+				<?php InputText::spawn( _("Cognome"), 'name', null, null, 'required="required"') ?>
+			</div>
+			<div class="col s12 input-field">
+				<?php $s = _("Assistenza per selezione esperti formatori") ?>
+				<?php InputSelect::spawn(InputSelect::SINGLE, 'subject', null, [
+					$s => sprintf("Oggetto: %s", $s)
+				] ) ?>
+			</div>
+			<div class="col s12 input-text">
+				<?php Textarea::spawn( _("Inserisci il messaggio") , 'message', null, 'required="required"' ) ?>
+			</div>
+			<div class="col s12">
+				<small><?php printf(
+					_("Una copia del messaggio ti sarà spedita al tuo indirizzo: <em>%s</em>"),
+					get_user()->getUserEmail()
+				) ?></small>
+			</div>
+			<div class="col s12">
+				<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Invia richiesta"); echo m_icon() ?></button>
+			</div>
+		</div>
+	</form>
 
-<?php
+	<script>
+	$(document).ready( function () {
+		$('select').material_select();
+	} );
+	</script>
 
-Footer::spawn();
+<?php endif ?>
+
+<?php Footer::spawn();
