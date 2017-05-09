@@ -17,14 +17,22 @@
 
 class InputText {
 
+	static $id = 0;
+
+	static function id() {
+		printf("input-text-%d", self::$id);
+	}
+
 	/**
 	 * @param $title string Placeholder
 	 * @param $name string Input name
 	 * @param $value string Input value
 	 */
 	static function spawn($title, $name, $value) {
+		self::$id++;
 		?>
-		<input type="text" name="<?php echo $name ?>" placeholder="<?php _esc_attr($title) ?>" value="<?php $value and _esc_attr($value) ?>" class="validate" />
+		<input type="text" name="<?php echo $name ?>" value="<?php $value and _esc_attr($value) ?>" class="validate" id="<?php self::id() ?>" />
+		<label for="<?php self::id() ?>"><?php _esc_attr($title) ?></label>
 		<?php
 	}
 }

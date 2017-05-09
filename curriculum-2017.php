@@ -117,16 +117,16 @@ $modal_open = function () {
 			<p><?php _e("Informazioni basilari da compilare prima di procedere con il questionario vero e proprio.") ?></p>
 
 			<?php Modal::start() ?>
-				<p><?php InputText::spawn( _("Nome"),               'name',    null ) ?></p>
-				<p><?php InputText::spawn( _("Cognome"),            'surname', null ) ?></p>
-				<p><?php InputText::spawn( _("Via e n° civico"),    'address', null ) ?></p>
-				<p><?php InputText::spawn( _("CAP"),                'cap', null ) ?></p>
-				<p><?php InputText::spawn( _("Città"),              'city', null ) ?></p>
-				<p><?php InputText::spawn( _("Cellulare"), 'phone', null ) ?></p>
-				<p><?php InputText::spawn( _("E-mail personale"),   'e-mail', null ) ?></p>
-				<p><?php InputText::spawn( _("Sito web / blog"), 'blog', null ) ?></p>
-				<p><?php InputText::spawn( _("Altri contatti"), 'others', null ) ?></p>
-				<p><?php Modal::close() ?>
+				<p class="input-field"><?php InputText::spawn( _("Nome"),               'name',    null ) ?></p>
+				<p class="input-field"><?php InputText::spawn( _("Cognome"),            'surname', null ) ?></p>
+				<p class="input-field"><?php InputText::spawn( _("Via e n° civico"),    'address', null ) ?></p>
+				<p class="input-field"><?php InputText::spawn( _("CAP"),                'cap', null ) ?></p>
+				<p class="input-field"><?php InputText::spawn( _("Città"),              'city', null ) ?></p>
+				<p class="input-field"><?php InputText::spawn( _("Cellulare"), 'phone', null ) ?></p>
+				<p class="input-field"><?php InputText::spawn( _("E-mail personale"),   'e-mail', null ) ?></p>
+				<p class="input-field"><?php InputText::spawn( _("Sito web / blog"), 'blog', null ) ?></p>
+				<p class="input-field"><?php InputText::spawn( _("Altri contatti"), 'others', null ) ?></p>
+				<p class="input-field"><?php Modal::close() ?>
 			<?php Modal::end() ?>
 
 			<div class="row">
