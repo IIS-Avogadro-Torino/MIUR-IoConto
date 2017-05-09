@@ -63,6 +63,7 @@ Header::spawn('assistenza');
 <?php if($sent): ?>
 	<div class="card-panel">
 		<p><?php _e("Messaggio inviato!") ?></p>
+		<p><?php _e("Puoi chiudere questa finestra o usare i link sulla sinistra.") ?></p>
 	</div>
 <?php else: ?>
 	<p class="flow-text"><?php _e("Hai bisogno di assistenza? Utilizza questo modulo, risponderemo il prima possibile.") ?></p>
@@ -73,7 +74,7 @@ Header::spawn('assistenza');
 				<?php InputText::spawn( _("Nome"), 'name', null, null, 'required="required"') ?>
 			</div>
 			<div class="col s12 m6 input-field">
-				<?php InputText::spawn( _("Cognome"), 'name', null, null, 'required="required"') ?>
+				<?php InputText::spawn( _("Cognome"), 'surname', null, null, 'required="required"') ?>
 			</div>
 			<div class="col s12 input-field">
 				<?php $s = _("Assistenza per selezione esperti formatori") ?>
