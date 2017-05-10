@@ -71,7 +71,7 @@ class Header {
 	<title><?php _esc_html( $complete_title ) ?></title>
 	<link rel="icon" type="image/png" href="<?php echo IMAGE_URL . '/formazione-MIUR-Io-Conto-favicon.png' ?>" />
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET ?>" />
-	<meta name="author" content="ITIS Avogadro, Valerio Bozzolan, Ivan Bertotto" />
+	<meta name="author" content="ITIS Avogadro" />
 	<meta name="generator" content="DIY PHP - MariaDB - MaterializeCSS - GNU Nano :^)" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><?php load_module('header') ?>
 

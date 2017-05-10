@@ -20,6 +20,7 @@ class UploadToolbar {
 
 	<!-- right -->
 	<aside class="col hide-on-small-only m3 l2">
+		<p class="flow-text"><?php _e("Avanzamento") ?>: <b class="form-percentage">0</b>%</p>
 		<p class="flow-text">Campi Complementari</p>
 		<p><a class="btn-floating btn waves-effect waves-light red"><?php echo m_icon('photo_camera') ?></a> Foto</p>
 	</aside>

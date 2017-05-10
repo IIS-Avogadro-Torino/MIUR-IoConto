@@ -148,8 +148,6 @@ $modal_open = function () {
 		<div class="card-panel">
 			<?php $heading( _("Compilazione curriculum") ) ?>
 
-			<p class="flow-text"><?php _e("Avanzamento") ?>: <b class="form-percentage">0</b>%</p>
-
 			<?php ModalInstructions::start( _("Valutare l'esperienza professionale dell'esperto considerando il ruolo e l'anzianità di servizio") ) ?>
 				<p><?php _e("Anni di anzianità o di servizio continuativi nel ruolo di DS o DSGA") ?></p>
 				<div class="input-field">
