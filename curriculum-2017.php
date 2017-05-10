@@ -27,6 +27,8 @@ if( ! empty( $_POST )  ) {
 	$fields = [
 		Curriculum::SURNAME => 's',
 		Curriculum::NAME => 's',
+		Curriculum::STATUS => 's',
+		Curriculum::ROLE => 's',
 		Curriculum::CITY => 's',
 		Curriculum::CAP => 's',
 		Curriculum::PHONE => 's',
@@ -123,16 +125,29 @@ $modal_open = function () {
 			<p><?php _e("Informazioni basilari da compilare prima di procedere con il questionario vero e proprio.") ?></p>
 
 			<?php Modal::start() ?>
-				<?php $fields = ['SURNAME', 'NAME', 'CAP', 'CITY', 'PHONE', 'EMAIL'] ?>
-				<?php foreach($fields as $field): ?>
-					<?php $const_value = constant("Curriculum::$field"); ?>
-					<p class="input-field"><?php InputText::spawn(
-						Curriculum::{$field}(),
-						$const_value,
-						$curriculum ? $curriculum->get($const_value) : null
-					) ?></p>
-				<?php endforeach ?>
-				<p class="input-field"><?php Modal::close() ?>
+				<div class="card-panel">
+					<?php $fields = ['SURNAME', 'NAME', 'CAP', 'CITY', 'PHONE', 'EMAIL'] ?>
+					<?php foreach($fields as $field): ?>
+						<?php $const_value = constant("Curriculum::$field"); ?>
+						<p class="input-field"><?php InputText::spawn(
+							Curriculum::{$field}(),
+							$const_value,
+							$curriculum ? $curriculum->get($const_value) : null
+						) ?></p>
+					<?php endforeach ?>
+				</div>
+				<div class="card-panel">
+					<p><?php _e("Seleziona il tuo ruolo ed il tuo stato:") ?></p>
+					<div class="row">
+						<div class="col s12 m6 input-field">
+							<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::ROLE,   $curriculum ? $curriculum->get(Curriculum::ROLE)   : null, Curriculum::ROLE() ) ?>
+						</div>
+						<div class="col s12 m6 input-field">
+							<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::STATUS, $curriculum ? $curriculum->get(Curriculum::STATUS) : null, Curriculum::STATUS() ) ?>
+						</div>
+					</div>
+				</div>
+				<?php Modal::close() ?>
 			<?php Modal::end() ?>
 
 			<div class="row">

@@ -43,6 +43,8 @@ class Curriculum extends Queried {
 	const CAP     = 'curriculum_cap';
 	const PHONE   = 'curriculum_phone';
 	const EMAIL   = 'curriculum_email';
+	const STATUS  = 'curriculum_status';
+	const ROLE    = 'curriculum_role';
 
 	// Fields
 	const YEARS                         = 'curriculum_years';
@@ -107,6 +109,21 @@ class Curriculum extends Queried {
 
 	static function EMAIL() {
 		return _("e-mail personale");
+	}
+
+	static function ROLE() {
+		return [
+			'ds'   => _("DS"),
+			'dsga' => _("DSGA")
+		];
+	}
+
+	static function STATUS() {
+		return  [
+			'titolare' => _("titolare"),
+			'reggente' => _("reggente"),
+			'altro'    => _("altro")
+		];
 	}
 
 	static function YEARS() {
