@@ -148,6 +148,8 @@ $modal_open = function () {
 		<div class="card-panel">
 			<?php $heading( _("Compilazione curriculum") ) ?>
 
+			<p class="flow-text"><?php _e("Avanzamento") ?>: <b class="form-percentage">0</b>%</p>
+
 			<?php ModalInstructions::start( _("Valutare l'esperienza professionale dell'esperto considerando il ruolo e l'anzianità di servizio") ) ?>
 				<p><?php _e("Anni di anzianità o di servizio continuativi nel ruolo di DS o DSGA") ?></p>
 				<div class="input-field">
@@ -354,12 +356,61 @@ var updateGUI = function () {
 };
 $_modelViewControllerAdded = updateGUI;
 
+function update_form_percentage() {
+	var $texts      = $('input[type=text]:not(.select-dropdown)');
+	var $radios     = $('input[type=radio]');
+	//var $checkboxes = $('input[type=checkbox]');
+	var $selects    = $('select');
+
+	var radio_names = {};
+	$radios.each( function () {
+		radio_names[ $(this).attr('name') ] = 1;
+	} );
+
+	console.log(radio_names);
+
+	var n_radios = Object.keys(radio_names).length;
+
+	var sum = $texts.length + n_radios + $selects.length;
+
+	var $texts_ok = $texts.filter( function () {
+		return $(this).val().length > 0;
+	} );
+	var $radios_ok     = $radios.filter(':checked');
+	//var $checkboxes_ok = $checkboxes.filter(':checked');
+	var $selects_ok    = $selects.filter( function () {
+		return $(this).val().length < 15;
+	} );
+
+	var sum_ok = $texts_ok.length + $radios_ok.length + $selects_ok.length;
+
+	var v = Math.floor( sum_ok / sum * 100 );
+
+	console.log($texts.length);
+	console.log($texts_ok.length);
+
+	console.log(n_radios);
+	console.log($radios_ok.length);
+
+	console.log($selects.length);
+	console.log($selects_ok.length);
+
+	console.log(sum);
+	console.log(sum_ok);
+
+	$('.form-percentage').html(v);
+}
+
 $(document).ready( function () {
 	updateGUI();
 	$('.modal').modal();
 	$('.modal').append(
 		'<button class="modal-close btn-flat" style="position:absolute;top:0;right:0;">X</button>'
 	);
+
+	update_form_percentage();
+	$('input').change(update_form_percentage);
+	$('select').change(update_form_percentage);
 } );
 </script>
 

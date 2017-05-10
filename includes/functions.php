@@ -129,7 +129,3 @@ function die_asking_permissions() {
 	Footer::spawn();
 	exit;
 }
-
-function yes_no($v) {
-	return $v ? _("sì") : _("no");
-}
