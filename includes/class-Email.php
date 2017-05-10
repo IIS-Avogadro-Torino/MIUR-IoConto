@@ -19,12 +19,13 @@ require_once(SENDGRID_PATH);
 
 class Email {
 	static function send($to, $subject, $msg) {
-		$from = new SendGrid\Email( _("Gentile utente") , ADMIN_EMAIL);
-		$to = new SendGrid\Email( _("Io Conto") , $to);
+		$from = new SendGrid\Email( _("FormazioneMiur.it") , ADMIN_EMAIL);
+		$to   = new SendGrid\Email( _("Gentile utente")    , $to);
 		$msg .= sprintf(
-			"\n\n".
-			"_____________\n".
-			"Io Conto\n%s",
+			"\n\n ".
+			"_____________\n ".
+			"FormazioneMiur\n ".
+			"%s",
 			URL
 		);
 		$msg = str_replace("\n", "\r\n", $msg);

@@ -47,7 +47,7 @@ if( isset( $_POST['name'], $_POST['surname'], $_POST['subject'], $_POST['message
 	);
 
 	Email::send(ADMIN_EMAIL, _("Richiesta di assistenza"), $msg);
-	Email::send($_POST['email'], _("Copia del messaggio di assistenza"), sprintf(
+	Email::send($email , _("Copia del messaggio di assistenza"), sprintf(
 		_("Di seguito una copia del messaggio che hai trasmesso:\n %s.\n\n".
 		  "Riceverai al più presto una risposta."),
 		$msg
