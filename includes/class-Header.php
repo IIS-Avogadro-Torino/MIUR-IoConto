@@ -1,6 +1,6 @@
 <?php
 # Formazione MIUR content management system
-# Copyright (C) 2015 Valerio Bozzolan
+# Copyright (C) 2015, 2016, 2017 Valerio Bozzolan
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -91,6 +91,9 @@ class Header {
 		<div class="hide-on-small-only">
 			<img class="responsive-img ioconto-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto.png" alt="logo Io Conto" />
 		</div>
+		<?php if( is_logged() ): ?>
+		<p class="white-text">Benvenuto <?php echo get_user()->getUserEmail() ?></p>
+		<?php endif ?>
 		<p class="flow-text red-text white margin-right-negative"><?php echo Header::$args['title'] ?></p>
 		<footer class="hide-on-small-only">
 			<ul>
@@ -106,6 +109,13 @@ class Header {
 				<li><?php print_menu_link('login', null, 'white-text') ?></li>
 				<?php endif ?>
 			</ul>
+
+			<?php if( has_permission('see-all-curriculums') ): ?>
+			<p class="white-text"><?php _e("Menù amministrativo:") ?></p>
+			<ul>
+				<li><?php print_menu_link('curriculum-export-csv', null, 'white-text') ?></li>
+			</ul>
+			<?php endif ?>
 		</footer>
 	</aside>
 	<!-- /left -->
