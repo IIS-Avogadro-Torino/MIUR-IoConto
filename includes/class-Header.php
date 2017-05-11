@@ -94,9 +94,10 @@ class Header {
 		<p class="flow-text red-text white margin-right-negative"><?php echo Header::$args['title'] ?></p>
 		<footer class="hide-on-small-only">
 			<ul>
-				<li><?php print_menu_link('torna-a-io-conto', null, 'white-text') ?></li>
+				<li><?php print_menu_link('home', _("Torna alla home"), 'white-text') ?></li>
 				<li><?php print_menu_link('istruzioni-compilazione', null, 'white-text') ?></li>
 				<li><?php print_menu_link('assistenza', null, 'white-text') ?></li>
+				<li><?php print_menu_link('torna-a-io-conto', null, 'white-text') ?></li>
 				<?php if( is_logged() ): ?>
 				<li><?php print_menu_link('logout', null, 'white-text') ?></li>
 				<?php else: ?>
