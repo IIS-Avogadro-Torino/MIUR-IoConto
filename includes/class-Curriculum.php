@@ -198,12 +198,15 @@ class Curriculum extends Queried {
 
 	static function REGIONAL_TASK() {
 		return [
-			3 => _("Gruppi di lavoro (più di 3)"),
-			5 => _("Incarichi di reggenza (più di 3)")
+			3 => _("gruppi di lavoro (più di 3)"),
+			5 => _("gruppi di lavoro (più di 5)")
 		];
 	}
 
 	static function NATIONAL_TASK() {
-		return self::REGIONAL_TASK();
+		return [
+			3 => _("incarichi di reggenza (più di 3)"),
+			5 => _("incarichi di reggenza (più di 5)")
+		];
 	}
 }
