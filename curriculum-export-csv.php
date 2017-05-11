@@ -117,6 +117,13 @@ function yep_nope() {
 	];
 }
 
+function sanitize_csv_value(& $s) {
+	$s = str_replace("\n", ' ', $s);
+	$s = str_replace("\r", ' ', $s);
+	$s = str_replace(CSV_GLUE, ' ', $s);
+	return $s;
+}
+
 $extra_info = _("Extra info");
 
 if( ! empty( $_POST ) ) {
@@ -192,6 +199,7 @@ if( ! empty( $_POST ) ) {
 		}
 		$values[] = $points;
 
+		array_walk($values, 'sanitize_csv_value');
 		echo implode(CSV_GLUE, $values);
 		echo "\n";
 	}
