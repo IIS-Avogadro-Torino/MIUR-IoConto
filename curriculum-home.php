@@ -30,9 +30,7 @@ Header::spawn('curriculum-home', [
 
 	Si tratta di selezionare da un menù a tendina le proprie qualifiche e poi di dettagliarle (se lo si ritiene necessario) in un campo di testo (ad esempio è possibile mettere per esteso il titolo delle proprie pubblicazioni).<br />
 
-	Alla fine è possibile stampare il proprio cv e inserire una fotografia.<br />
-
-	Dopo avere cliccato il pulsante <em>Salva</em>, una serie di popup avvertono che si sta per inviare e concludere la procedura e che dopo l'invio NON sarà più possibile modificare quanto inviato.
+	Dopo avere cliccato il pulsante <em>Salva tutto</em> non sarà più possibile modificare quanto inviato.
 	</div>
 
 	<ul class="collection">
@@ -40,10 +38,7 @@ Header::spawn('curriculum-home', [
 			<?php print_menu_link('curriculum-2017', _("Crea il tuo Curriculum online") . m_icon('edit'), 'btn light-blue darken-1 waves-effect') ?>
 		</li>
 		<li class="collection-item">
-			<?php _e("Modello e istruzioni") ?>
-		</li>
-		<li class="collection-item">
-			<?php _e("Esempi") ?>
+			 <?php print_menu_link('istruzioni-compilazione', null, 'btn light-blue darken-1 waves-effect') ?>
 		</li>
 	</ul>
 <?php
