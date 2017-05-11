@@ -23,9 +23,12 @@ Header::spawn('curriculum-home', [
 ?>
 
 <div class="card-panel">
+	<?php /*
 	<div class="video-container">
 		<iframe width="853" height="480" src="https://www.youtube.com/embed/FuwiWEiv8_Y" frameborder="0" allowfullscreen></iframe>
 	</div>
+	*/ ?>
+	<p><?php _e("Sarà scaricabile un breve manuale.") ?></p>
 </div>
 
 <?php
