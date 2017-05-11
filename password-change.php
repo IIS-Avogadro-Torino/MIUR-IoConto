@@ -17,21 +17,31 @@
 
 require 'load.php';
 
-$uid   = $_REQUEST['uid'];
-$token = $_REQUEST['token'];
+$invalidate = function () {
+	http_redirect( menu_url('password-recovery') );
+};
 
-isset( $uid, $token )
-	or http_redirect( menu_url('password-reset') );
+$uid   = @ $_REQUEST['uid'];
+$token = @ $_REQUEST['token'];
+
+empty( $uid ) ||
+empty( $token )
+	and $invalidate();
 
 $user = User::factoryByUID( $uid )
 	->queryRow();
 
-$user	or http_redirect( menu_url('password-reset') );
+$user	or  $invalidate();
 
-$token = $user->get(User::TOKEN);
+$user_token = $user->get(User::TOKEN);
 
-empty($token)
-	and http_redirect( menu_url('password-reset') );
+empty($user_token)
+	and $invalidate();
+
+$token_wrong = strlen($token) < 5 || $token !== $user_token;
+
+$token_wrong
+	and $invalidate();
 
 $reset = false;
 if( isset( $_POST['password'] ) ) {
@@ -48,6 +58,7 @@ if( isset( $_POST['password'] ) ) {
 Header::spawn('password-change');
 
 ?>
+
 	<div class="card-panel">
 		<?php if($reset): ?>
 			<p class="flow-text"><?php _e("Ottimo! Ora effetua l'accesso con le credenziali appena create:") ?></p>
@@ -79,20 +90,21 @@ Header::spawn('password-change');
 			</div>
 		</form>
 		<?php endif ?>
+
+		<script>
+		$(document).ready( function () {
+			$('form').submit(function (e) {
+				var $p1 = $('input[name=password]').val();
+				var $p2 = $('input[name=password2]').val();
+				if( $p1 !== $p2 ) {
+					Materialize.toast('<?php _e("Le password non combaciano!") ?>', 4000);
+					e.preventDefault();
+				}
+			});
+		} );
+		</script>
 	</div>
 
-	<script>
-	$(document).ready( function () {
-		$('form').submit(function (e) {
-			var $p1 = $('input[name=password]').val();
-			var $p2 = $('input[name=password2]').val();
-			if( $p1 !== $p2 ) {
-				Materialize.toast('<?php _e("Le password non combaciano!") ?>', 4000);
-				e.preventDefault();
-			}
-		});
-	} );
-	</script>
 <?php
 
 Footer::spawn();

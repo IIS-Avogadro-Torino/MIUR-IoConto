@@ -36,7 +36,7 @@ if( isset( $_POST['uid'] ) ) {
 		] );
 		$user->updateUser( new DBCol(User::TOKEN, $token, 's' ) );
 		Email::send( $user->getUserEmail() , _("Procedura di reset password"), sprintf(
-			_("Recupero password:\n%s"),
+			_("Recupero password:\n %s"),
 			$url
 		) );
 	} else {
