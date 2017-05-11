@@ -64,6 +64,8 @@ class Curriculum extends Queried {
 	const USRMIUR_TASKS_DESC            = 'curriculum_usrmiurtasks_desc';
 	const REGIONAL_TASK                 = 'curriculum_regionaltask';
 	const REGIONAL_TASK_DESC            = 'curriculum_regionaltask_desc';
+	const NATIONAL_TASK                 = 'curriculum_nationaltask';
+	const NATIONAL_TASK_DESC            = 'curriculum_nationaltask_desc';
 	const ECDL                          = 'curriculum_ecdl';
 	const EXTRALANGUAGE                 = 'curriculum_extralanguage';
 	const EXPERT                        = 'curriculum_expertioconto';
@@ -128,7 +130,7 @@ class Curriculum extends Queried {
 
 	static function YEARS() {
 		return [
-			5  => _("Anzianità > 15 anni"),
+			5  => _("anzianità < 5 anni"),
 			10 => _("5 anni < anzianità <= 10 anni"),
 			15 => _("10 anni < anzianità <= 15 anni"),
 			20 => _("anzianità > 15")
@@ -197,5 +199,9 @@ class Curriculum extends Queried {
 			3 => _("Gruppi di lavoro (più di 3)"),
 			5 => _("Incarichi di reggenza (più di 3)")
 		];
+	}
+
+	static function NATIONAL_TASK() {
+		return self::REGIONAL_TASK();
 	}
 }

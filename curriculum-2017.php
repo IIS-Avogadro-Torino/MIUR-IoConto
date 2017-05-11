@@ -49,6 +49,8 @@ if( ! empty( $_POST )  ) {
 		Curriculum::USRMIUR_TASKS_DESC => 's',
 		Curriculum::REGIONAL_TASK => 's',
 		Curriculum::REGIONAL_TASK_DESC => 's',
+		Curriculum::NATIONAL_TASK => 's',
+		Curriculum::NATIONAL_TASK_DESC => 's',
 		Curriculum::ECDL => 'd',
 		Curriculum::EXTRALANGUAGE => 'd',
 		Curriculum::EXPERT => 'd'
@@ -287,23 +289,20 @@ $modal_open = function () {
 				<div class="card-panel">
 					<p><?php _e("Appartenenza a gruppi di lavoro istituzionali regionali e/o centrali gruppo di lavoro, cabine di regia, comitati paritetici (indicare nome ed estremi)") ?></p>
 					<div class="input-field">
-						<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::REGIONAL_TASK, null, Curriculum::REGIONAL_TASK() ) ?>
+						<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::REGIONAL_TASK, $curriculum ? $curriculum->get(Curriculum::REGIONAL_TASK) : null, Curriculum::REGIONAL_TASK() ) ?>
 					</div>
 					<div class="input-field">
-						<?php Textarea::spawn( _("Dettaglia"), Curriculum::REGIONAL_TASK_DESC, null) ?>
+						<?php Textarea::spawn( _("Dettaglia"), Curriculum::REGIONAL_TASK_DESC, $curriculum ? $curriculum->get(Curriculum::REGIONAL_TASK_DESC) : null ) ?>
 					</div>
 				</div>
 
 				<div class="card-panel">
 					<p><?php _e("Incarichi di reggenza presso Istituzioni scolastiche statali") ?></p>
 					<div class="input-field">
-						<?php InputSelect::spawn(InputSelect::SINGLE, 'government_tasks', null, [
-							'3' => _("Gruppi di lavoro, tavoli tecnici ecc. Amministrazione centrale e/o periferica (più di 3)"),
-							'5' => _("Incarichi reggenza (più di 3)"),
-						] ) ?>
+						<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::NATIONAL_TASK, $curriculum ? $curriculum->get(Curriculum::NATIONAL_TASK) : null, Curriculum::NATIONAL_TASK() ) ?>
 					</div>
 					<div class="input-field">
-						<?php Textarea::spawn( _("Dettaglia"), 'government_tasks_desc', null) ?>
+						<?php Textarea::spawn( _("Dettaglia"), Curriculum::NATIONAL_TASK_DESC, $curriculum ? $curriculum->get(Curriculum::NATIONAL_TASK_DESC) : null ) ?>
 					</div>
 				</div>
 			<?php ModalInstructions::end() ?>
