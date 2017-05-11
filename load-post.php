@@ -39,7 +39,7 @@ defined('SENDGRID_PATH')
 	or define('SENDGRID_PATH', ABSPATH . __ . 'sendgrid-php' . __ . 'sendgrid-php.php');
 
 defined('CSV_GLUE')
-	or define('CSV_GLUE', '|');
+	or define('CSV_GLUE', ';');
 
 define('UPLOADS',   CONTENT . '/uploads');
 
