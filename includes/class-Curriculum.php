@@ -70,6 +70,8 @@ class Curriculum extends Queried {
 	const EXTRALANGUAGE                 = 'curriculum_extralanguage';
 	const EXPERT                        = 'curriculum_expertioconto';
 
+	const LASTUPDATE_DATE               = 'curriculum_lastupdate_date';
+
 	// Complete external keys
 	const ORGANICO_ = self::T . DOT . self::ORGANICO;
 
@@ -180,10 +182,10 @@ class Curriculum extends Queried {
 	static function COURSES_ORGANIZED_GENERIC() {
 		return [
 			0 =>  _("Nessun corso"),
-			5 =>  _("0 < corsi <= 2"),
-			10 => _("2 < corsi <= 4"),
-			15 => _("4 < corsi <= 6"),
-			20 => _("corsi > 6")
+			4 =>  _("0 < corsi <= 2"),
+			6 => _("2 < corsi <= 4"),
+			8 => _("4 < corsi <= 6"),
+			10 => _("corsi > 6")
 		];
 	}
 

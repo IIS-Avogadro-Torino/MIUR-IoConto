@@ -143,19 +143,12 @@ if( ! empty( $_POST ) ) {
 		new CSVHeadingSimple(0, 0, 'Curriculum::USRMIUR_TASKS_DESC',                 $extra_info),
 		new CSVHeadingSimple(1, 0, 'Curriculum::REGIONAL_TASK',                      _("Compiti regionali/provinciali") ),
 		new CSVHeadingSimple(0, 0, 'Curriculum::REGIONAL_TASK_DESC',                 $extra_info),
+		new CSVHeadingSimple(1, 0, 'Curriculum::NATIONAL_TASK',                      _("Compiti nazionali") ),
+		new CSVHeadingSimple(0, 0, 'Curriculum::NATIONAL_TASK_DESC',                 $extra_info),
 		new CSVHeadingSimple(1, 1, 'Curriculum::ECDL',                               _("patente computer"), 'yep_nope',     1 ),
 		new CSVHeadingSimple(1, 1, 'Curriculum::EXTRALANGUAGE',                      _("lingua straniera"), 'yep_nope',     1 ),
 		new CSVHeadingSimple(1, 1, 'Curriculum::EXPERT',                             _("ex-esperto"),       'yep_nope',     3 ),
 	];
-
-	$headings = [];
-	foreach($CSVHeadings as $heading) {
-		$headings[] = $heading->getTitle();
-		if( $heading->isCountable() ) {
-			$headings[] = sprintf("Punteggio %s", $heading->getTitle() );
-		}
-	}
-	$headings[] = _("PUNTEGGIO TOTALE");
 
 	$curriculums = Curriculum::factory()
 		->select(Curriculum::T . DOT . STAR)
@@ -171,6 +164,21 @@ if( ! empty( $_POST ) ) {
 
 		->queryResults();
 
+	header('Content-Type: text/csv; charset=utf-8');
+	header('Content-Disposition: attachment; filename=generated-export-curriculums.csv');
+
+	$headings = [];
+	foreach($CSVHeadings as $heading) {
+		$headings[] = $heading->getTitle();
+		if( $heading->isCountable() ) {
+			$headings[] = sprintf("Punteggio %s", $heading->getTitle() );
+		}
+	}
+	$headings[] = _("PUNTEGGIO TOTALE");
+
+	echo implode(CSV_GLUE, $headings);
+	echo "\n";
+
 	foreach($curriculums as $curriculum) {
 		$values = [];
 		$points = 0;
@@ -183,15 +191,10 @@ if( ! empty( $_POST ) ) {
 			}
 		}
 		$values[] = $points;
+
+		echo implode(CSV_GLUE, $values);
+		echo "\n";
 	}
-
-	header('Content-Type: text/csv; charset=utf-8');
-	header('Content-Disposition: attachment; filename=generated-export-curriculums.csv');
-
-	echo implode(CSV_GLUE, $headings);
-	echo "\n";
-	echo implode(CSV_GLUE, $values);
-	echo "\n";
 
 	exit;
 }
