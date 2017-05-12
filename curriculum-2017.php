@@ -32,7 +32,6 @@ if( ! empty( $_POST )  ) {
 		Curriculum::CITY => 's',
 		Curriculum::CAP => 's',
 		Curriculum::PHONE => 's',
-		Curriculum::EMAIL => 's',
 		Curriculum::YEARS => 's',
 		Curriculum::YEARS_DESC => 's',
 		Curriculum::STUDY => 's',
@@ -52,13 +51,12 @@ if( ! empty( $_POST )  ) {
 		Curriculum::NATIONAL_TASK => 's',
 		Curriculum::NATIONAL_TASK_DESC => 's',
 		Curriculum::ECDL => 'd',
-		Curriculum::EXTRALANGUAGE => 'd',
 		Curriculum::EXPERT => 'd'
 	];
 	$dbfields = [];
 	foreach($fields as $field => $type) {
 		$v = @ $_POST[$field];
-		$v = luser_input($v, 5000);
+		$v = luser_input($v, 1500);
 		$dbfields[] = new DBCol($field, $v, $type);
 	}
 
@@ -129,7 +127,7 @@ $modal_open = function () {
 
 			<?php Modal::start() ?>
 				<div class="card-panel">
-					<?php $fields = ['SURNAME', 'NAME', 'CAP', 'CITY', 'PHONE', 'EMAIL'] ?>
+					<?php $fields = ['SURNAME', 'NAME', 'CAP', 'CITY', 'PHONE'] ?>
 					<?php foreach($fields as $field): ?>
 						<?php $const_value = constant("Curriculum::$field"); ?>
 						<p class="input-field"><?php InputText::spawn(
@@ -138,17 +136,6 @@ $modal_open = function () {
 							$curriculum ? $curriculum->get($const_value) : null
 						) ?></p>
 					<?php endforeach ?>
-				</div>
-				<div class="card-panel">
-					<p><?php _e("Seleziona il tuo ruolo ed il tuo stato:") ?></p>
-					<div class="row">
-						<div class="col s12 m6 input-field">
-							<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::ROLE,   $curriculum ? $curriculum->get(Curriculum::ROLE)   : null, Curriculum::ROLE() ) ?>
-						</div>
-						<div class="col s12 m6 input-field">
-							<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::STATUS, $curriculum ? $curriculum->get(Curriculum::STATUS) : null, Curriculum::STATUS() ) ?>
-						</div>
-					</div>
 				</div>
 				<?php Modal::close() ?>
 			<?php Modal::end() ?>
@@ -273,7 +260,6 @@ $modal_open = function () {
 				<?php $container_end() ?>
 			</div>
 
-
 			<!-- Campi blu -->
 			<?php ModalInstructions::start( _("Valutare la collaborazione con le diverse direzioni regionali e con altre scuole del contesto regionale e nazionale") ) ?>
 				<div class="card-panel">
@@ -323,10 +309,6 @@ $modal_open = function () {
 						<input name="<?php echo Curriculum::ECDL ?>" type="checkbox" id="computer" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::ECDL), true ) ?> />
 						<label for="computer"><?php _e("Hai la patente europea del computer?") ?></label>
 					</p>
-					<p>
-						<input name="<?php echo Curriculum::EXTRALANGUAGE ?>" type="checkbox" id="languages" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::EXTRALANGUAGE), true ) ?> />
-						<label for="languages"><?php _e("Hai la conoscenza di una lingua straniera?") ?></label>
-					</p>
 				</div>
 				<div class="card-panel">
 					<p><?php _e("hai partecipato alla prima edizione del progetto Io conto in qualità di esperto?") ?></p>
@@ -355,7 +337,10 @@ $modal_open = function () {
 				<p><?php _e("Compilando e salvando il questionario Autorizzo espressamente il trattamento dei miei dati personali ai sensi del Decreto Legislativo 30 giugno 2003, n. 196 \"Codice in materia di protezione dei dati personali\" per la selezione per Esperto Formatore del progetto Io conto seconda edizione.") ?></p>
 			</div>
 			<div class="col s12 m6 input-field">
-				<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Salva tutto") ?><?php echo m_icon() ?></button>
+				<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Salva") ?><?php echo m_icon() ?></button>
+			</div>
+			<div class="col s12 m6 input-field">
+				<button type="submit" name="finalize" value="1" class="btn waves-effect light-blue darken-1"><?php _e("Finalizza") ?></button>
 			</div>
 		</div>
 	</form>
@@ -370,6 +355,7 @@ var updateGUI = function () {
 $_modelViewControllerAdded = updateGUI;
 
 function update_form_percentage() {
+	var $textareas = $('textarea');
 	var $texts      = $('input[type=text]:not(.select-dropdown)');
 	var $radios     = $('input[type=radio]');
 	//var $checkboxes = $('input[type=checkbox]');
@@ -380,12 +366,13 @@ function update_form_percentage() {
 		radio_names[ $(this).attr('name') ] = 1;
 	} );
 
-	console.log(radio_names);
-
 	var n_radios = Object.keys(radio_names).length;
 
 	var sum = $texts.length + n_radios + $selects.length;
 
+	var $textareas = $textareas.filter( function () {
+		return $(this).val().length > 0;
+	} );
 	var $texts_ok = $texts.filter( function () {
 		return $(this).val().length > 0;
 	} );
@@ -412,6 +399,10 @@ function update_form_percentage() {
 	console.log(sum_ok);
 
 	$('.form-percentage').html(v);
+
+	$('input[name=finalize]').submit( function () {
+		/* Modal che chiede sì/no */
+	} );
 }
 
 $(document).ready( function () {

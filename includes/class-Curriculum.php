@@ -67,7 +67,6 @@ class Curriculum extends Queried {
 	const NATIONAL_TASK                 = 'curriculum_nationaltask';
 	const NATIONAL_TASK_DESC            = 'curriculum_nationaltask_desc';
 	const ECDL                          = 'curriculum_ecdl';
-	const EXTRALANGUAGE                 = 'curriculum_extralanguage';
 	const EXPERT                        = 'curriculum_expertioconto';
 
 	const LASTUPDATE_DATE               = 'curriculum_lastupdate_date';
@@ -77,7 +76,7 @@ class Curriculum extends Queried {
 
 	function __construct() {
 		$this->integers(self::ORGANICO);
-		$this->booleans(self::ECDL, self::EXTRALANGUAGE, self::EXPERT);
+		$this->booleans(self::ECDL, self::EXPERT);
 	}
 
 	static function factory() {
@@ -132,7 +131,7 @@ class Curriculum extends Queried {
 
 	static function YEARS() {
 		return [
-			5  => _("anzianità < 5 anni"),
+			5  => _("anzianità <= 5 anni"),
 			10 => _("5 anni < anzianità <= 10 anni"),
 			15 => _("10 anni < anzianità <= 15 anni"),
 			20 => _("anzianità > 15")
@@ -141,37 +140,37 @@ class Curriculum extends Queried {
 
 	static function STUDY() {
 		return [
-			3  => _("Laurea triennale"),
-			5  => _("Laurea magistrale / V.O / specialistica"),
-			8  => _("Master di I livello"),
-			10 => _("Master di II livello (o biennale)"),
-			15 => _("Dottorato / seconda laurea")
+			3  => _("laurea triennale"),
+			5  => _("laurea magistrale / V.O. / specialistica"),
+			8  => _("master universitario di I livello"),
+			10 => _("master universitario di II livello (o biennale)"),
+			15 => _("dottorato / seconda laurea")
 		];
 	}
 
 	static function COURSES_FOLLOWED() {
 		return [
-			0  => _("Nessun corso"),
+			0  => _("nessun corso"),
 			2  => _("0 < corsi <= 2"),
 			4  => _("2 < corsi <= 4"),
 			6  => _("4 < corsi <= 6"),
-			8  => _("corsi > 6"),
+			8  => _("6 < corsi <= 10"),
 			10 => _("corsi > 10")
 		];
 	}
 
 	static function PUBLICATIONS() {
 		return [
-			0  => _("Nessuna pubblicazione su articoli o riviste specializzate"),
-			3  => _("da uno a tre pubblicazioni"),
-			5  => _("meno di sei pubblicazioni"),
-			10 => _("sei pubblicazioni o più")
+			0  => _("nessuna pubblicazione"),
+			3  => _("1 < pubblicazioni <= 3"),
+			5  => _("3 < pubblicazioni <= 6"),
+			10 => _("pubblicazioni > 6")
 		];
 	}
 
 	static function COURSES_ORGANIZED_SPECIALIZED() {
 		return [
-			0 =>  _("Nessun corso"),
+			0 =>  _("nessun corso"),
 			5 =>  _("0 < corsi <= 2"),
 			10 => _("2 < corsi <= 4"),
 			15 => _("4 < corsi <= 6"),
@@ -181,32 +180,32 @@ class Curriculum extends Queried {
 
 	static function COURSES_ORGANIZED_GENERIC() {
 		return [
-			0 =>  _("Nessun corso"),
+			0 =>  _("nessun corso"),
 			4 =>  _("0 < corsi <= 2"),
-			6 => _("2 < corsi <= 4"),
-			8 => _("4 < corsi <= 6"),
+			6 =>  _("2 < corsi <= 4"),
+			8 =>  _("4 < corsi <= 6"),
 			10 => _("corsi > 6")
 		];
 	}
 
 	static function USRMIUR_TASKS() {
 		return [
-			3 => _("Fino a 3 incarichi"),
-			5 => _("Più di 5 incarichi")
+			3 => _("incarichi <= 5"),
+			5 => _("incarichi > 5")
 		];
 	}
 
 	static function REGIONAL_TASK() {
 		return [
-			3 => _("gruppi di lavoro (più di 3)"),
-			5 => _("gruppi di lavoro (più di 5)")
+			3 => _("gruppi di lavoro <= 5"),
+			5 => _("gruppi di lavoro > 5")
 		];
 	}
 
 	static function NATIONAL_TASK() {
 		return [
-			3 => _("incarichi di reggenza (più di 3)"),
-			5 => _("incarichi di reggenza (più di 5)")
+			3 => _("incarichi di reggenza <= 3"),
+			5 => _("incarichi di reggenza > 3")
 		];
 	}
 }

@@ -25,11 +25,15 @@ trait UserTrait {
 	}
 
 	function getUserEmail() {
-		return $this->getUserUID();
+		return $this->get(User::EMAIL);
 	}
 
 	function isUserActive() {
 		return $this->get(User::ACTIVE);
+	}
+
+	function hasNotPersonalEmail() {
+		return $this->getUserEmail() !== $this->get(User::EMAIL_OFFICIAL);
 	}
 
 	function getUserOrganicoID() {
@@ -58,9 +62,13 @@ class User extends Sessionuser {
 	const ACTIVE = 'user_active';
 	const TOKEN = 'user_token';
 	const PASSWORD = 'user_password';
+	const EMAIL = 'user_email';
+	const EMAIL_OFFICIAL = 'user_email_official';
 
 	const ID_       = self::T . DOT . self::ID;
 	const ORGANICO_ = self::T . DOT . self::ORGANICO;
+
+	const FIRM = 'user_firm';
 
 	function __construct() {
 		$this->integers(self::ID, self::ORGANICO);

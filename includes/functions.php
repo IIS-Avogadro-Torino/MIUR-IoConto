@@ -129,3 +129,13 @@ function die_asking_permissions() {
 	Footer::spawn();
 	exit;
 }
+
+function login_url($user_uid = null) {
+	$url = menu_url('login');
+	if($user_uid) {
+		$url .= '?' . http_build_query( [
+			'user_uid' => $user_uid
+		] );
+	}
+	return $url;
+}

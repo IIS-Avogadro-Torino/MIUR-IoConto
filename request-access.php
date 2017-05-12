@@ -21,38 +21,32 @@ $sent = ! empty( $_POST['uid'] );
 
 $uid = null;
 
+Header::spawn('password-recovery');
+
 if( isset( $_POST['uid'] ) ) {
-	$uid = $_POST['uid'];
+	$uid = luser_input( $_POST['uid'], 20 );
 
-	$user = User::factoryByUID( $uid )
-		->queryRow();
+	$users = User::factory( $uid )
+		->where( sprintf(
+			"%s LIKE '%s'",
+			"$uid%"
+		) )
+		->queryResults();
 
-	if($user) {
-		$token = str_truncate( sha1( rand() . DOT . rand() ), 20 );
-		$url =  menu_url('password-change') . '?';
-		$url .= http_build_query( [
-			'uid'   => $uid,
-			'token' => $token
-		] );
-		$user->updateUser( new DBCol(User::TOKEN, $token, 's' ) );
-		Email::send( $user->getUserEmail() , _("Procedura di reset password"), sprintf(
-			_("Recupero password:\n %s"),
-			$url
+	if( count( $users ) < 2 ) {
+		MessageBox::spawn( sprintf(
+			_("Per favore, richiedi l'assistenza. Il meccanografico non è previsto: %s."),
+			'http://assistenza'
 		) );
-
-		if( $user->get(User::EMAIL) !== $user->get(User::EMAIL_OFFICIAL) ) {
-			Email::send( $user->getUserEmail() , _("Notifica procedura di reset password"), sprintf(
-				_("Con la presente per informarla che l'utente %s sta effettuando la procedura di recupero password e la riceverà alla email: %s."),
-				$user->getUserUID(),
-				$user->getUserEmail()
-			) );
-		}
 	} else {
-		error("Utente non esistente");
+		$msg = sprintf(
+			"Caro DS, caro DSGA,\n ".
+			"Ecco a voi i due link: ".
+			"asd"
+		);
+		Email::send( $user->getUserEmail(), _("Accesso alla piattaforma per DS e DSGA"), $msg );
 	}
 }
-
-Header::spawn('password-recovery');
 
 ?>
 	<div class="card-panel">
@@ -60,16 +54,16 @@ Header::spawn('password-recovery');
 			<p class="flow-text"><?php _e("E-mail inviata con successo!") ?></p>
 			<p><?php _e("Segui le istruzioni ricevute via E-mail. Puoi chiudere questa finestra.") ?></p>
 		<?php else: ?>
-		<p class="flow-text"><?php _e("Inserisci la tua email personale. Riceverai le istruzioni per e-mail.") ?></p>
+		<p class="flow-text"><?php _e("Inserisci il codice meccanografico per richiedere gli accessi per il DS ed il DSGA.") ?></p>
 		<form method="post">
 			<div class="row">
-				<div class="col s12 m6">
+				<div class="col s12">
 					<input type="email" name="uid" id="uid" class="validate" required />
-					<label for="uid"><?php _e("Inserisci la tua email personale") ?></label>
+					<label for="uid"><?php _e("Inserisci codice meccanografico") ?></label>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col s12 m6">
+				<div class="col s12">
 					<button type="submit" class="btn light-blue darken-1 waves-effect"><?php _e("Invia istruzioni"); echo m_icon() ?></button>
 				</div>
 			</div>

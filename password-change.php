@@ -44,14 +44,49 @@ $token_wrong
 	and $invalidate();
 
 $reset = false;
-if( isset( $_POST['password'] ) ) {
-	$pass = Session::encryptUserPassword( $_POST['password'] );
+if( isset( $_POST['password'], $_POST['email'] ) ) {
+
+	$old_email = $user->getUserEmail();
+
+	$email = luser_input($_POST['email'], 64 );
+
+	if( filter_var($email, FILTER_VALIDATE_EMAIL) === false ) {
+		error_die("Invalid email format");
+	}
+
+	$pass = luser_input( $_POST['password'], 100 );
+	$pass = Session::encryptUserPassword( $pass );
 	$user->updateUser( [
-		new DBCol(User::TOKEN,    null, null),
-		new DBCol(User::PASSWORD, $pass, 's')
+		new DBCol(User::EMAIL,     $email, 's'),
+		new DBCol(User::TOKEN,     null,  null),
+		new DBCol(User::PASSWORD,  $pass,  's')
 	] );
 	$url = menu_url('login');
-	Email::send( $user->getUserEmail() , _("Password resettata!"), _("Con la presente per informarla che la password è stata re-impostata.") );
+
+	$user = User::factoryByUID( $uid )
+		->queryRow();
+
+	Email::send( $user->getUserEmail() , _("Credenziali resettate!"), sprintf(
+		_(
+			"Con la presente per informarla che le credenziali per l'utente %s sono state impostate con successo.\n ".
+			"Effettua l'accesso:\n ".
+			"%s"
+		),
+		$user->getUserUID(),
+		login_url( $user->getUserUID() )
+	) );
+
+	if( $email !== $old_email ) {
+		Email::send( $old_mail, _("Credenziali resettate!"), sprintf(
+			_(
+				"Con la presente per informarla che l'utente %s ha cambiato email personale in: %s.\n ".
+				"Le prossime comunicazioni relative a questo singolo utente arriveranno alla email appena specificata."
+			),
+			$user->getUserUID(),
+			$user->getUserEmail()
+		) );
+	}
+
 	$reset = true;
 }
 
@@ -64,21 +99,27 @@ Header::spawn('password-change');
 			<p class="flow-text"><?php _e("Ottimo! Ora effetua l'accesso con le credenziali appena create:") ?></p>
 			<p><?php print_menu_link('login', null, 'btn waves-effect light-blue darken-1') ?></p>
 		<?php else: ?>
-		<p class="flow-text"><?php printf(
-			_("Ora crea una nuova password associata alla tua email <strong>%s</strong> da usare per entrare nel sistema Io Conto:"),
-			$uid
-		) ?></p>
+
+		<p class="flow-text"><?php
+			_e("Ora puoi impostare la tua email personale ed una nuova password associata.")
+		?></p>
 		<form method="post">
 			<input type="hidden" name="uid" value="<?php   _esc_attr($uid) ?>" />
 			<input type="hidden" name="token" value="<?php _esc_attr($token) ?>" />
 			<div class="row">
-				<div class="col s12 m6">
+				<div class="col s12 m6 input-field">
+					<input type="email" name="email" id="email" class="validate" value="<?php $user->hasNotPersonalEmail() or _esc_attr( $user->getUserEmail() ) ?>" required />
+					<label for="email"><?php _e("Email personale") ?></label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12 m6 input-field">
 					<input type="password" name="password" id="password" class="validate" required />
 					<label for="password"><?php _e("Inserisci la tua nuova password") ?></label>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col s12 m6">
+				<div class="col s12 m6 input-field">
 					<input type="password" name="password2" id="password2" class="validate" required />
 					<label for="password2"><?php _e("Ripeti la tua nuova password") ?></label>
 				</div>

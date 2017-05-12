@@ -26,11 +26,12 @@ Header::spawn('curriculum-home', [
 	Gentile DS, <br />
 	Gentile DSGA, <br />
 	Cliccando sul pulsante <em>Crea il tuo curriculum</em> accederai ad una pagina nella quale inserire le informazioni necessarie a valutare la tua candidatura per il ruolo di "formatore esperto" nel progetto Io conto seconda edizione.
-	Come avrai modo di vedere si tratta di una procedura rapida che serve solo ad avere un quadro delle competenze che hai.<br />
+	Come avrai modo di vedere si tratta di una procedura rapida che serve solo ad avere un quadro delle competenze che possiedi.<br />
 
-	Si tratta di selezionare da un menù a tendina le proprie qualifiche e poi di dettagliarle (se lo si ritiene necessario) in un campo di testo (ad esempio è possibile mettere per esteso il titolo delle proprie pubblicazioni).<br />
+	Si tratta di selezionare da un menù a tendina le proprie esperienze professionali e di dettagliarle (obbligatoriamente) in un campo di testo (ad esempio devi mettere per esteso il titolo delle pubblicazioni).<br />
+	Si precisa che è necessario compilare <em>tutti</em> i campi per completare la procedura di candidatura.
 
-	Dopo avere cliccato il pulsante <em>Salva tutto</em> non sarà più possibile modificare quanto inviato.
+	<!-- <strong>Attenzione!</strong> Dopo avere cliccato il pulsante <em></em> la candidatura sarà inviata e non sarà più possibile modificarla. -->
 	</div>
 
 	<ul class="collection">
@@ -38,7 +39,7 @@ Header::spawn('curriculum-home', [
 			<?php print_menu_link('curriculum-2017', _("Crea il tuo Curriculum online") . m_icon('edit'), 'btn light-blue darken-1 waves-effect') ?>
 		</li>
 		<li class="collection-item">
-			 <?php print_menu_link('istruzioni-compilazione', null, 'btn light-blue darken-1 waves-effect') ?>
+			<?php print_menu_link('istruzioni-compilazione', null, 'btn light-blue darken-1 waves-effect') ?>
 		</li>
 	</ul>
 <?php
