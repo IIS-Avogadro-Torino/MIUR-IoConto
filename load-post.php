@@ -103,7 +103,8 @@ add_menu_entries( [
 	new MenuEntry('torna-a-io-conto',                         'https://www.ioconto.itisavogadro.org',          _("Torna a Io Conto") ),
 	new MenuEntry('istruzioni-compilazione',                  'istruzioni-compilazione.php',                   _("Istruzioni per la compilazione") ),
 	new MenuEntry('assistenza',                               'assistenza.php',                                _("Assistenza") ),
-	new MenuEntry('curriculum-export-csv',                    'curriculum-export-csv.php',                     _("Esportazione curriculum") , 'admin-menu' )
+	new MenuEntry('curriculum-export-csv',                    'curriculum-export-csv.php',                     _("Esportazione curriculum") , 'admin-menu' ),
+	new MenuEntry('register',                                 'register.php',                                  _("Registrazione"),                     'hidden')
 ] );
 
 // Global objects dynamically instantiated
@@ -115,3 +116,4 @@ setlocale(LC_MONETARY, 'it_IT');
 
 // Shortcuts
 require 'includes/functions.php';
+

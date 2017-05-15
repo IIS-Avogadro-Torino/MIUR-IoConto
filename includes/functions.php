@@ -139,3 +139,19 @@ function login_url($user_uid = null) {
 	}
 	return $url;
 }
+
+/**
+ * @author Stephen Watkins
+ * @license CC BY SA 3.0
+ * @see https://stackoverflow.com/questions/4356289/php-random-string-generator/4356295#4356295
+ */
+function generate_random_string($length = 10) {
+	$dictionary = '23456789abcdefghlmnpqrstuvz';
+	$n = strlen($dictionary);
+	$s = '';
+	for($i = 0; $i < $length; $i++) {
+		$j = rand(0, $n - 1);
+		$s .= $dictionary[ $j ];
+	}
+	return $s;
+}

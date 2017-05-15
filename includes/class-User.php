@@ -25,7 +25,7 @@ trait UserTrait {
 	}
 
 	function getUserEmail() {
-		return $this->get(User::EMAIL);
+		return $this->get(User::UID);
 	}
 
 	function isUserActive() {
@@ -49,6 +49,10 @@ trait UserTrait {
 			'%s = %d',
 			User::ID, $this->getUserID()
 		) );
+	}
+
+	function factoryOrganicoByUser() {
+		return Organico::factoryByID( $this->getUserOrganicoID() );
 	}
 }
 

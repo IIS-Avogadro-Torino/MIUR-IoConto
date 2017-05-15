@@ -15,12 +15,41 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Organico {
+trait OrganicoTrait {
+	function getOrganicoID() {
+		return $this->nonnull(Organico::ID);
+	}
+}
+
+class Organico extends Queried {
+	use OrganicoTrait;
+
 	const T = 'organico';
 
-	const ID     = 'organico_ID';
-	const SCUOLA = 'scuola_ID';
+	const ID      = 'organico_ID';
+	const SCUOLA  = 'scuola_ID';
+	const ROLE    = 'organico_ruolo';
 
 	const ID_     = self::T . DOT . self::ID;
 	const SCUOLA_ = self::T . DOT . self::SCUOLA;
+
+	const DS = 'DS';
+	const DSGA = 'DSGA';
+
+	static $ROLES = [
+		self::DS,
+		self::DSGA
+	];
+
+	static function factory() {
+		return Query::factory(__CLASS__)->from(self::T);
+	}
+
+	static function factoryByID($ID) {
+		return self::factory()->whereInt(self::ID_, $ID);
+	}
+
+	static function getTokenByRole($mecc, $role) {
+		return sha1("$mecc.$role");
+	}
 }

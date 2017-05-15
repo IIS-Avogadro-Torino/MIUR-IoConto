@@ -17,34 +17,59 @@
 
 require 'load.php';
 
-$sent = ! empty( $_POST['uid'] );
-
-$uid = null;
-
 Header::spawn('password-recovery');
 
+$sent = false;
 if( isset( $_POST['uid'] ) ) {
 	$uid = luser_input( $_POST['uid'], 20 );
 
-	$users = User::factory( $uid )
-		->where( sprintf(
-			"%s LIKE '%s'",
-			"$uid%"
-		) )
-		->queryResults();
+	$school = Scuola::factoryByMeccanografico( $uid )
+		->select( [
+			Scuola::ID_,
+			Scuola::EMAIL,
+			Scuola::MECCANOGRAFICO
+		] )
+		->queryRow();
 
-	if( count( $users ) < 2 ) {
-		MessageBox::spawn( sprintf(
-			_("Per favore, richiedi l'assistenza. Il meccanografico non è previsto: %s."),
-			'http://assistenza'
-		) );
+	if( $school ) {
+
+		// Sanitized
+		$school_ID       = $school->get(Scuola::ID);
+		$school_register = $school->getSchoolRegisterURL();
+		$school_email    = $school->get(Scuola::EMAIL);
+
+		$organico = Organico::factory()
+			->select( [
+				Organico::ID_
+			] )
+			->whereInt(Organico::SCUOLA_, $school_ID)
+			->queryResults();
+
+		if( count( $organico ) === 0 ) {
+			$msg = sprintf(
+				"Caro DS, caro DSGA,\n ".
+				"Ecco a voi gli indirizzi per richiedere gli accessi personali in Formazione MIUR.\n\n ".
+				"Per il DS:\n %s \n\n" .
+				"Per il DSGA:\n %s \n\n"
+				,
+				$school->getSchoolRegisterURL(Organico::DS),
+				$school->getSchoolRegisterURL(Organico::DSGA)
+			);
+
+			Email::send( $school_email, _("Accesso alla piattaforma per DS e DSGA"), $msg );
+
+			$sent = true;
+		} else {
+			MessageBox::spawn( sprintf(
+				_("Questa procedura non può essere eseguita due volte. Per favore contatta l'assistenza: %s."),
+				'http://assistenza'
+			), MessageBox::WARNING );
+		}
 	} else {
-		$msg = sprintf(
-			"Caro DS, caro DSGA,\n ".
-			"Ecco a voi i due link: ".
-			"asd"
-		);
-		Email::send( $user->getUserEmail(), _("Accesso alla piattaforma per DS e DSGA"), $msg );
+		MessageBox::spawn( sprintf(
+			_("Questo meccanografico non è previso. Per favore, richiedi assistenza: %s."),
+			'http://assistenza'
+		), MessageBox::WARNING );
 	}
 }
 
@@ -52,13 +77,13 @@ if( isset( $_POST['uid'] ) ) {
 	<div class="card-panel">
 		<?php if($sent): ?>
 			<p class="flow-text"><?php _e("E-mail inviata con successo!") ?></p>
-			<p><?php _e("Segui le istruzioni ricevute via E-mail. Puoi chiudere questa finestra.") ?></p>
+			<p><?php _e("Segui le istruzioni ricevute via e-mail all'indirizzo istituzionale della scuola. Puoi chiudere questa finestra.") ?></p>
 		<?php else: ?>
 		<p class="flow-text"><?php _e("Inserisci il codice meccanografico per richiedere gli accessi per il DS ed il DSGA.") ?></p>
 		<form method="post">
 			<div class="row">
 				<div class="col s12">
-					<input type="email" name="uid" id="uid" class="validate" required />
+					<input type="text" name="uid" id="uid" class="validate" required />
 					<label for="uid"><?php _e("Inserisci codice meccanografico") ?></label>
 				</div>
 			</div>

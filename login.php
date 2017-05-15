@@ -33,10 +33,14 @@ if( is_logged() ) {
 
 Header::spawn('login');
 
+var_dump($status);
+
 ?>
 
 	<?php if( $status === Session::LOGIN_FAILED): ?>
 		<?php MessageBox::spawn( _("Nome utente o password errati."), MessageBox::WARNING ) ?>
+	<?php elseif( $status === Session::USER_DISABLED ): ?>
+		<?php MessageBox::spawn( _("Utente disabilitato."), MessageBox::WARNING ) ?>
 	<?php endif ?>
 
 	<?php MessageBox::spawn( sprintf(
@@ -65,7 +69,7 @@ Header::spawn('login');
 				<div class="row">
 					<div class="input-field col s12 m6">
 						<i class="mdi-action-account-circle prefix"></i>
-						<input name="user_uid" id="user_uid" type="text" class="validate"<?php echo HTML::property('value', @$_POST['user_uid']) ?>>
+						<input name="user_uid" id="user_uid" type="text" class="validate"<?php echo HTML::property('value', @$_REQUEST['user_uid']) ?>>
 						<label for="user_uid"><?php _esc_attr( _("Nome utente") ) ?></label>
 					</div>
 					<div class="input-field col s12 m6">

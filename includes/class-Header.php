@@ -92,7 +92,11 @@ class Header {
 			<img class="responsive-img ioconto-img" src="<?php echo IMAGE_URL ?>/formazione-MIUR-Io-Conto.png" alt="logo Io Conto" />
 		</div>
 		<?php if( is_logged() ): ?>
-		<p class="white-text">Benvenuto <?php echo get_user()->getUserEmail() ?></p>
+		<p class="white-text">Benvenuto <?php echo get_user()->getUserUID() ?></p>
+			<?php if( get_user()->userHasOrganico() ): ?>
+				
+			<?php endif ?>
+		<?php if(  ) ?>
 		<?php endif ?>
 		<p class="flow-text red-text white margin-right-negative"><?php echo Header::$args['title'] ?></p>
 		<footer class="hide-on-small-only">

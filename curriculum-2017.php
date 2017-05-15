@@ -218,6 +218,14 @@ $modal_open = function () {
 					</div>
 					<!-- /Pubblicazioni -->
 
+					<div class="card-panel">
+						<p><?php _e("Ulteriori qualifiche professionali (ad esempio patente europea del computer)") ?></p>
+						<p>
+							<input name="<?php echo Curriculum::ECDL ?>" type="checkbox" id="computer" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::ECDL), true ) ?> />
+							<label for="computer"><?php _e("Hai la patente europea del computer?") ?></label>
+						</p>
+					</div>
+
 			<?php ModalInstructions::end() ?>
 
 			<div class="row">
@@ -250,6 +258,18 @@ $modal_open = function () {
 							<?php Textarea::spawn( _("Dettaglia i corsi"), Curriculum::COURSES_ORGANIZED_GENERIC_DESC,  $curriculum ? $curriculum->get(Curriculum::COURSES_ORGANIZED_GENERIC_DESC) : null ) ?>
 						</div>
 					</div>
+				</div>
+
+				<div class="card-panel">
+					<p><?php _e("hai partecipato alla prima edizione del progetto Io conto in qualità di esperto?") ?></p>
+					<p>
+						<input name="<?php echo Curriculum::EXPERT ?>" type="radio" id="collaborated_yes" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::EXPERT), true ) ?> />
+						<label for="collaborated_yes"><?php _e("Sì") ?></label>
+					</p>
+					<p>
+						<input name="<?php echo Curriculum::EXPERT ?>" type="radio" id="collaborated_no" value="0"<?php $curriculum and _checked( $curriculum->get(Curriculum::EXPERT), false ) ?> />
+						<label for="collaborated_no"><?php _e("No") ?></label>
+					</p>
 				</div>
 			<?php ModalInstructions::end() ?>
 
@@ -300,36 +320,6 @@ $modal_open = function () {
 				<?php $container_end() ?>
 			</div>
 			<!-- /Campi blu -->
-
-			<!-- Campi rosa -->
-			<?php ModalInstructions::start( _("Valutare la presenza di eventuali esperienze professionali aggiuntive che attestino una conoscenza dell'esperto nelle materie del percorso di aggiornamento professionale del progetto Io Conto") ) ?>
-				<div class="card-panel">
-					<p><?php _e("Ulteriori qualifiche professionali (ad esempio patente europea del computer)") ?></p>
-					<p>
-						<input name="<?php echo Curriculum::ECDL ?>" type="checkbox" id="computer" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::ECDL), true ) ?> />
-						<label for="computer"><?php _e("Hai la patente europea del computer?") ?></label>
-					</p>
-				</div>
-				<div class="card-panel">
-					<p><?php _e("hai partecipato alla prima edizione del progetto Io conto in qualità di esperto?") ?></p>
-					<p>
-						<input name="<?php echo Curriculum::EXPERT ?>" type="radio" id="collaborated_yes" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::EXPERT), true ) ?> />
-						<label for="collaborated_yes"><?php _e("Sì") ?></label>
-					</p>
-					<p>
-						<input name="<?php echo Curriculum::EXPERT ?>" type="radio" id="collaborated_no" value="0"<?php $curriculum and _checked( $curriculum->get(Curriculum::EXPERT), false ) ?> />
-						<label for="collaborated_no"><?php _e("No") ?></label>
-					</p>
-				</div>
-			<?php ModalInstructions::end() ?>
-
-			<div class="row">
-				<?php $label( _("Ulteriori esperienze") ) ?>
-				<?php $container_start() ?>
-					<p><?php ModalInstructions::open() ?></p>
-				<?php $container_end() ?>
-			</div>
-			<!-- /Campi rosa 2 -->
 		</div>
 
 		<div class="row">
@@ -355,7 +345,7 @@ var updateGUI = function () {
 $_modelViewControllerAdded = updateGUI;
 
 function update_form_percentage() {
-	var $textareas = $('textarea');
+	var $textareas  = $('textarea');
 	var $texts      = $('input[type=text]:not(.select-dropdown)');
 	var $radios     = $('input[type=radio]');
 	//var $checkboxes = $('input[type=checkbox]');
@@ -368,9 +358,9 @@ function update_form_percentage() {
 
 	var n_radios = Object.keys(radio_names).length;
 
-	var sum = $texts.length + n_radios + $selects.length;
+	var sum = $texts.length + n_radios + $selects.length + $textareas.length;
 
-	var $textareas = $textareas.filter( function () {
+	var $textareas_ok = $textareas.filter( function () {
 		return $(this).val().length > 0;
 	} );
 	var $texts_ok = $texts.filter( function () {
@@ -382,9 +372,13 @@ function update_form_percentage() {
 		return $(this).val().length < 15;
 	} );
 
-	var sum_ok = $texts_ok.length + $radios_ok.length + $selects_ok.length;
+	var sum_ok = $texts_ok.length + $radios_ok.length + $selects_ok.length + $textareas_ok.length;
 
 	var v = Math.floor( sum_ok / sum * 100 );
+
+	console.log("fields");
+	console.log($textareas.length);
+	console.log($textareas_ok.length);
 
 	console.log($texts.length);
 	console.log($texts_ok.length);
@@ -397,6 +391,7 @@ function update_form_percentage() {
 
 	console.log(sum);
 	console.log(sum_ok);
+	console.log("/fields");
 
 	$('.form-percentage').html(v);
 
@@ -415,6 +410,7 @@ $(document).ready( function () {
 	update_form_percentage();
 	$('input').change(update_form_percentage);
 	$('select').change(update_form_percentage);
+	$('textarea').change(update_form_percentage);
 } );
 </script>
 
