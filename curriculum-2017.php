@@ -116,6 +116,12 @@ if( ! empty( $_POST )  ) {
 	);
 }
 
+if( $curriculum && $curriculum->isCurriculumFinalized() ) {
+	MessageBox::spawn( _("Procedura conclusa con successo. Il curriculum sarà validato.") );
+	Footer::spawn();
+	exit;
+}
+
 $heading = function ($s) {
 	printf("<p class='flow-text'>%s</p>\n", $s);
 };
