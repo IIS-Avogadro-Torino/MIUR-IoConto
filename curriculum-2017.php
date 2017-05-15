@@ -19,16 +19,24 @@ require 'load.php';
 
 required_permission('do-my-curriculum');
 
+Header::spawn('curriculum-2017', [
+	'toolbar-upload' => true
+] );
+
 $curriculum = Curriculum::factoryByOrganico()
 	->queryRow();
+
+if( $curriculum && $curriculum->isCurriculumFinalized() ) {
+	MessageBox::spawn( _("Curriculum già inviato.") );
+	Footer::spawn();
+	exit;
+}
 
 if( ! empty( $_POST )  ) {
 
 	$fields = [
 		Curriculum::SURNAME => 's',
 		Curriculum::NAME => 's',
-		Curriculum::STATUS => 's',
-		Curriculum::ROLE => 's',
 		Curriculum::CITY => 's',
 		Curriculum::CAP => 's',
 		Curriculum::PHONE => 's',
@@ -51,7 +59,8 @@ if( ! empty( $_POST )  ) {
 		Curriculum::NATIONAL_TASK => 's',
 		Curriculum::NATIONAL_TASK_DESC => 's',
 		Curriculum::ECDL => 'd',
-		Curriculum::EXPERT => 'd'
+		Curriculum::EXPERT => 'd',
+		Curriculum::FINALIZED => 'd'
 	];
 	$dbfields = [];
 	foreach($fields as $field => $type) {
@@ -67,6 +76,24 @@ if( ! empty( $_POST )  ) {
 		insert_row(Curriculum::T, $dbfields);
 	}
 
+	$labelled_fields = CurriculumFields::get();
+
+	$curriculum = Curriculum::factoryByOrganico()
+		->queryRow();
+
+	$human_fields = '';
+	foreach($labelled_fields as $labelled_field) {
+		if($human_fields) {
+			$human_fields .= "\n\n ";
+		}
+		$human_fields .= sprintf(
+			"%s:\n ".
+			"%s",
+			$labelled_field->getTitle(),
+			$labelled_field->getHumanValue( $curriculum )
+		);
+	}
+
 	$what = $curriculum ? _("aggiornato") : _("salvato");
 	Email::send(
 		get_user()->getUserEmail(),
@@ -77,21 +104,17 @@ if( ! empty( $_POST )  ) {
 		sprintf(
 			_(
 				"Con la presente per informarla che ha %s con successo il suo curriculum.\n ".
+				"Campi del curriculum:\n\n ".
+				"%s\n\n ".
 				"Torna al curriculum:\n ".
 				"%s"
 			),
 			$what,
+			$human_fields,
 			menu_url('curriculum-2017')
 		)
 	);
-
-	$curriculum = Curriculum::factoryByOrganico()
-		->queryRow();
 }
-
-Header::spawn('curriculum-2017', [
-	'toolbar-upload' => true
-] );
 
 $heading = function ($s) {
 	printf("<p class='flow-text'>%s</p>\n", $s);
@@ -330,12 +353,29 @@ $modal_open = function () {
 				<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Salva") ?><?php echo m_icon() ?></button>
 			</div>
 			<div class="col s12 m6 input-field">
-				<button type="submit" name="finalize" value="1" class="btn waves-effect light-blue darken-1"><?php _e("Finalizza") ?></button>
+				<button type="button" class="btn waves-effect yellow black-text finalize"><?php _e("Finalizza") ?><?php echo m_icon('close') ?></button>
 			</div>
 		</div>
+
+
+		<div id="are-you-sure" class="modal">
+			<div class="modal-content">
+				<h4><?php _e("Invio definitivo") ?></h4>
+				<p class="flow-text"><?php _e(
+					"Attenzione! Stai per inviare la tua candidatura alla selezione per esperto formatore del progetto io conto seconda edizione. ".
+					"Proseguendo <strong>non sarà più possibile</strong> modificare il curriculum e la candidatura risulterà acquisita per la successiva selezione."
+				) ?></p>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat"><?php _e("No, indietro") ?></a>
+				<button type="submit" class="btn waves-effect yellow black-text modal-action" name="<?php echo Curriculum::FINALIZED ?>" value="1"><?php _e("Sì, conferma") ?></a>
+			</div>
+		</div>
+
 	</form>
 
 <script>
+
 /**
  * Modal fix
  */
@@ -393,6 +433,8 @@ function update_form_percentage() {
 	console.log(sum_ok);
 	console.log("/fields");
 
+	window.formPercentage = v;
+
 	$('.form-percentage').html(v);
 
 	$('input[name=finalize]').submit( function () {
@@ -411,6 +453,15 @@ $(document).ready( function () {
 	$('input').change(update_form_percentage);
 	$('select').change(update_form_percentage);
 	$('textarea').change(update_form_percentage);
+
+	$('button.finalize').click( function (event) {
+		if( window.formPercentage < 100 ) {
+			Materialize.toast('<?php _e("Completa tutti i campi.") ?>', 4000);
+			event.preventDefault();
+		} else {
+			$("#are-you-sure").modal('open');
+		}
+	} );
 } );
 </script>
 

@@ -118,7 +118,7 @@ function required_permission($permission) {
 		$url = site_page( get_menu_entry('login')->url );
 		http_redirect( $url );
 	} elseif( ! has_permission($permission) ) {
-		PermissionErrorr::spawn();
+		PermissionError::spawn();
 		Footer::spawn();
 		exit; // Yes!
 	}
@@ -154,4 +154,11 @@ function generate_random_string($length = 10) {
 		$s .= $dictionary[ $j ];
 	}
 	return $s;
+}
+
+function yep_nope() {
+	return [
+		true  => _("si'"), // Lasciare senza accento
+		false => _("no")
+	];
 }

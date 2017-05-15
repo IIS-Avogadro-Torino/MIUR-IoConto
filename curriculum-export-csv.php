@@ -19,104 +19,6 @@ require 'load.php';
 
 required_permission('see-all-curriculums');
 
-class CSVHeading {
-	var $isCountable;
-	var $multiple;
-
-	function __construct($is_countable, $multiple, $title, $field, $callback_value = null, $callback_points = null) {
-		$this->isCountable = $is_countable;
-		$this->multiple    = $multiple;
-		$this->title = $title;
-		$this->field = $field;
-		$this->callbackValue = $callback_value;
-		$this->callbackPoints = $callback_points;
-	}
-
-	function isCountable() {
-		return $this->isCountable;
-	}
-
-	function isMultiple() {
-		return $this->multiple;
-	}
-
-	function getValue(Queried $obj) {
-		return $obj->get( $this->field );
-	}
-
-	function getPoints($obj) {
-		$value = $this->getValue($obj);
-
-		if( ! $this->callbackPoints ) {
-			return $value;
-		}
-
-		// Not a function, only a value assigned in case of a boolean value
-		if( is_integer( $this->callbackPoints ) && is_bool($value) ) {
-			return $value ? $this->callbackPoints : 0;
-		}
-
-		return $this->callbackPoints( $value );
-	}
-
-	function getHumanValue(Queried $obj) {
-		$value = $this->getValue($obj);
-
-		if( $this->callbackValue ) {
-			// Return the select elements
-			$values = is_string( $this->callbackValue )
-				? call_user_func($this->callbackValue)
-				: $this->callbackValue->__invoke();
-
-			if( is_array( $values ) ) {
-				// Set of labels
-				if( isset( $values[$value] ) ) {
-					return $values[$value];
-				}
-				return _("n.d.");
-			} else {
-				// It's only a label?
-				return $values;
-			}
-		}
-
-		return $value;
-	}
-
-	function getTitle() {
-		return $this->title;
-	}
-}
-
-class CSVHeadingSimple extends CSVHeading {
-	var $constName;
-
-	function __construct($is_countable, $is_multiple, $const_name, $title = null, $callback_value = null ) {
-		$this->constName = $const_name;
-
-		if(! $callback_value && $is_countable && $is_multiple) {
-			$callback_value = function () {
-				return call_user_func( $this->constName );
-			};
-		}
-
-		parent::__construct(
-			$is_countable,
-			$is_multiple,
-			$title ? $title : call_user_func( $const_name ),
-			constant($const_name),
-			$callback_value
-		);
-	}
-}
-
-function yep_nope() {
-	return [
-		true  => _("si'"), // Lasciare senza accento
-		false => _("no")
-	];
-}
-
 function sanitize_csv_value(& $s) {
 	$s = str_replace("\n", ' ', $s);
 	$s = str_replace("\r", ' ', $s);
@@ -124,37 +26,8 @@ function sanitize_csv_value(& $s) {
 	return $s;
 }
 
-$extra_info = _("Extra info");
-
 if( ! empty( $_POST ) ) {
-	$CSVHeadings = [
-		new CSVHeadingSimple(0, 0, 'Curriculum::SURNAME',                            _("cognome") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::NAME',                               _("nome") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::CITY',                               _("città") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::CAP',                                _("CAP") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::PHONE',                              _("telefono") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::EMAIL',                              _("e-mail") ),
-		new CSVHeadingSimple(1, 0, 'Curriculum::YEARS',                              _("esperienza") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::YEARS_DESC',                         $extra_info ),
-		new CSVHeadingSimple(1, 1, 'Curriculum::STUDY',                              _("titoli di studio") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::STUDY_DESC',                         $extra_info ),
-		new CSVHeadingSimple(1, 1, 'Curriculum::COURSES_FOLLOWED',                   _("corsi seguiti") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::COURSES_FOLLOWED_DESC',              $extra_info ),
-		new CSVHeadingSimple(1, 1, 'Curriculum::PUBLICATIONS',                       _("pubblicazioni") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::PUBLICATIONS_DESC',                  $extra_info),
-		new CSVHeadingSimple(1, 1, 'Curriculum::COURSES_ORGANIZED_SPECIALIZED',      _("corsi specialistici organizzati") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::COURSES_ORGANIZED_SPECIALIZED_DESC', $extra_info),
-		new CSVHeadingSimple(1, 1, 'Curriculum::COURSES_ORGANIZED_GENERIC',          _("corsi generici organizzati") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::COURSES_ORGANIZED_GENERIC_DESC',     $extra_info),
-		new CSVHeadingSimple(1, 0, 'Curriculum::USRMIUR_TASKS',                      _("gruppi lavoro USR/MIUR") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::USRMIUR_TASKS_DESC',                 $extra_info),
-		new CSVHeadingSimple(1, 0, 'Curriculum::REGIONAL_TASK',                      _("gruppi lavoro regionali/provinciali") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::REGIONAL_TASK_DESC',                 $extra_info),
-		new CSVHeadingSimple(1, 0, 'Curriculum::NATIONAL_TASK',                      _("punteggio incarichi reggenza") ),
-		new CSVHeadingSimple(0, 0, 'Curriculum::NATIONAL_TASK_DESC',                 $extra_info),
-		new CSVHeadingSimple(1, 1, 'Curriculum::ECDL',                               _("patente computer"), 'yep_nope',     1 ),
-		new CSVHeadingSimple(1, 1, 'Curriculum::EXPERT',                             _("ex-esperto"),       'yep_nope',     3 ),
-	];
+	$CSVHeadings = CurriculumFields::get();
 
 	$curriculums = Curriculum::factory()
 		->select(Curriculum::T . DOT . STAR)

@@ -27,6 +27,10 @@ trait CurriculumTrait {
 			$this->getOrganicoID()
 		) );
 	}
+
+	function isCurriculumFinalized() {
+		return $this->get(Curriculum::FINALIZED);
+	}
 }
 
 class Curriculum extends Queried {
@@ -69,13 +73,14 @@ class Curriculum extends Queried {
 	const ECDL                          = 'curriculum_ecdl';
 	const EXPERT                        = 'curriculum_expertioconto';
 
+	const FINALIZED                     = 'curriculum_finalized';
 	const LASTUPDATE_DATE               = 'curriculum_lastupdate_date';
 
 	// Complete external keys
 	const ORGANICO_ = self::T . DOT . self::ORGANICO;
 
 	function __construct() {
-		$this->integers(self::ORGANICO);
+		$this->integers(self::ORGANICO, self::FINALIZED);
 		$this->booleans(self::ECDL, self::EXPERT);
 	}
 
