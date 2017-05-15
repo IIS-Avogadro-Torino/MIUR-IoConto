@@ -120,7 +120,7 @@ $heading = function ($s) {
 	printf("<p class='flow-text'>%s</p>\n", $s);
 };
 $label = function ($s) {
-	printf("<div class='input-field col s12 m2'><p>%s</p></div>\n", $s);
+	printf("<div class='input-field col s12 m2'><p>%s<br /><span class=\"small-progress-counter\"></span></p></div>\n", $s);
 };
 $container_start = function () {
 	echo "<div class='input-field col s12 m9 push-m1 model-view-container'>\n";
@@ -415,6 +415,59 @@ function update_form_percentage() {
 	var sum_ok = $texts_ok.length + $radios_ok.length + $selects_ok.length + $textareas_ok.length;
 
 	var v = Math.floor( sum_ok / sum * 100 );
+
+	var $smallCounters = $('.small-progress-counter');
+	$smallCounters.each( function () {
+		var $a = $(this).closest('.row');
+		var href = $a.find('a').attr('href');
+		var $modal = $(href);
+
+		var textareas    = 0;
+		var textareas_ok = 0;
+
+		function countChild($selector) {
+			var n = 0;
+			$selector.each( function () {
+				var is = $.contains($modal[0], $(this)[0] );
+				if(is) {
+					n++;
+				}
+			} );
+			return n;
+		}
+
+		var radio_names_child = {};
+		$modal.find($radios).each( function () {
+			radio_names_child[ $(this).attr('name') ] = 1;
+		} );
+
+		console.log("child fields " + href);
+		textareas    = countChild($textareas);
+		textareas_ok = countChild($textareas_ok);
+		texts        = countChild($texts);
+		texts_ok     = countChild($texts_ok);
+		radios       = Object.keys(radio_names_child).length;
+		radios_ok    = countChild($radios_ok);
+		selects      = countChild($selects);
+		selects_ok   = countChild($selects_ok);
+		console.log(textareas);
+		console.log(textareas_ok);
+		console.log(texts);
+		console.log(texts_ok);
+		console.log(radios);
+		console.log(radios_ok);
+		console.log(selects);
+		console.log(selects_ok);
+		console.log("/child fields");
+
+		var sum_child    = textareas    + texts    + radios    + selects;
+		var sum_child_ok = textareas_ok + texts_ok + radios_ok + selects_ok;
+
+		var sum_percentage_child = Math.floor( sum_child_ok / sum_child * 100 );
+
+		var color = sum_percentage_child >= 100 ? 'green' : 'yellow';
+		$(this).html( $("<span>").addClass(color).html(sum_percentage_child + "%") );
+	} );
 
 	console.log("fields");
 	console.log($textareas.length);
