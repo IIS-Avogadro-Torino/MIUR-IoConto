@@ -17,15 +17,21 @@
 
 class CSVHeading {
 	var $isCountable;
+	var $isLongDesc;
 	var $multiple;
 
-	function __construct($is_countable, $multiple, $title, $field, $callback_value = null, $callback_points = null) {
+	function __construct($is_countable, $multiple, $is_long_desc, $title, $field, $callback_value = null, $callback_points = null) {
 		$this->isCountable = $is_countable;
 		$this->multiple    = $multiple;
+		$this->isLongDesc  = $is_long_desc;
 		$this->title = $title;
 		$this->field = $field;
 		$this->callbackValue = $callback_value;
 		$this->callbackPoints = $callback_points;
+	}
+
+	function isLongDescription() {
+		return $this->isLongDesc;
 	}
 
 	function isCountable() {

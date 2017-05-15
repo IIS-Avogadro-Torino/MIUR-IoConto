@@ -48,6 +48,10 @@ if( ! empty( $_POST ) ) {
 
 	$headings = [];
 	foreach($CSVHeadings as $heading) {
+		if( $heading->isLongDescription() ) {
+			continue;
+		}
+
 		$headings[] = $heading->getTitle();
 		if( $heading->isCountable() ) {
 			$headings[] = sprintf("Punteggio %s", $heading->getTitle() );
@@ -62,6 +66,10 @@ if( ! empty( $_POST ) ) {
 		$values = [];
 		$points = 0;
 		foreach($CSVHeadings as $heading) {
+			if( $heading->isLongDescription() ) {
+				continue;
+			}
+
 			$values[] = $heading->getHumanValue( $curriculum );
 			if( $heading->isCountable() ) {
 				$row_points = $heading->getPoints( $curriculum );

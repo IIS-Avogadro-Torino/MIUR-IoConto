@@ -18,7 +18,7 @@
 class CSVHeadingSimple extends CSVHeading {
 	var $constName;
 
-	function __construct($is_countable, $is_multiple, $const_name, $title = null, $callback_value = null ) {
+	function __construct($is_countable, $is_multiple, $is_long_description, $const_name, $title = null, $callback_value = null ) {
 		$this->constName = $const_name;
 
 		if(! $callback_value && $is_countable && $is_multiple) {
@@ -30,6 +30,7 @@ class CSVHeadingSimple extends CSVHeading {
 		parent::__construct(
 			$is_countable,
 			$is_multiple,
+			$is_long_description,
 			$title ? $title : call_user_func( $const_name ),
 			constant($const_name),
 			$callback_value
