@@ -40,8 +40,6 @@ CREATE TABLE `curriculum` (
   `organico_ID` int(10) unsigned NOT NULL,
   `curriculum_surname` varchar(40) NOT NULL,
   `curriculum_name` varchar(40) NOT NULL,
-  `curriculum_role` enum('ds','dsga') NOT NULL,
-  `curriculum_status` enum('titolare','reggente','altro') NOT NULL,
   `curriculum_city` varchar(40) NOT NULL,
   `curriculum_cap` varchar(5) NOT NULL,
   `curriculum_phone` varchar(40) NOT NULL,
@@ -66,6 +64,8 @@ CREATE TABLE `curriculum` (
   `curriculum_nationaltask_desc` text NOT NULL,
   `curriculum_ecdl` tinyint(1) NOT NULL,
   `curriculum_expertioconto` tinyint(1) NOT NULL,
+  `curriculum_lastupdate_date` datetime NOT NULL,
+  `curriculum_finalized` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`organico_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -95,8 +95,8 @@ DROP TABLE IF EXISTS `organico`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `organico` (
   `organico_ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `organico_nome` varchar(25) NOT NULL,
-  `organico_cognome` varchar(25) NOT NULL,
+  `organico_nome` varchar(25) DEFAULT NULL,
+  `organico_cognome` varchar(25) DEFAULT NULL,
   `organico_ruolo` enum('DS','DSGA') NOT NULL,
   `scuola_ID` int(10) unsigned NOT NULL,
   PRIMARY KEY (`organico_ID`),
@@ -176,11 +176,8 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_active` tinyint(1) NOT NULL,
-  `user_role` enum('user','supervisor','admin') NOT NULL,
+  `user_role` enum('user','supervisor','admin') NOT NULL DEFAULT 'user',
   `user_uid` varchar(64) NOT NULL COMMENT 'Meccanografico',
-  `user_firm` enum('ds','dsga') NOT NULL,
-  `user_email` varchar(64) NOT NULL,
-  `user_email_official` varchar(64) NOT NULL,
   `user_password` varchar(40) NOT NULL,
   `user_name` varchar(32) NOT NULL,
   `scuola_ID` int(10) unsigned DEFAULT NULL COMMENT 'is related to a school?',
@@ -204,4 +201,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-15  8:27:55
+-- Dump completed on 2017-05-15 14:03:01
