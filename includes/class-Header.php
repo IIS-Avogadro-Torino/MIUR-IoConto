@@ -94,9 +94,16 @@ class Header {
 		<?php if( is_logged() ): ?>
 		<p class="white-text">Benvenuto <?php echo get_user()->getUserUID() ?></p>
 			<?php if( get_user()->userHasOrganico() ): ?>
-				
+				<?php
+				$organico = get_user()->factoryOrganicoByUser()
+					->select(Organico::ROLE)
+					->queryRow();
+				?>
+
+				<?php if($organico): ?>
+					<p class="white-text">Sei un <?php _esc_html( $organico->get(Organico::ROLE) ) ?>.</p>
+				<?php endif ?>
 			<?php endif ?>
-		<?php if(  ) ?>
 		<?php endif ?>
 		<p class="flow-text red-text white margin-right-negative"><?php echo Header::$args['title'] ?></p>
 		<footer class="hide-on-small-only">
