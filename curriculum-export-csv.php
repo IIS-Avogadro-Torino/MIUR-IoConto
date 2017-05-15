@@ -36,6 +36,7 @@ if( ! empty( $_POST ) ) {
 		->from(Organico::T)
 		->equals(Curriculum::ORGANICO_, Organico::ID_)
 
+		->select(Scuola::MECCANOGRAFICO)
 		->from(Scuola::T)
 		->equals(Organico::SCUOLA_, Scuola::ID_)
 
@@ -46,7 +47,11 @@ if( ! empty( $_POST ) ) {
 	header('Content-Type: text/csv; charset=utf-8');
 	header('Content-Disposition: attachment; filename=generated-export-curriculums.csv');
 
-	$headings = [];
+	$headings = [
+		_("ruolo"),
+		_("meccanografico"),
+		_("email")
+	];
 	foreach($CSVHeadings as $heading) {
 		if( $heading->isLongDescription() ) {
 			continue;
@@ -63,7 +68,17 @@ if( ! empty( $_POST ) ) {
 	echo "\n";
 
 	foreach($curriculums as $curriculum) {
-		$values = [];
+		$user = User::factory()
+			->where(User::ORGANICO_, $curriculum->get(Organico::ID) )
+			->queryRow();
+
+		$user || error_die("Unexisting user?");
+
+		$values = [
+			$curriculum->get(Organico::ROLE),
+			$curriculum->get(Scuola::MECCANOGRAFICO),
+			$user->getUserEmail(),
+		];
 		$points = 0;
 		foreach($CSVHeadings as $heading) {
 			if( $heading->isLongDescription() ) {
