@@ -15,26 +15,39 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class CSVHeadingSimple extends CSVHeading {
-	var $constName;
+require_once FPDF_PATH;
 
-	function __construct($is_countable, $is_multiple, $is_long_description, $const_name, $title = null, $callback_value = null, $callback_points = null ) {
-		$this->constName = $const_name;
+class CurriculumPDF extends FPDF {
+	var $organico;
+	var $curriculum;
 
-		if(! $callback_value && $is_countable && $is_multiple) {
-			$callback_value = function () {
-				return call_user_func( $this->constName );
-			};
-		}
-
-		parent::__construct(
-			$is_countable,
-			$is_multiple,
-			$is_long_description,
-			$title ? $title : call_user_func( $const_name ),
-			constant($const_name),
-			$callback_value,
-			$callback_points
+	function Header() {
+		$this->Image('content/images/formazione-MIUR-Io-Conto-logo-landscape.png', 10, 6, 30);
+		$this->SetFont('Arial', 'B', 15);
+		$this->Cell(40);
+		$this->Cell(
+			0,
+			0,
+			sprintf(
+				_("Curriculum di %s %s"),
+				$this->curriculum->get(Curriculum::NAME),
+				$this->curriculum->get(Curriculum::SURNAME)
+			)
 		);
+		$this->Ln(20);
+	}
+
+	function Footer() {
+		$this->SetY(-15);
+		$this->SetFont('Arial','I',8);
+		$this->Cell(0, 10, 'Page '. $this->PageNo() . '/{nb}', 0, 0, 'C');
+	}
+
+	function setOrganico($organico) {
+		$this->organico = $organico;
+	}
+
+	function setCurriculum($curriculum) {
+		$this->curriculum = $curriculum;
 	}
 }

@@ -22,11 +22,17 @@
 
 defined('BOZ_PHP') or exit;
 
+defined('PDF_TOKEN')
+	or define('PDF_TOKEN', md5('asd') );
+
 defined('INCLUDES')
 	or define('INCLUDES', 'includes');
 
 defined('CONTENT')
 	or define('CONTENT', 'content');
+
+defined('FPDF_PATH')
+	or define('FPDF_PATH', '/usr/share/php/fpdf.php');
 
 // Debian distribution
 defined('JQUERY')
@@ -95,18 +101,19 @@ add_menu_entries( [
 	new MenuEntry('logout',                                   'login.php?logout',                             _("Logout") ),
 	new MenuEntry('about',                                    'about.php',                                    _("Crediti") ),
 	new MenuEntry('404',                                      '404.php',                                      _("Pagina non trovata!"),               'hidden'),
-	new MenuEntry('curriculum-2017',                          'curriculum-2017.php',                           _("Il tuo Curriculum")                  ),
-	new MenuEntry('curriculum-home',                          'curriculum-home.php',                           _("Home")                               ),
-	new MenuEntry('news',                                     'http://www.ioconto.itisavogadro.org/index.php/news', _("News")                          ),
-	new MenuEntry('password-recovery',                        'password-recovery.php',                         _("Recupero password"),                 'hidden'),
-	new MenuEntry('password-change',                          'password-change.php',                           _("Cambio password"),                   'hidden'),
+	new MenuEntry('curriculum-2017',                          'curriculum-2017.php',                           _("Il tuo Curriculum")                 ),
+	new MenuEntry('curriculum-home',                          'curriculum-home.php',                           _("Home")                              ),
+	new MenuEntry('news',                                     'http://www.ioconto.itisavogadro.org/index.php/news', _("News")                         ),
+	new MenuEntry('password-recovery',                        'password-recovery.php',                         _("Recupero password"),                'hidden'),
+	new MenuEntry('password-change',                          'password-change.php',                           _("Cambio password"),                  'hidden'),
 	new MenuEntry('torna-a-io-conto',                         'https://www.ioconto.itisavogadro.org',          _("Torna a Io Conto") ),
 	new MenuEntry('istruzioni-compilazione',                  'istruzioni-compilazione.php',                   _("Istruzioni per la compilazione") ),
 	new MenuEntry('assistenza',                               'assistenza.php',                                _("Assistenza") ),
-	new MenuEntry('curriculum-export-csv',                    'curriculum-export-csv.php',                     _("Esportazione curriculum") , 'admin-menu' ),
-	new MenuEntry('register',                                 'register.php',                                  _("Registrazione"),                     'hidden'),
+	new MenuEntry('curriculum-export-csv',                    'curriculum-export-csv.php',                     _("Esportazione curriculum") ,         'admin-menu'),
+	new MenuEntry('register',                                 'register.php',                                  _("Registrazione"),                    'hidden'),
 	new MenuEntry('request-access',                           'request-access.php',                            _("Richiedi accesso") ),
-	new MenuEntry('help',                                     'http://www.formazionemiur.it/assistenza/',      _("Assistenza") )
+	new MenuEntry('help',                                     'http://www.formazionemiur.it/assistenza/',      _("Assistenza") ),
+	new MenuEntry('curriculum-search',                        'curriculum-search.php',                         _("Cerca CV"),                         'admin-menu')
 ] );
 
 // Global objects dynamically instantiated

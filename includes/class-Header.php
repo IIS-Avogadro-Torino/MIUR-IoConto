@@ -125,6 +125,7 @@ class Header {
 			<p class="white-text"><?php _e("Menù amministrativo:") ?></p>
 			<ul>
 				<li><?php print_menu_link('curriculum-export-csv', null, 'white-text') ?></li>
+				<li><?php print_menu_link('curriculum-search', null, 'white-text') ?></li>
 			</ul>
 			<?php endif ?>
 		</footer>

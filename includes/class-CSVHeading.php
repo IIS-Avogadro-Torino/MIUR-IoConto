@@ -50,7 +50,7 @@ class CSVHeading {
 		$value = $this->getValue($obj);
 
 		if( ! $this->callbackPoints ) {
-			return $value;
+			return $value ? $value : 0;
 		}
 
 		// Not a function, only a value assigned in case of a boolean value
@@ -66,9 +66,13 @@ class CSVHeading {
 
 		if( $this->callbackValue ) {
 			// Return the select elements
-			$values = is_string( $this->callbackValue )
-				? call_user_func($this->callbackValue)
-				: $this->callbackValue->__invoke();
+			if( is_string( $this->callbackValue ) ) {
+				$values = call_user_func($this->callbackValue);
+			} elseif( is_integer( $this->callbackValue ) ) {
+				$values = $this->callbackValue;
+			} else {
+				$values = $this->callbackValue->__invoke();
+			}
 
 			if( is_array( $values ) ) {
 				// Set of labels

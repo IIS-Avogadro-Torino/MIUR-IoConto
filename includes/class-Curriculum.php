@@ -31,6 +31,13 @@ trait CurriculumTrait {
 	function isCurriculumFinalized() {
 		return $this->get(Curriculum::FINALIZED);
 	}
+
+	function getCurriculumPDFURL() {
+		return ROOT . '/curriculum-export-pdf.php?' . http_build_query( [
+			'o'     => $this->getOrganicoID(),
+			'token' => PDF_TOKEN
+		] );
+	}
 }
 
 class Curriculum extends Queried {
