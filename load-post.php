@@ -104,7 +104,9 @@ add_menu_entries( [
 	new MenuEntry('istruzioni-compilazione',                  'istruzioni-compilazione.php',                   _("Istruzioni per la compilazione") ),
 	new MenuEntry('assistenza',                               'assistenza.php',                                _("Assistenza") ),
 	new MenuEntry('curriculum-export-csv',                    'curriculum-export-csv.php',                     _("Esportazione curriculum") , 'admin-menu' ),
-	new MenuEntry('register',                                 'register.php',                                  _("Registrazione"),                     'hidden')
+	new MenuEntry('register',                                 'register.php',                                  _("Registrazione"),                     'hidden'),
+	new MenuEntry('request-access',                           'request-access.php',                            _("Richiedi accesso") ),
+	new MenuEntry('help',                                     'http://www.formazionemiur.it/assistenza/',      _("Assistenza") )
 ] );
 
 // Global objects dynamically instantiated

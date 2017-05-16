@@ -33,8 +33,6 @@ if( is_logged() ) {
 
 Header::spawn('login');
 
-var_dump($status);
-
 ?>
 
 	<?php if( $status === Session::LOGIN_FAILED): ?>
@@ -43,12 +41,21 @@ var_dump($status);
 		<?php MessageBox::spawn( _("Utente disabilitato."), MessageBox::WARNING ) ?>
 	<?php endif ?>
 
-	<?php MessageBox::spawn( sprintf(
-		_("Le istruzioni per l'accesso all'area riservata sono state trasmesse via email alle scuole. Chi non le avesse ricevute segnali a <b>%s</b>"),
-		ADMIN_EMAIL
-	) ) ?>
-
 	<div class="card-panel">
+		<p>
+			Gentile DS, <br />
+			Gentile DSGA, <br />
+			Cliccando sul pulsante <em>Accedi</em> verrai indirizzato alla pagina <em>Crea il tuo curriculum online</em>.
+
+			<?php /*
+			ad una pagina nella quale inserire le informazioni necessarie a valutare la tua candidatura per il ruolo di "formatore esperto" nel progetto Io conto seconda edizione.
+			Come avrai modo di vedere si tratta di una procedura rapida che serve solo ad avere un quadro delle competenze che possiedi.<br />
+
+			Si tratta di selezionare da un menù a tendina le proprie esperienze professionali e di dettagliarle (obbligatoriamente) in un campo di testo (ad esempio devi mettere per esteso il titolo delle pubblicazioni).<br />
+			Si precisa che è necessario compilare <em>tutti</em> i campi per completare la procedura di candidatura.
+			*/ ?>
+		</p>
+
 		<p><?php _e("Esegui l'accesso:") ?></p>
 		<div class="row">
 			<form class="col s12" method="post" action="<?php echo URL  . '/login.php' ?>">
@@ -82,11 +89,21 @@ var_dump($status);
 			</form>
 		</div>
 	</div>
+	<?php /*
 	<div class="row">
 		<div class="col s12 m6">
 			<div class="card-panel">
 				<p><?php _e("Password dimenticata?") ?></p>
 				<p><?php print_menu_link('password-recovery', null, 'btn waves-effect light-blue darken-1') ?></p>
+			</div>
+		</div>
+	</div>
+	*/ ?>
+	<div class="row">
+		<div class="col s12 m6">
+			<div class="card-panel">
+				<p><?php _e("Richiedi registrazione (solo la prima volta che accedi).") ?></p>
+				<p><?php print_menu_link('request-access', null, 'btn waves-effect orange') ?></p>
 			</div>
 		</div>
 	</div>

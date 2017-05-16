@@ -144,7 +144,7 @@ $modal_open = function () {
 	<?php if( $curriculum && ! empty( $_POST ) ): ?>
 	<div class="card-panel yellow">
 		<p class="flow-text"><?php _e("Curriculum salvato con successo!") ?></p>
-		<p><?php _e("Ricontrolla di aver compilato tutti i campi.") ?></p>
+		<p><?php _e("Ricordati di compilare tutti i campi (sotto ogni modulo deve apparire il simbolo <em>100%</em> verde, altrimenti non sarà possibile finalizzare ed inviare il curriculum).") ?></p>
 	</div>
 	<?php endif ?>
 	<form method="post">
@@ -181,6 +181,7 @@ $modal_open = function () {
 		<!-- Conoscenze di base e specifiche -->
 		<div class="card-panel">
 			<?php $heading( _("Compilazione curriculum") ) ?>
+			<p><?php _e("Si ricorda che è obbligatorio inserire tutti i campi di testo.") ?></p>
 
 			<?php ModalInstructions::start( _("Valutare l'esperienza professionale dell'esperto considerando il ruolo e l'anzianità di servizio") ) ?>
 				<p><?php _e("Anni di anzianità o di servizio continuativi nel ruolo di DS o DSGA") ?></p>

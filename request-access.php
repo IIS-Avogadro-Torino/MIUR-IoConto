@@ -48,7 +48,7 @@ if( isset( $_POST['uid'] ) ) {
 		if( count( $organico ) === 0 ) {
 			$msg = sprintf(
 				"Caro DS, caro DSGA,\n ".
-				"Ecco a voi gli indirizzi per richiedere gli accessi personali in Formazione MIUR.\n\n ".
+				"Ecco gli indirizzi per richiedere gli accessi personali per la selezione a esperti formatori del progetto Io Conto seconda edizione.\n\n ".
 				"Per il DS:\n %s \n\n" .
 				"Per il DSGA:\n %s \n\n"
 				,
@@ -80,9 +80,10 @@ if( isset( $_POST['uid'] ) ) {
 			<p><?php _e("Segui le istruzioni ricevute via e-mail all'indirizzo istituzionale della scuola. Puoi chiudere questa finestra.") ?></p>
 		<?php else: ?>
 		<p class="flow-text"><?php _e("Inserisci il codice meccanografico per richiedere gli accessi per il DS ed il DSGA.") ?></p>
+		<p><?php _e("Nota: senza \"@istruzione.it\".") ?></p>
 		<form method="post">
 			<div class="row">
-				<div class="col s12">
+				<div class="col s12 input-field">
 					<input type="text" name="uid" id="uid" class="validate" required />
 					<label for="uid"><?php _e("Inserisci codice meccanografico") ?></label>
 				</div>

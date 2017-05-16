@@ -83,7 +83,7 @@ if( isset( $_POST['email'] ) ) {
 	}
 
 	$emailExists = User::factory()
-		->whereStr( User::EMAIL, $email )
+		->whereStr( User::UID, $email )
 		->queryRow();
 
 	if( $emaiExists ) {
@@ -109,7 +109,7 @@ if( isset( $_POST['email'] ) ) {
 
 	Email::send( $email , _("Credenziali di accesso"), sprintf(
 		_(
-			"Con la presente per comunicarle le credenziali per il %s della scuola %s per l'accesso in Formazione MIUR:\n\n ". // $role, $school_mecc
+			"Con la presente per comunicarle le credenziali per il %s della scuola %s per la selezione a esperti formatori del progetto Io Conto seconda edizione:\n\n ". // $role, $school_mecc
 
 			"Nome utente:\n ".
 			"%s\n\n ". // $email
@@ -129,7 +129,7 @@ if( isset( $_POST['email'] ) ) {
 
 	Email::send( $school_email, _("Notifica registrazione"), sprintf(
 		_(
-			"Con la presente per informarvi che il %s ha registrato con successo la seguente email personale nel sistema Formazione MIUR:\n ".
+			"Con la presente per informarvi che il %s ha registrato con successo la seguente email personale per la selezione a esperti formatori del progetto Io Conto seconda edizione:\n ".
 			"%s.\n\n ". // $email
 			"Le prossime comunicazioni relative a questo singolo utente avverranno attraverso l'email appena specificata."
 		),
@@ -158,8 +158,9 @@ if( isset( $_POST['email'] ) ) {
 
 		<div class="question question-1" data-activator=".question-2">
 			<p class="flow-text"><?php printf(
-				_("Sei davvero un %s?"),
-				esc_html($role)
+				_("Sei il %s della scuola %s?"),
+				esc_html($role),
+				esc_html($school_mecc)
 			) ?></p>
 
 			<?php $yesno() ?>
@@ -168,7 +169,7 @@ if( isset( $_POST['email'] ) ) {
 
 		<div class="question question-2" data-activator=".sure-sure-sure">
 			<p class="flow-text"><?php printf(
-				_("Sei un %s titolare?"),
+				_("Sei il %s titolare?"),
 				esc_html($role)
 			) ?></p>
 
