@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// Now the user receives the password via e-mail
+exit;
+
 require 'load.php';
 
 $invalidate = function () {

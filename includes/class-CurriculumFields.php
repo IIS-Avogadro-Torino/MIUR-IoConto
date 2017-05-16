@@ -50,7 +50,8 @@ class CurriculumFields {
 			new CSVHeadingSimple(0, 0, 1, 'Curriculum::REGIONAL_TASK_DESC',                 $extra_info),
 			new CSVHeadingSimple(1, 0, 0, 'Curriculum::NATIONAL_TASK',                      _("punteggio incarichi reggenza") ),
 			new CSVHeadingSimple(0, 0, 1, 'Curriculum::NATIONAL_TASK_DESC',                 $extra_info),
-			new CSVHeadingSimple(1, 1, 0, 'Curriculum::ECDL',                               _("patente computer"), 'yep_nope',     1 )
+			new CSVHeadingSimple(1, 1, 0, 'Curriculum::ECDL',                               _("patente computer"), 'yep_nope',     1 ),
+			new CSVHeadingSimple(1, 1, 0, 'Curriculum::EXPERT',                             _("ex esperto Io Conto"), 5 )
 		];
 		return $fields;
 	}

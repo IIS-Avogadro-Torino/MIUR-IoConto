@@ -27,7 +27,7 @@ class Textarea {
 			$other = " $other";
 		}
 		?>
-		<textarea name="<?php echo $name ?>" placeholder="<?php _esc_attr($title) ?>" class="validate materialize-textarea"<?php echo $other ?>><?php _esc_html($value) ?></textarea>
+		<textarea name="<?php echo $name ?>" placeholder="<?php _esc_attr($title) ?>" class="validate materialize-textarea"<?php echo $other ?> maxlength="1500"><?php _esc_html($value) ?></textarea>
 		<?php
 	}
 }

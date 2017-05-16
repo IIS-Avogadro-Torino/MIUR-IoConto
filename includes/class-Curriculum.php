@@ -195,8 +195,9 @@ class Curriculum extends Queried {
 
 	static function USRMIUR_TASKS() {
 		return [
-			3 => _("incarichi <= 5"),
-			5 => _("incarichi > 5")
+			0 => _("nessun incarico ispettivo"),
+			3 => _("0 < incarichi <= 4"),
+			5 => _("incarichi > 4")
 		];
 	}
 
@@ -209,8 +210,8 @@ class Curriculum extends Queried {
 
 	static function NATIONAL_TASK() {
 		return [
-			3 => _("incarichi di reggenza <= 3"),
-			5 => _("incarichi di reggenza > 3")
+			0 => _("incarichi di reggenza <= 3"),
+			2 => _("incarichi di reggenza > 3")
 		];
 	}
 }
