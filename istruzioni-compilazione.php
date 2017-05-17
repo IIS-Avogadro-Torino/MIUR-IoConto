@@ -23,12 +23,10 @@ Header::spawn('curriculum-home', [
 ?>
 
 <div class="card-panel">
-	<?php /*
-	<div class="video-container">
-		<iframe width="853" height="480" src="https://www.youtube.com/embed/FuwiWEiv8_Y" frameborder="0" allowfullscreen></iframe>
-	</div>
-	*/ ?>
-	<p><?php _e("Sarà scaricabile un breve manuale.") ?></p>
+	<p><?php _e("È scaricabile un breve manuale che riporta una procedura guidata per la candidatura alla selezione di esperti formatori per il progetto Io Conto seconda edizione.") ?></p>
+	<p>
+		<a href="Manuale.pdf" class="btn waves-effect light-blue darken-1" target="_blank"><?php _e("Manuale"); echo m_icon('file_download'); ?></a>
+	</p>
 </div>
 
 <?php
