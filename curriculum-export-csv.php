@@ -69,7 +69,7 @@ if( ! empty( $_POST ) ) {
 
 	foreach($curriculums as $curriculum) {
 		$user = User::factory()
-			->where(User::ORGANICO_, $curriculum->get(Organico::ID) )
+			->whereInt(User::ORGANICO_, $curriculum->get(Organico::ID) )
 			->queryRow();
 
 		$user || error_die("Unexisting user?");

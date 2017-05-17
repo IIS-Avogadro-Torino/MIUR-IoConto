@@ -45,7 +45,7 @@ $curriculum
 	|| error_die("Missing curriculum");
 
 $user = User::factory()
-	->where(User::ORGANICO_, $organico->get(Organico::ID) )
+	->whereInt(User::ORGANICO_, $organico->get(Organico::ID) )
 	->queryRow();
 
 $user
