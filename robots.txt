@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /area-personale/curriculum-export-pdf.php
+
