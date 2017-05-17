@@ -73,6 +73,7 @@ foreach($organicos as $organico) {
 	}
 }
 
+$email = null;
 $register = false;
 if( isset( $_POST['email'] ) ) {
 
@@ -152,7 +153,10 @@ if( isset( $_POST['email'] ) ) {
 
 	<div class="card-panel">
 		<?php if($register): ?>
-			<p class="flow-text"><?php _e("Ottimo! Riceverai a breve un'email con le istruzioni per l'accesso.") ?></p>
+			<p class="flow-text"><?php printf(
+				_("Ottimo! Riceverai a breve un'email all'indirizzo %s con le istruzioni per l'accesso."),
+				"<code>" . esc_html( $email ) . "</code>"
+			) ?></p>
 			<p><?php _e("Puoi chiudere questa finestra.") ?></p>
 		<?php else: ?>
 
@@ -185,7 +189,11 @@ if( isset( $_POST['email'] ) ) {
 			<div class="row">
 				<div class="col s12 m6 input-field">
 					<input type="email" name="email" id="email" class="validate" required />
-					<label for="email"><?php _e("Email personale") ?></label>
+					<label for="email"><?php _e("E-mail personale") ?></label>
+				</div>
+				<div class="col s12 m6 input-field">
+					<input type="email" name="email_repeat" id="email-repeat" class="validate" required />
+					<label for="email-repeat"><?php _e("Ripeti la tua e-mail personale") ?></label>
 				</div>
 			</div>
 			<div class="row">
@@ -198,6 +206,16 @@ if( isset( $_POST['email'] ) ) {
 
 		<script>
 		$(document).ready( function () {
+			$('form').submit( function (event) {
+				var $email  = $('input[name=email]');
+				var $email2 = $('input[name=email_repeat]');
+				if( $email.val() !== $email2.val() ) {
+					$email2.val('');
+					Materialize.toast('<?php _e("Ri-controlla la tua e-mail") ?>', 4000);
+					event.preventDefault();
+				}
+			} );
+
 			$('.question .yes').click( function () {
 				var v = $(this).closest('.question').hide().data('activator');
 				$(v).show();
