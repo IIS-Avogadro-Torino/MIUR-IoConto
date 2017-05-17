@@ -109,7 +109,7 @@ Header::spawn('home');
 		<form method="post">
 			<input type="hidden" name="do" value="1" />
 			<p><?php _e("L'operazione potrebbe richiedere del tempo.") ?></p>
-			<button type="submit" class="btn"><?php _e("Esporta tutti i curriculum") ?></button>
+			<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Esporta tutti i curriculum"); echo m_icon('file_download') ?></button>
 		</form>
 	</div>
 

@@ -70,7 +70,7 @@ if($searched) {
 				<label for="surname"><?php _e("Cognome") ?></label>
 			</div>
 			<div class="col s12 m6 input-field">
-				<button type="submit" class="btn waves-effect"><?php _e("Cerca") ?></button>
+				<button type="submit" class="btn waves-effect light-blue darken-1"><?php _e("Cerca"); echo m_icon('search'); ?></button>
 			</div>
 		</form>
 	</div>
@@ -98,7 +98,10 @@ if($searched) {
 					<tr>
 						<td><?php echo $c_name ?></td>
 						<td><?php echo $c_surname ?></td>
-						<td><a href="<?php echo $curriculum->getCurriculumPDFURL() ?>" class="btn waves-effect" target="_blank"><?php _e("PDF") ?></a></td>
+						<td><a href="<?php echo $curriculum->getCurriculumPDFURL() ?>" class="btn waves-effect light-blue darken-1" target="_blank"><?php
+							_e("PDF");
+							echo m_icon('file_download');
+						?></a></td>
 					</tr>
 				<?php endforeach ?>
 			</table>
