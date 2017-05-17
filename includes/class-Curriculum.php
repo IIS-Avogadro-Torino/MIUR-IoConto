@@ -152,6 +152,7 @@ class Curriculum extends Queried {
 
 	static function STUDY() {
 		return [
+			0  => _("diploma"),
 			3  => _("laurea triennale"),
 			5  => _("laurea magistrale / V.O. / specialistica"),
 			8  => _("master universitario di I livello"),
@@ -174,9 +175,11 @@ class Curriculum extends Queried {
 	static function PUBLICATIONS() {
 		return [
 			0  => _("nessuna pubblicazione"),
-			3  => _("1 < pubblicazioni <= 3"),
-			5  => _("3 < pubblicazioni <= 6"),
-			10 => _("pubblicazioni > 6")
+			2  => _("0 < pubblicazioni <= 2"),
+			4  => _("2 < pubblicazioni <= 4"),
+			6  => _("4 < pubblicazioni <= 6"),
+			8  => _("6 < pubblicazioni <= 10"),
+			10 => _("pubblicazioni > 10")
 		];
 	}
 
@@ -210,8 +213,8 @@ class Curriculum extends Queried {
 
 	static function REGIONAL_TASK() {
 		return [
-			3 => _("gruppi di lavoro <= 5"),
-			5 => _("gruppi di lavoro > 5")
+			0 => _("gruppi di lavoro / altro <= 3"),
+			2 => _("gruppi di lavoro / altro > 3")
 		];
 	}
 

@@ -17,8 +17,6 @@
 
 require 'load.php';
 
-required_permission('see-all-curriculums');
-
 isset( $_GET['o'], $_GET['token'] )
 	|| exit;
 
@@ -97,4 +95,8 @@ foreach($labelled_fields as $labelled_field) {
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(0, 0, "TOTALE: $sum");
 
-$pdf->Output();
+$pdf->Output('I', sprintf("%s-%s-%s.pdf",
+	$school->get(Scuola::MECCANOGRAFICO),
+	$curriculum->get(Curriculum::SURNAME),
+	$organico->get(Organico::ROLE)
+) );

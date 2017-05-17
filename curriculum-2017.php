@@ -181,7 +181,10 @@ $modal_open = function () {
 		<!-- Conoscenze di base e specifiche -->
 		<div class="card-panel">
 			<?php $heading( _("Compilazione curriculum") ) ?>
-			<p><?php _e("Si ricorda che è obbligatorio inserire tutti i campi di testo.") ?></p>
+			<p><?php printf(
+				_("Si ricorda che è obbligatorio inserire tutti i campi di testo che sono limitati a %d caratteri."),
+				1500
+			) ?></p>
 
 			<?php ModalInstructions::start( _("Valutare l'esperienza professionale dell'esperto considerando il ruolo e l'anzianità di servizio") ) ?>
 				<p><?php _e("Anni di anzianità o di servizio continuativi nel ruolo di DS o DSGA") ?></p>
@@ -202,7 +205,7 @@ $modal_open = function () {
 				<?php $container_end() ?>
 			</div>
 
-			<?php ModalInstructions::start( _("Valutare il livello di preparazione dell'esperto considerando il suo percorso accademico formativo") ) ?>
+			<?php ModalInstructions::start( _("Valutare il livello di preparazione dell'esperto considerando il suo percorso accademico e formativo") ) ?>
 
 					<!-- Titoli di studio -->
 					<div class="card-panel">
@@ -220,7 +223,7 @@ $modal_open = function () {
 
 					<!-- Corsi di formazione seguiti -->
 					<div class="card-panel">
-						<p><?php _e("N. corsi di formazione seguiti in qualità di discente su tematiche attinenti alle materie amministrativo contabili (Bilancio, obblighi normativi, acquisizione di beni e servizi)") ?></p>
+						<p><?php _e("N. corsi di formazione seguiti in qualità di discente su tematiche attinenti alle materie amministrativo contabili (Bilancio, obblighi normativi, acquisizione di beni e servizi).") ?></p>
 						<div class="input-field">
 							<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::COURSES_FOLLOWED, $curriculum ? $curriculum->get(Curriculum::COURSES_FOLLOWED) : null, Curriculum::COURSES_FOLLOWED() ) ?>
 						</div>
@@ -236,7 +239,7 @@ $modal_open = function () {
 
 					<!-- Pubblicazioni -->
 					<div class="card-panel">
-						<p><?php _e("N. pubblicazioni su tematiche attinenti alle materie del percorso di aggiornamento professionale Io Conto") ?></p>
+						<p><?php _e("N. pubblicazioni su tematiche attinenti alle materie del percorso di aggiornamento professionale Io Conto.") ?></p>
 						<div class="row">
 							<div class="col s12 input-field">
 								<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::PUBLICATIONS, $curriculum ? $curriculum->get(Curriculum::PUBLICATIONS) : null, Curriculum::PUBLICATIONS() ) ?>
@@ -249,10 +252,15 @@ $modal_open = function () {
 					<!-- /Pubblicazioni -->
 
 					<div class="card-panel">
-						<p><?php _e("Ulteriori qualifiche professionali (ad esempio patente europea del computer)") ?></p>
+						<p><?php _e("La patente europea del computer garantisce la conoscenza degli strumenti informatici utilizzati nel progetto Io Conto.") ?></p>
+						<p><?php _e("Sei in possesso della patente europea?") ?></p>
 						<p>
-							<input name="<?php echo Curriculum::ECDL ?>" type="checkbox" id="computer" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::ECDL), true ) ?> />
-							<label for="computer"><?php _e("Hai la patente europea del computer?") ?></label>
+							<input name="<?php echo Curriculum::ECDL ?>" type="radio" id="ecdl_yes" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::ECDL), true ) ?> />
+							<label for="ecdl_yes"><?php _e("Sì") ?></label>
+						</p>
+						<p>
+							<input name="<?php echo Curriculum::ECDL ?>" type="radio" id="ecdl_no" value="0"<?php $curriculum and _checked( $curriculum->get(Curriculum::ECDL), false ) ?> />
+							<label for="ecdl_no"><?php _e("No") ?></label>
 						</p>
 					</div>
 
@@ -291,7 +299,8 @@ $modal_open = function () {
 				</div>
 
 				<div class="card-panel">
-					<p><?php _e("hai partecipato alla prima edizione del progetto Io conto in qualità di esperto?") ?></p>
+					<p><?php _e("Aver partecipato alla prima edizione del progetto Io Conto in qualità di esperto formatore garantisce una consolidata conoscenza delle materie amministrativo-contabili.") ?></p>
+					<p><?php _e("Hai partecipato alla prima edizione del progetto Io Conto in qualità di esperto formatore?") ?></p>
 					<p>
 						<input name="<?php echo Curriculum::EXPERT ?>" type="radio" id="collaborated_yes" value="1"<?php $curriculum and _checked( $curriculum->get(Curriculum::EXPERT), true ) ?> />
 						<label for="collaborated_yes"><?php _e("Sì") ?></label>
@@ -323,7 +332,7 @@ $modal_open = function () {
 				</div>
 
 				<div class="card-panel">
-					<p><?php _e("Appartenenza a gruppi di lavoro istituzionali regionali e/o centrali gruppo di lavoro, cabine di regia, comitati paritetici (indicare nome ed estremi)") ?></p>
+					<p><?php _e("Appartenenza a gruppi di lavoro istituzionali regionali e/o centrali, cabine di regia, comitati paritetici (indicare nome ed estremi).") ?></p>
 					<div class="input-field">
 						<?php InputSelect::spawn(InputSelect::SINGLE, Curriculum::REGIONAL_TASK, $curriculum ? $curriculum->get(Curriculum::REGIONAL_TASK) : null, Curriculum::REGIONAL_TASK() ) ?>
 					</div>
@@ -344,7 +353,7 @@ $modal_open = function () {
 			<?php ModalInstructions::end() ?>
 
 			<div class="row">
-				<?php $label( _("Collaborazioni con UUSSRR e istituzioni scolastiche") ) ?>
+				<?php $label( _("Collaborazioni con Amm. centrale, UUSSRR e istituzioni scolastiche") ) ?>
 				<?php $container_start() ?>
 					<p><?php ModalInstructions::open() ?></p>
 				<?php $container_end() ?>
