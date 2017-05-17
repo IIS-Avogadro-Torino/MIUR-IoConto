@@ -106,7 +106,7 @@ add_menu_entries( [
 	new MenuEntry('news',                                     'http://www.ioconto.itisavogadro.org/index.php/news', _("News")                         ),
 	new MenuEntry('password-recovery',                        'password-recovery.php',                         _("Recupero password"),                'hidden'),
 	new MenuEntry('password-change',                          'password-change.php',                           _("Cambio password"),                  'hidden'),
-	new MenuEntry('torna-a-io-conto',                         'https://www.ioconto.itisavogadro.org',          _("Torna a Io Conto") ),
+	new MenuEntry('torna-a-io-conto',                         'https://www.formazionemiur.it/',                _("Torna a Io Conto") ),
 	new MenuEntry('istruzioni-compilazione',                  'istruzioni-compilazione.php',                   _("Istruzioni per la compilazione") ),
 	new MenuEntry('assistenza',                               'assistenza.php',                                _("Assistenza") ),
 	new MenuEntry('curriculum-export-csv',                    'curriculum-export-csv.php',                     _("Esportazione curriculum") ,         'admin-menu'),
