@@ -95,8 +95,8 @@ foreach($labelled_fields as $labelled_field) {
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(0, 0, "TOTALE: $sum");
 
-$pdf->Output('I', sprintf("%s-%s-%s.pdf",
+$pdf->Output( sprintf("%s-%s-%s.pdf",
 	$school->get(Scuola::MECCANOGRAFICO),
 	$curriculum->get(Curriculum::SURNAME),
 	$organico->get(Organico::ROLE)
-) );
+), 'I');
