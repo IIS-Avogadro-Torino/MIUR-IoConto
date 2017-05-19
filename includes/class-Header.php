@@ -40,7 +40,8 @@ class Header {
 			'user-navbar'  => false,
 			'container'    => false,
 			'header'       => true,
-			'toolbar-upload' => false
+			'toolbar-upload' => false,
+			'toolbar-login' => true
 		], $args);
 
 		switch( $args['pre-template'] ) {
