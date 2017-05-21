@@ -1,6 +1,6 @@
 <?php
 # Formazione MIUR content management system
-# Copyright (C) 2015 Valerio Bozzolan
+# Copyright (C) 2015, 2016, 2017 Valerio Bozzolan, Ivan Bertotto, ITIS Avogadro
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -17,13 +17,13 @@
 
 require 'load.php';
 
-Header::factory('404', [
-	'title'     => _("Questa pagina non è stata trovata"),
+Header::spawn('home', [
+	'title'     => _("Pagina non trovata"),
 	'permalink' => false
 ] );
 
 ?>
-	<p><?php _e("Puoi tornare alla homepage:") ?></p>
+	<p class="flow-text"><?php _e("Questa pagina non esiste, o non è più disponibile. Puoi tornare alla homepage:") ?></p>
 	<p><?php echo HTML::a(
 		URL,
 		_("Torna alla home"),
@@ -32,4 +32,4 @@ Header::factory('404', [
 	) ?></p>
 <?php
 
-Footer::factory();
+Footer::spawn();
