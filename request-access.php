@@ -62,13 +62,13 @@ if( isset( $_POST['uid'] ) ) {
 		} else {
 			MessageBox::spawn( sprintf(
 				_("Questa procedura non può essere eseguita due volte. Per favore contatta l'assistenza: %s."),
-				'http://assistenza'
+				assist_link()
 			), MessageBox::WARNING );
 		}
 	} else {
 		MessageBox::spawn( sprintf(
 			_("Questo meccanografico non è previso. Per favore, richiedi assistenza: %s."),
-			'http://assistenza'
+			assist_link()
 		), MessageBox::WARNING );
 	}
 }

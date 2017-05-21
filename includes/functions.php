@@ -156,6 +156,17 @@ function generate_random_string($length = 10) {
 	return $s;
 }
 
+function assist_link($title = null) {
+	if( ! $title ) {
+		$title = _("assistenza");
+	}
+	return sprintf(
+		'<a href="%s">%s</a>',
+		'http://www.formazionemiur.it/assistenza/',
+		$title
+	);
+}
+
 function yep_nope() {
 	return [
 		true  => _("si'"), // Lasciare senza accento

@@ -23,7 +23,7 @@ $invalidate = function ($s) {
 	MessageBox::spawn( sprintf(
 		"%s. Contatta l'assistenza: %s.",
 		$s,
-		'http://assistenza'
+		assist_link()
 	), MessageBox::WARNING );
 	Footer::spawn();
 };
