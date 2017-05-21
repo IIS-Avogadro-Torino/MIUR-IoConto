@@ -36,7 +36,7 @@ empty( $uid ) or empty( $token ) or empty( $role )
 	and http_redirect('request-access');
 
 if( $role !== Organico::DS && $role !== Organico::DSGA ) {
-	error_die("Unknown role");
+	error_die("Questa pagina è raggiungibile soltanto attraverso un'email particolare.");
 }
 
 $school = Scuola::factoryByMeccanografico( $uid )
