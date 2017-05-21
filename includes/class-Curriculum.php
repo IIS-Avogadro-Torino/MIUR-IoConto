@@ -20,7 +20,9 @@ trait CurriculumTrait {
 		return $this->nonnull(Curriculum::ORGANICO);
 	}
 
-	function update($fields) {
+	function updateCurriculum($fields) {
+		$fields[] = new DBCol(Curriculum::LASTUPDATE_DATE, 'NOW()', '-');
+
 		query_update(Curriculum::T, $fields, sprintf(
 			 "%s = '%d'",
 			Curriculum::ORGANICO,
@@ -81,6 +83,7 @@ class Curriculum extends Queried {
 	const EXPERT                        = 'curriculum_expertioconto';
 
 	const FINALIZED                     = 'curriculum_finalized';
+	const CREATION_DATE                 = 'curriculum_creation_date';
 	const LASTUPDATE_DATE               = 'curriculum_lastupdate_date';
 
 	// Complete external keys
@@ -100,6 +103,18 @@ class Curriculum extends Queried {
 			$organico_ID = organico_ID();
 		}
 		return self::factory()->whereInt( self::ORGANICO_, $organico_ID );
+	}
+
+	static function insert($fields, $organico_ID = null) {
+		if( ! $organico_ID ) {
+			$organico_ID = organico_ID();
+		}
+
+		$fields[] = new DBCol(Curriculum::ORGANICO, organico_ID(),  'd');
+		$fields[] = new DBCol(Curriculum::LASTUPDATE_DATE, 'NOW()', '-');
+		$fields[] = new DBCol(Curriculum::CREATION_DATE,   'NOW()', '-');
+
+		insert_row(Curriculum::T, $fields);
 	}
 
 	static function SURNAME() {

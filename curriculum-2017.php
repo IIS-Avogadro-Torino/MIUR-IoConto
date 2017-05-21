@@ -70,10 +70,9 @@ if( ! empty( $_POST )  ) {
 	}
 
 	if( $curriculum ) {
-		$curriculum->update($dbfields);
+		$curriculum->updateCurriculum($dbfields);
 	} else {
-		$dbfields[] = new DBCol(Curriculum::ORGANICO, organico_ID(), 'd');
-		insert_row(Curriculum::T, $dbfields);
+		Curriculum::insert($dbfields);
 	}
 
 	$labelled_fields = CurriculumFields::get();
