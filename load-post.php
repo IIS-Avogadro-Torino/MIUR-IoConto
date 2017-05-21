@@ -1,6 +1,6 @@
 <?php
 # Formazione MIUR content management system
-# Copyright (C) 2015 Valerio Bozzolan
+# Copyright (C) 2015, 2016, 2017 Valerio Bozzolan, Ivan Bertotto, ITIS Avogadro
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -113,11 +113,9 @@ add_menu_entries( [
 	new MenuEntry('register',                                 'register.php',                                  _("Registrazione"),                    'hidden'),
 	new MenuEntry('request-access',                           'request-access.php',                            _("Richiedi accesso") ),
 	new MenuEntry('help',                                     'http://www.formazionemiur.it/assistenza/',      _("Assistenza") ),
-	new MenuEntry('curriculum-search',                        'curriculum-search.php',                         _("Cerca CV"),                         'admin-menu')
+	new MenuEntry('curriculum-search',                        'curriculum-search.php',                         _("Cerca CV"),                         'admin-menu'),
+	new MenuEntry('stats',                                    'stats',                                         _("Statistiche"),                      'admin-menu')
 ] );
-
-// Global objects dynamically instantiated
-register_expected('moduliRendiconto', 'ModuliRendiconto');
 
 // PHP twicks
 date_default_timezone_set('Europe/Rome');
