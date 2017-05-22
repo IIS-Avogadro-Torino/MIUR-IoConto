@@ -60,14 +60,16 @@ class User extends Sessionuser {
 	use userTrait;
 
 	const T   = 'user';
-	const ID  = 'user_ID';
-	const UID = 'user_uid';
+
+	const ID       = 'user_ID';
 	const ORGANICO = 'organico_ID';
-	const ACTIVE = 'user_active';
-	const TOKEN = 'user_token';
-	const PASSWORD = 'user_password';
-	const EMAIL = 'user_email';
-	const EMAIL_OFFICIAL = 'user_email_official';
+
+	const UID            = 'user_uid';
+	const EMAIL          = 'user_uid';
+	const EMAIL_OFFICIAL = 'user_uid';
+	const ACTIVE         = 'user_active';
+	const PASSWORD       = 'user_password';
+	const RECOVERY_TOKEN = 'user_recoverytoken';
 
 	const ID_       = self::T . DOT . self::ID;
 	const ORGANICO_ = self::T . DOT . self::ORGANICO;
@@ -83,6 +85,7 @@ class User extends Sessionuser {
 	}
 
 	static function factoryByUID($uid) {
+		$uid = luser_input($uid, 64);
 		return self::factory()->whereStr(self::UID, $uid);
 	}
 }

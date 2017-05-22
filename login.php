@@ -37,6 +37,7 @@ Header::spawn('login');
 
 	<?php if( $status === Session::LOGIN_FAILED): ?>
 		<?php MessageBox::spawn( _("Nome utente o password errati."), MessageBox::WARNING ) ?>
+		<?php print_menu_link('password-recovery', _("Password dimenticata?"), 'btn waves-effect' ) ?>
 	<?php elseif( $status === Session::USER_DISABLED ): ?>
 		<?php MessageBox::spawn( _("Utente disabilitato."), MessageBox::WARNING ) ?>
 	<?php endif ?>
