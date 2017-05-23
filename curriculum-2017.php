@@ -94,6 +94,10 @@ if( ! empty( $_POST )  ) {
 	}
 
 	$what = $curriculum ? _("aggiornato") : _("salvato");
+	if( $curriculum->isCurriculumFinalized() ) {
+		$what = _("finalizzato");
+	}
+
 	Email::send(
 		get_user()->getUserEmail(),
 		sprintf(
