@@ -47,7 +47,7 @@ if( isset( $_REQUEST[ User::UID ] ) ) {
 
 				Email::send( $user->getUserEmail() , _("Password resettata"), sprintf(
 					_(
-						"Come da Lei richiesto in seguito le nuove credenziali di accesso per la piattaforma Io Conto seconda edizione sono le seguenti:\n\n ".
+						"Come da Lei richiesto in seguito le nuove credenziali di accesso per la piattaforma Io Conto seconda edizione:\n\n ".
 
 						"Nome utente:\n ".
 						"%s\n\n ". // $user->getUserUID()
@@ -66,12 +66,12 @@ if( isset( $_REQUEST[ User::UID ] ) ) {
 				$sent = true;
 
 				MessageBox::spawn( sprintf(
-					 _("Conferma completata. Riceverai al tuo indirizzo <b>%s</b> le nuove credenziali di accesso."),
+					 _("Procedura di recupero password completata. Riceverai all'indirizzo <b>%s</b> le nuove credenziali di accesso.<br /> Puoi chiudere questa finestra."),
 					esc_html( $user->getUserEmail() )
 				) );
 
 			} else {
-				MessageBox::spawn( _("Token già utilizzato. Per ri-chiedere una nuova password, ri-esegui le istruzioni in questa pagina."), MessageBox::WARNING );
+				MessageBox::spawn( _("Token già utilizzato. Se hai ancora bisogno di recuperare la tua password, ri-esegui le istruzioni in questa pagina."), MessageBox::WARNING );
 			}
 
 		} else {
@@ -107,19 +107,19 @@ if( isset( $_REQUEST[ User::UID ] ) ) {
 
 <?php if( ! $sent ): ?>
 	<div class="card-panel">
-		<p class="flow-text"><?php _e("Per procedere con il recupero della tua password, inserisci la tua e-mail personale.") ?></p>
+		<p class="flow-text"><?php _e("Se hai smarrito la password che ti è stata trasmessa via e-mail, puoi richiederne un'altra. Per procedere, inserisci il tuo indirizzo e-mail personale.") ?></p>
 		<form method="post" action="<?php echo menu_url('password-recovery') ?>">
 			<div class="row">
-				<div class="col s12 m6">
+				<div class="col s12 input-field">
 					<input type="email" name="<?php echo User::UID ?>" id="uid" class="validate" required />
 					<label for="uid"><?php _e("Inserisci la tua email personale") ?></label>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col s12 m6">
-					<button type="submit" class="btn light-blue darken-1 waves-effect"><?php _e("Invia istruzioni"); echo m_icon() ?></button>
+				<div class="col s12">
+					<button type="submit" class="btn light-blue darken-1 waves-effect"><?php _e("Procedi"); echo m_icon() ?></button>
 				</div>
-				</div>
+			</div>
 		</form>
 	</div>
 <?php endif ?>

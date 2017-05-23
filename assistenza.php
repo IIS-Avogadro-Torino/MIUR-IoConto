@@ -66,7 +66,9 @@ Header::spawn('assistenza');
 		<p><?php _e("Puoi chiudere questa finestra o usare i link sulla sinistra.") ?></p>
 	</div>
 <?php else: ?>
-	<p class="flow-text"><?php _e("Hai bisogno di assistenza? Utilizza questo modulo, risponderemo il prima possibile.") ?></p>
+	<div class="card-panel">
+		<p class="flow-text"><?php _e("Hai bisogno di assistenza? Utilizza questo modulo, risponderemo il prima possibile.") ?></p>
+	</div>
 
 	<form method="post" class="card-panel">
 		<div class="row">

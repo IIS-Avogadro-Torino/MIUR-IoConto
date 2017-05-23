@@ -80,7 +80,7 @@ if( isset( $_POST['uid'] ) ) {
 			<p><?php _e("Segui le istruzioni ricevute via e-mail all'indirizzo istituzionale della scuola. Puoi chiudere questa finestra.") ?></p>
 		<?php else: ?>
 		<p class="flow-text"><?php _e("Inserisci il codice meccanografico per richiedere gli accessi per il DS ed il DSGA.") ?></p>
-		<p><?php _e("Nota: senza \"@istruzione.it\".") ?></p>
+		<p><?php _e("Nota: senza \"@istruzione.it\"") ?></p>
 		<form method="post">
 			<div class="row">
 				<div class="col s12 input-field">
