@@ -36,8 +36,7 @@ trait ScuolaTrait {
 	}
 
 	function getSchoolToken() {
-		$s = sha1( $this->get(Scuola::MECCANOGRAFICO) . "formazionemiur2017");
-		return substr($s, 0, 10);
+		return Scuola::getToken( $this->get(Scuola::MECCANOGRAFICO) );
 	}
 
 	function getSchoolRegisterURL($role = null) {
@@ -69,6 +68,11 @@ class Scuola extends Queried {
 
 	function __construct() {
 		$this->normalizeScuola();
+	}
+
+	static function getToken($meccanografico) {
+		$s = sha1($meccanografico . 'formazionemiur2017');
+		return substr($s, 0, 10);
 	}
 
 	static function factory($c = __CLASS__ ) {
