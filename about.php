@@ -1,6 +1,6 @@
 <?php
 # Formazione MIUR content management system
-# Copyright (C) 2015 Valerio Bozzolan
+# Copyright (C) 2015, 2016, 2017 Valerio Bozzolan
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -17,7 +17,7 @@
 
 require 'load.php';
 
-Header::factory( 'about' );
+Header::spawn( 'about' );
 ?>
 	<div class="card-panel hoverable">
 		<div class="row valign-wrapper">
@@ -46,7 +46,7 @@ Header::factory( 'about' );
 							<img src="<?php echo get_gravatar('gmail.com') ?>" alt="Leonardo Filippone" class="circle responsive-img" />
 						</div>
 						<div class="col s10">
-							<b>Leonardo Filippone</b><br />Supervisor, Task Scheduler.
+							<b>Leonardo Filippone</b><br />Supervisor.
 						</div>
 					</div>
 				</div>
@@ -60,7 +60,7 @@ Header::factory( 'about' );
 							<img src="<?php echo URL . '/content/images/ulisse-fabiani.png' ?>" alt="Ulisse Fabiani" class="circle responsive-img" />
 						</div>
 						<div class="col s10">
-							<b>Ulisse Fabiani</b><br />Logistic Manager, Team Orchestrator.
+							<b>Ulisse Fabiani</b><br />Lui.
 						</div>
 					</div>
 				</div>
@@ -74,7 +74,7 @@ Header::factory( 'about' );
 							<img src="<?php echo get_gravatar('ivan.bertotto@gmail.com') ?>" alt="Ivan Bertotto" class="circle responsive-img" />
 						</div>
 						<div class="col s10">
-							<b>Ivan Bertotto</b><br />Joomla Senior, System Administrator, Tech Orchestrator.
+							<b>Ivan Bertotto</b><br />Joomla! Senior. Now tagliato fuori / inchiappettato.
 						</div>
 					</div>
 				</div>
@@ -88,7 +88,7 @@ Header::factory( 'about' );
 							<img src="<?php echo get_gravatar('gnu@linux.it') ?>" alt="Valerio Bozzolan" class="circle responsive-img" />
 						</div>
 						<div class="col s10">
-							<b><a href="https://boz.reyboz.it">Valerio Bozzolan</a></b><br />Main PHP Developer, System Administrator, DBA.
+							<b><a href="https://boz.reyboz.it">Valerio Bozzolan</a></b><br />Fa ancora cose, ma sarà inchiappettato come Ivan.
 						</div>
 					</div>
 				</div>
@@ -142,4 +142,4 @@ Header::factory( 'about' );
 
 BackendNav::spawn();
 
-Footer::factory();
+Footer::spawn();
