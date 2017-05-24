@@ -509,12 +509,14 @@ function update_form_percentage() {
 
 	$('.form-percentage').html(v);
 
-	$('input[name=finalize]').submit( function () {
-		/* Modal che chiede sì/no */
-	} );
+	<?php if( $curriculum && $curriculum->isCurriculumFinalized() ): ?>
+		$('.form-percentage').parent().hide();
+	<?php endif ?>
 }
 
 $(document).ready( function () {
+	$('.form-percentage-parent').show();
+
 	updateGUI();
 	$('.modal').modal();
 	$('.modal').append(

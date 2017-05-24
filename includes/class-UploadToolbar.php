@@ -20,7 +20,7 @@ class UploadToolbar {
 
 	<!-- right -->
 	<aside class="col hide-on-small-only m3 l2">
-		<p class="flow-text"><?php _e("Avanzamento") ?>: <b class="form-percentage">0</b>%</p>
+		<p class="flow-text form-percentage-parent" style="display:none"><?php _e("Avanzamento") ?>: <b class="form-percentage">0</b>%</p>
 
 		<!--
 		<p class="flow-text">Campi Complementari</p>
