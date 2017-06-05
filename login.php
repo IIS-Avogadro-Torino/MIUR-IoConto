@@ -59,7 +59,7 @@ Header::spawn('login');
 
 		<p><?php _e("Esegui l'accesso:") ?></p>
 		<div class="row">
-			<form class="col s12" method="post" action="<?php echo URL  . '/login.php' ?>">
+			<form class="col s12" method="post" action="<?php echo ROOT . '/login.php' ?>">
 				<?php
 				// Start hidden redirect link
 				$redirect = null;
