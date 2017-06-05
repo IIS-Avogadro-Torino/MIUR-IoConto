@@ -114,7 +114,7 @@ add_menu_entries( [
 	new MenuEntry('request-access',                           'request-access.php',                            _("Richiedi accesso") ),
 	new MenuEntry('help',                                     'http://www.formazionemiur.it/assistenza/',      _("Assistenza") ),
 	new MenuEntry('curriculum-search',                        'curriculum-search.php',                         _("Cerca CV"),                         'admin-menu'),
-	new MenuEntry('stats',                                    'stats',                                         _("Statistiche"),                      'admin-menu')
+	new MenuEntry('stats',                                    'stats.php',                                     _("Statistiche"),                      'admin-menu')
 ] );
 
 // PHP twicks

@@ -1,6 +1,6 @@
 <?php
 # Formazione MIUR content management system
-# Copyright (C) 2015 Valerio Bozzolan
+# Copyright (C) 2015, 2016, 2017 Valerio Bozzolan, Ivan Bertotto, ITIS Avogadro
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
