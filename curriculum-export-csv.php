@@ -62,6 +62,7 @@ if( ! empty( $_POST ) ) {
 			$headings[] = sprintf("Punteggio %s", $heading->getTitle() );
 		}
 	}
+	$headings[] = _("finalizzato");
 	$headings[] = _("PUNTEGGIO TOTALE");
 
 	echo implode(CSV_GLUE, $headings);
@@ -92,6 +93,7 @@ if( ! empty( $_POST ) ) {
 				$points += $row_points;
 			}
 		}
+		$values[] = $curriculum->isCurriculumFinalized() ? _("si'") : _("no");
 		$values[] = $points;
 
 		array_walk($values, 'sanitize_csv_value');
