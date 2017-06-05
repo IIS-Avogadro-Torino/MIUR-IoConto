@@ -131,7 +131,7 @@ if( isset( $_POST['email'] ) ) {
 	Email::send( $school_email, _("Notifica registrazione"), sprintf(
 		_(
 			"Con la presente per informarvi che il %s ha registrato con successo la seguente email personale per la selezione a esperti formatori del progetto Io Conto seconda edizione:\n ".
-			"%s.\n\n ". // $email
+			"%s\n\n ". // $email
 			"Le prossime comunicazioni relative a questo singolo utente avverranno attraverso l'email appena specificata."
 		),
 		$role,
