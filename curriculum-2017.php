@@ -59,9 +59,13 @@ if( ! empty( $_POST )  ) {
 		Curriculum::NATIONAL_TASK => 's',
 		Curriculum::NATIONAL_TASK_DESC => 's',
 		Curriculum::ECDL => 'd',
-		Curriculum::EXPERT => 'd',
-		Curriculum::FINALIZED => 'd'
+		Curriculum::EXPERT => 'd'
 	];
+
+	if( ! LOCK_CURRICULUM ) {
+		$fields[Curriculum::FINALIZED] = 'd';
+	}
+
 	$dbfields = [];
 	foreach($fields as $field => $type) {
 		$v = @ $_POST[$field];
@@ -145,11 +149,19 @@ $modal_open = function () {
 
 ?>
 	<?php if( $curriculum && ! empty( $_POST ) ): ?>
+		<div class="card-panel yellow">
+			<p class="flow-text"><?php _e("Curriculum salvato con successo!") ?></p>
+			<p><?php _e("Ricordati di compilare tutti i campi (sotto ogni modulo deve apparire il simbolo <em>100%</em> verde, altrimenti non sarà possibile finalizzare ed inviare il curriculum).") ?></p>
+		</div>
+	<?php endif ?>
+
+	<?php if( LOCK_CURRICULUM ): ?>
 	<div class="card-panel yellow">
-		<p class="flow-text"><?php _e("Curriculum salvato con successo!") ?></p>
-		<p><?php _e("Ricordati di compilare tutti i campi (sotto ogni modulo deve apparire il simbolo <em>100%</em> verde, altrimenti non sarà possibile finalizzare ed inviare il curriculum).") ?></p>
+		<p class="flow-text"><?php _e("Scadenza raggiunta") ?></p>
+		<p><?php _e("Si segnala che è scaduto il termine (14 giugno 2017 ore 12:00) e pertanto non è più possibile finalizzare il curriculum per l'invio.") ?></p>
 	</div>
 	<?php endif ?>
+
 	<form method="post">
 
 		<!-- Informazioni personali -->

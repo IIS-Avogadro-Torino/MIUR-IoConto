@@ -34,6 +34,9 @@ defined('CONTENT')
 defined('FPDF_PATH')
 	or define('FPDF_PATH', '/usr/share/php/fpdf.php');
 
+defined('LOCK_CURRICULUM')
+	or define('LOCK_CURRICULUM', false);
+
 // Debian distribution
 defined('JQUERY')
 	or define('JQUERY', '/javascript/jquery/jquery.min.js');
